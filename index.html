@@ -1126,7 +1126,11 @@ function setF(v){G.filter=v;document.querySelectorAll('.fc').forEach(function(c)
 
 function renderL(){
   var q=(document.getElementById('s-inp').value||'').toLowerCase().trim();
-  var fl=G.entries.filter(function(e){return(!q||e.name.toLowerCase().includes(q)||(e.subtitle||'').toLowerCase().includes(q))&&(G.filter==='all'||e.system===G.filter);});
+  var fl=G.entries.filter(function(e){
+    var nm=e.name&&typeof e.name==='object'?(e.name[G.lang]||e.name.en||e.name.zh||''):(e.name||'');
+    var sb=e.subtitle&&typeof e.subtitle==='object'?(e.subtitle[G.lang]||e.subtitle.en||e.subtitle.zh||''):(e.subtitle||'');
+    return(!q||nm.toLowerCase().includes(q)||sb.toLowerCase().includes(q))&&(G.filter==='all'||e.system===G.filter);
+  });
   document.getElementById('sf-n').textContent=fl.length;
   document.getElementById('e-badge').textContent=G.entries.length;
   var el=document.getElementById('el');
@@ -1145,7 +1149,7 @@ function renderL(){
     var ac=G.eid===e.id?' act':'';
     var cc=e.comments&&e.comments.length?' <span style="font-size:9px;background:rgba(74,124,248,.2);color:rgba(255,255,255,.6);padding:0 4px;border-radius:8px">'+e.comments.length+'</span>':'';
     return '<div class="ei'+ac+'" onclick="showE(\''+e.id+'\')">'
-      +'<div class="en">'+esc(e.name)+cc+'</div>'
+      +'<div class="en">'+esc(e.name&&typeof e.name==='object'?(e.name[G.lang]||e.name.en||e.name.zh||''):(e.name||''))+cc+'</div>'
       +'<div class="esys">'+esc(e.system||'')+'</div>'
       +'<button class="edel" onclick="event.stopPropagation();delE(\''+e.id+'\')">×</button>'
       +'</div>';
