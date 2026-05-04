@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcomWiki — Ecommerce Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nv:#1B2742;--nvd:#111929;
+  --nb:rgba(255,255,255,.08);--nh:rgba(255,255,255,.06);
+  --bg:#F8F7F4;--bg2:#fff;--bg3:#F0EEE9;
+  --bd:#E5E2DB;--bds:#CCC9C0;
+  --tx:#1A1916;--tx2:#5C5A54;--tx3:#9C9A94;
+  --ac:#4A7CF8;--ach:#3A6CE8;--acl:#EEF3FF;--acb:rgba(74,124,248,.3);
+  --gn:#22A55A;--gnl:#E8F7EE;
+  --am:#D97706;--aml:#FEF3C7;
+  --rd:#DC2626;--rdl:#FEE2E2;
+  --bl:#1D4ED8;--bll:#DBEAFE;
+  --f:'Space Grotesk',sans-serif;--fm:'Space Mono',monospace;
+  --r:6px;--rm:10px;--rl:14px;--rxl:20px;
+  --sh:0 1px 4px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:var(--f);font-size:14px;line-height:1.6;color:var(--tx);display:flex}
+
+/* ── SIDEBAR ─────────────────────────────────────── */
+.sb{width:232px;flex-shrink:0;background:var(--nv);display:flex;flex-direction:column;height:100vh}
+.sb-brand{padding:18px 16px 14px;border-bottom:1px solid var(--nb)}
+.brand{font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;letter-spacing:-.02em}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--ac);flex-shrink:0}
+.bsub{font-size:9px;color:rgba(255,255,255,.3);font-family:var(--fm);margin-top:3px;letter-spacing:.06em}
+.nsec{padding:9px 15px 3px;font-size:9px;font-family:var(--fm);letter-spacing:.1em;color:rgba(255,255,255,.25);text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;padding-right:12px}
+.ni{margin:1px 8px;border-radius:var(--rm);padding:8px 11px;cursor:pointer;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.5);font-size:13px;font-weight:500;transition:all .15s;background:transparent;border:none;width:calc(100% - 16px);text-align:left;font-family:var(--f)}
+.ni:hover{background:var(--nh);color:#fff}
+.ni.act{background:var(--ac);color:#fff}
+.ni-ic{font-size:14px;width:17px;text-align:center;flex-shrink:0;opacity:.85}
+.sdiv{height:1px;background:var(--nb);margin:5px 14px}
+.sw{padding:7px 9px 3px}
+.si{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:5px 9px;font-size:12px;font-family:var(--f);color:#fff;outline:none}
+.si::placeholder{color:rgba(255,255,255,.2)}
+.si:focus{border-color:rgba(74,124,248,.5)}
+.sfl{padding:3px 9px 5px;display:flex;flex-wrap:wrap;gap:3px}
+.fc{padding:2px 6px;border-radius:20px;border:1px solid rgba(255,255,255,.1);font-size:10px;font-family:var(--fm);color:rgba(255,255,255,.3);background:transparent;cursor:pointer;transition:all .15s}
+.fc:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.3)}
+.fc.act{background:rgba(74,124,248,.25);border-color:rgba(74,124,248,.5);color:rgba(255,255,255,.9)}
+.el{flex:1;overflow-y:auto;padding:0 0 4px}
+.el::-webkit-scrollbar{width:3px}
+.el::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+.ei{margin:1px 8px;border-radius:var(--r);padding:7px 11px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .1s;border:1px solid transparent}
+.ei:hover{background:var(--nh)}
+.ei.act{background:rgba(74,124,248,.18);border-color:rgba(74,124,248,.3)}
+.ei.act .en{color:#fff}
+.en{font-size:12px;font-weight:500;color:rgba(255,255,255,.5);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.esys{font-size:9px;font-family:var(--fm);color:rgba(255,255,255,.2);flex-shrink:0}
+.edel{width:15px;height:15px;border-radius:3px;border:none;background:transparent;color:rgba(255,255,255,.15);cursor:pointer;font-size:11px;display:none;align-items:center;justify-content:center;flex-shrink:0}
+.ei:hover .edel{display:flex}
+.edel:hover{color:#fca5a5}
+.sempty{padding:14px;font-size:11px;color:rgba(255,255,255,.2);font-family:var(--fm);text-align:center}
+.lr{padding:5px 9px;display:flex;gap:3px;border-top:1px solid var(--nb)}
+.lb{flex:1;height:25px;border-radius:var(--r);border:1px solid rgba(255,255,255,.08);background:transparent;font-size:10px;font-family:var(--fm);font-weight:700;color:rgba(255,255,255,.3);cursor:pointer;transition:all .15s}
+.lb:hover{color:#fff}
+.lb.act{background:var(--ac);color:#fff;border-color:var(--ac)}
+.sf{padding:8px 12px;border-top:1px solid var(--nb);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sfc{font-size:10px;font-family:var(--fm);color:rgba(255,255,255,.25)}
+.sfc span{color:rgba(255,255,255,.55);font-weight:700}
+.sfb-row{display:flex;gap:3px}
+.sfb{width:23px;height:23px;border-radius:var(--r);border:1px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;color:rgba(255,255,255,.3);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.sfb:hover{background:var(--nh);color:#fff}
+
+/* ── MAIN ─────────────────────────────────────────── */
+.main{flex:1;height:100vh;overflow-y:auto;background:var(--bg);display:flex;flex-direction:column}
+.main::-webkit-scrollbar{width:5px}
+.main::-webkit-scrollbar-thumb{background:var(--bds);border-radius:3px}
+.panel{display:none;flex:1}
+.panel.act{display:flex;flex-direction:column}
+
+/* ── OVERVIEW ─────────────────────────────────────── */
+.ov{padding:38px 48px;max-width:900px}
+.ov-t{font-size:26px;font-weight:700;color:var(--tx);letter-spacing:-.025em;margin-bottom:6px}
+.ov-s{font-size:13px;color:var(--tx2);line-height:1.65;max-width:520px;margin-bottom:26px}
+.sec-lbl{font-size:10px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:11px}
+.fw-g{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:26px}
+.fw-c{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:15px}
+.fw-n{font-size:10px;font-family:var(--fm);color:var(--tx3);margin-bottom:4px}
+.fw-t{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:8px}
+.fw-tags{display:flex;flex-wrap:wrap;gap:3px}
+.fw-tag{font-size:10px;font-family:var(--fm);padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--tx2);border:1px solid var(--bd)}
+.mk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:26px}
+.mk-c{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:12px}
+.mk-fl{font-size:19px;margin-bottom:4px}
+.mk-nm{font-size:12px;font-weight:600;margin-bottom:2px}
+.mk-d{font-size:10px;color:var(--tx3);line-height:1.4}
+.ht-c{background:var(--nv);border-radius:var(--rxl);padding:20px 24px}
+.ht-t{font-size:13px;font-weight:600;color:#fff;margin-bottom:12px}
+.hs{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px}
+.hs:last-child{margin-bottom:0}
+.hs-n{width:20px;height:20px;border-radius:50%;background:var(--ac);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.hs-t{font-size:12px;color:rgba(255,255,255,.68);line-height:1.55}
+
+/* ── ASK ──────────────────────────────────────────── */
+.ask-w{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+.ask-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rxl);padding:36px;max-width:540px;width:100%;text-align:center;box-shadow:var(--sh)}
+.ask-ic{width:48px;height:48px;border-radius:var(--rl);background:var(--ac);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:20px;color:#fff;font-weight:700;box-shadow:0 4px 14px rgba(74,124,248,.3)}
+.ask-t{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.ask-s{font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:20px}
+.ask-row{display:flex;gap:7px;margin-bottom:11px}
+.ask-in{flex:1;height:44px;background:var(--bg3);border:1.5px solid var(--bd);border-radius:var(--rm);padding:0 13px;font-size:14px;font-family:var(--f);color:var(--tx);outline:none;transition:border-color .15s}
+.ask-in:focus{border-color:var(--ac);background:var(--bg2)}
+.ask-in::placeholder{color:var(--tx3)}
+.ask-btn{height:44px;padding:0 18px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.ask-btn:hover:not(:disabled){background:var(--ach)}
+.ask-btn:disabled{background:var(--bg3);color:var(--tx3);cursor:not-allowed}
+.ask-exs{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.ask-ex{padding:3px 10px;border-radius:20px;border:1px solid var(--bd);background:var(--bg3);font-size:11px;color:var(--tx2);cursor:pointer;transition:all .15s;font-family:var(--fm)}
+.ask-ex:hover{border-color:var(--ac);color:var(--ac)}
+
+/* API mode toggle */
+.mode-bar{display:flex;gap:0;border:1px solid var(--bd);border-radius:var(--rm);overflow:hidden;margin-bottom:16px}
+.mode-btn{flex:1;height:36px;border:none;background:transparent;font-size:12px;font-family:var(--f);font-weight:500;color:var(--tx2);cursor:pointer;transition:all .15s;border-right:1px solid var(--bd)}
+.mode-btn:last-child{border-right:none}
+.mode-btn.act{background:var(--ac);color:#fff}
+.mode-btn:hover:not(.act){background:var(--bg3)}
+
+/* Manual paste panel */
+.paste-wrap{display:none;flex-direction:column;gap:12px;text-align:left}
+.paste-wrap.show{display:flex}
+.prompt-box{background:var(--nv);border-radius:var(--rm);padding:14px 16px;position:relative}
+.prompt-lbl{font-size:10px;font-family:var(--fm);color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.copy-btn{height:22px;padding:0 9px;border-radius:4px;border:1px solid rgba(255,255,255,.2);background:transparent;font-size:10px;font-family:var(--fm);color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.prompt-text{font-family:var(--fm);font-size:11px;color:#93C5FD;line-height:1.6;max-height:140px;overflow-y:auto}
+.paste-ta{width:100%;background:var(--bg3);border:1.5px solid var(--bd);border-radius:var(--rm);padding:10px 13px;font-size:12px;font-family:var(--fm);color:var(--tx);outline:none;resize:vertical;min-height:96px;line-height:1.55}
+.paste-ta:focus{border-color:var(--ac)}
+.paste-ta::placeholder{color:var(--tx3)}
+.paste-submit{width:100%;height:42px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.paste-submit:hover{background:var(--ach)}
+
+/* API key setup */
+.apikey-banner{background:var(--aml);border:1px solid rgba(217,119,6,.25);border-radius:var(--rm);padding:11px 14px;margin-top:12px;font-size:12px;color:#92400E;display:none}
+.apikey-banner.show{display:flex;gap:10px;align-items:flex-start}
+.apikey-banner a{color:var(--am);font-weight:600}
+.apikey-setup-link{font-size:11px;color:var(--ac);cursor:pointer;text-decoration:underline;margin-top:6px;display:inline-block}
+
+/* Loading */
+.load-w{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:40px}
+.lspin{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lt{font-size:13px;font-weight:600;color:var(--tx)}
+.ls{font-size:11px;font-family:var(--fm);color:var(--ac)}
+.lbar{width:200px;height:2px;background:var(--bd);border-radius:1px;overflow:hidden}
+.lbf{height:100%;background:var(--ac);border-radius:1px;animation:lba 1.8s ease-in-out infinite}
+@keyframes lba{0%{width:0;margin-left:0}50%{width:70%;margin-left:0}100%{width:10%;margin-left:90%}}
+
+/* ── SETTINGS PANEL ───────────────────────────────── */
+.settings-w{padding:38px 48px;max-width:680px}
+.settings-t{font-size:22px;font-weight:700;color:var(--tx);letter-spacing:-.02em;margin-bottom:5px}
+.settings-s{font-size:13px;color:var(--tx2);margin-bottom:28px}
+.settings-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:20px 24px;margin-bottom:16px}
+.settings-card-t{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.settings-card-s{font-size:12px;color:var(--tx2);margin-bottom:14px;line-height:1.55}
+.settings-row{display:flex;gap:8px;align-items:center}
+.settings-in{flex:1;height:40px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rm);padding:0 12px;font-size:13px;font-family:var(--fm);color:var(--tx);outline:none}
+.settings-in:focus{border-color:var(--ac)}
+.settings-in::placeholder{color:var(--tx3)}
+.settings-save-btn{height:40px;padding:0 16px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.settings-save-btn:hover{background:var(--ach)}
+.settings-clr-btn{height:40px;padding:0 14px;background:transparent;color:var(--rd);border:1px solid rgba(220,38,38,.25);border-radius:var(--rm);font-family:var(--f);font-size:13px;cursor:pointer;transition:all .15s}
+.settings-clr-btn:hover{background:var(--rdl)}
+.key-status{margin-top:10px;font-size:12px;font-family:var(--fm);display:none}
+.key-ok{color:var(--gn)}
+.key-none{color:var(--tx3)}
+.provider-tabs{display:flex;gap:0;border:1px solid var(--bd);border-radius:var(--rm);overflow:hidden;margin-bottom:14px;width:fit-content}
+.ptab{height:32px;padding:0 14px;border:none;background:transparent;font-size:12px;font-family:var(--f);font-weight:500;color:var(--tx2);cursor:pointer;border-right:1px solid var(--bd)}
+.ptab:last-child{border-right:none}
+.ptab.act{background:var(--nv);color:#fff}
+.provider-info{font-size:11px;color:var(--tx3);line-height:1.55;margin-bottom:12px}
+.provider-info a{color:var(--ac)}
+
+/* ── ENTRY ────────────────────────────────────────── */
+.ep{flex:1;display:flex;flex-direction:column;min-height:0}
+.eh{background:var(--bg2);border-bottom:1px solid var(--bd);padding:18px 36px 15px;flex-shrink:0}
+.ebc{font-size:10px;font-family:var(--fm);color:var(--tx3);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.ebc-s{color:var(--bds)}
+.eh-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.e-title{font-size:22px;font-weight:700;letter-spacing:-.025em;color:var(--tx);line-height:1.15}
+.e-sub{font-size:12px;color:var(--tx2);margin-top:3px}
+.e-chips{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.echip{font-size:10px;font-family:var(--fm);padding:2px 8px;border-radius:4px;font-weight:700}
+.ec-sys{background:var(--acl);color:var(--bl);border:1px solid var(--acb)}
+.ec-stg{background:var(--aml);color:var(--am);border:1px solid rgba(217,119,6,.2)}
+.eh-act{display:flex;gap:5px;flex-shrink:0;margin-top:2px}
+.eh-btn{height:28px;padding:0 11px;border-radius:var(--r);border:1px solid var(--bd);background:var(--bg3);font-size:10px;font-family:var(--fm);font-weight:700;color:var(--tx2);cursor:pointer;transition:all .15s}
+.eh-btn:hover{background:var(--bd);color:var(--tx)}
+.ebody{flex:1;overflow-y:auto;padding:22px 36px 42px;max-width:820px}
+.ebody::-webkit-scrollbar{width:4px}
+.ebody::-webkit-scrollbar-thumb{background:var(--bds);border-radius:2px}
+.sec{margin-bottom:24px}
+.slbl{font-size:10px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3);margin-bottom:8px}
+.stxt{font-size:13px;color:var(--tx2);line-height:1.78}
+.formula{font-family:var(--fm);font-size:12px;background:var(--nv);color:#93C5FD;border-radius:var(--rm);padding:11px 15px;line-height:1.9;border-left:3px solid var(--ac)}
+.who-l{display:flex;flex-wrap:wrap;gap:5px}
+.who-p{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--bd);color:var(--tx2);background:var(--bg2)}
+.mkg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.mdc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:13px}
+.mdc:hover{border-color:var(--acb)}
+.mdc-h{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:6px;display:flex;align-items:baseline;gap:5px}
+.mdc-tm{font-size:10px;font-family:var(--fm);color:var(--tx3);font-weight:400}
+.mdc-b{font-size:12px;color:var(--tx2);line-height:1.65}
+.mdc-b li{list-style:none;padding-left:10px;position:relative;margin-bottom:2px}
+.mdc-b li::before{content:"–";position:absolute;left:0;color:var(--tx3)}
+.dtbl{width:100%;border-collapse:collapse;font-size:12px}
+.dtbl th{text-align:left;font-family:var(--fm);font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;padding:5px 9px;border-bottom:1.5px solid var(--bd)}
+.dtbl td{padding:8px 9px;border-bottom:1px solid var(--bd);color:var(--tx2);vertical-align:top;line-height:1.45}
+.dtbl tr:last-child td{border-bottom:none}
+.dtbl tr:hover td{background:var(--bg3)}
+.dbg{font-size:10px;font-family:var(--fm);padding:2px 7px;border-radius:4px;white-space:nowrap;display:inline-block;font-weight:700}
+.dg{background:var(--gnl);color:var(--gn);border:1px solid rgba(34,165,90,.2)}
+.da{background:var(--aml);color:var(--am);border:1px solid rgba(217,119,6,.2)}
+.dr{background:var(--rdl);color:var(--rd);border:1px solid rgba(220,38,38,.2)}
+.db{background:var(--bll);color:var(--bl);border:1px solid rgba(29,78,216,.2)}
+.rc-c{background:var(--nv);border-radius:var(--rl);padding:13px 16px;display:flex;flex-direction:column;gap:5px}
+.rc-lbl{font-size:10px;font-family:var(--fm);font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.08em}
+.rc-t{font-size:13px;font-weight:600;color:#fff}
+.rc-d{font-size:12px;color:rgba(255,255,255,.6);line-height:1.6}
+.rc-u{font-size:11px;font-family:var(--fm);color:#93C5FD;text-decoration:none;word-break:break-all}
+.rc-u:hover{text-decoration:underline}
+.cmts-w{margin-top:30px;padding-top:22px;border-top:1px solid var(--bd)}
+.cmts-hd{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.cmts-t{font-size:10px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--tx3)}
+.cmt-cnt{background:var(--bg3);color:var(--tx3);border:1px solid var(--bd);padding:1px 7px;border-radius:20px;font-size:10px;font-family:var(--fm)}
+.cmt-c{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:12px 15px;margin-bottom:9px;border-left:3px solid var(--ac)}
+.cmt-q{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:7px;display:flex;gap:8px;align-items:flex-start}
+.cmt-ql{font-family:var(--fm);font-size:9px;font-weight:700;color:var(--ac);background:var(--acl);padding:2px 5px;border-radius:3px;flex-shrink:0;margin-top:1px}
+.cmt-a{font-size:13px;color:var(--tx2);line-height:1.72;padding-left:27px}
+.cmt-dt{font-size:10px;font-family:var(--fm);color:var(--tx3);padding-left:27px;margin-top:5px}
+.no-cmt{font-size:12px;color:var(--tx3);font-family:var(--fm);padding:7px 0}
+/* ── MODAL / CTX ──────────────────────────────────── */
+.ctx{position:fixed;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rm);box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:500;overflow:hidden;min-width:148px;display:none}
+.ctx.open{display:block}
+.ctx-i{padding:9px 13px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:9px;color:var(--tx)}
+.ctx-i:hover{background:var(--bg3)}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.mo.open{display:flex}
+.md{background:var(--bg2);border-radius:var(--rxl);box-shadow:0 20px 60px rgba(0,0,0,.2);width:500px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--bd)}
+.md-h{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.md-t{font-size:14px;font-weight:700}
+.md-x{width:26px;height:26px;border-radius:var(--r);border:1px solid var(--bd);background:var(--bg3);cursor:pointer;font-size:15px;color:var(--tx2);display:flex;align-items:center;justify-content:center}
+.md-b{padding:15px 20px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.md-cl{font-size:10px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:4px}
+.md-ctx{font-size:12px;color:var(--tx2);background:var(--bg3);border-radius:var(--r);padding:8px 11px;line-height:1.5;border-left:2px solid var(--bds);font-style:italic;max-height:80px;overflow:hidden}
+.md-ta{width:100%;background:var(--bg3);border:1.5px solid var(--bd);border-radius:var(--rm);padding:9px 12px;font-size:13px;font-family:var(--f);color:var(--tx);outline:none;resize:vertical;min-height:80px;line-height:1.6}
+.md-ta:focus{border-color:var(--ac)}
+.md-ta::placeholder{color:var(--tx3)}
+
+/* Paste modal for followup */
+.fu-prompt-box{background:var(--nv);border-radius:var(--rm);padding:12px 14px;position:relative;margin-bottom:4px}
+.fu-prompt-lbl{font-size:10px;font-family:var(--fm);color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.fu-prompt-txt{font-family:var(--fm);font-size:11px;color:#93C5FD;line-height:1.55;max-height:80px;overflow-y:auto}
+
+.md-f{padding:12px 20px;border-top:1px solid var(--bd);display:flex;gap:7px;justify-content:flex-end}
+.btn-s{height:32px;padding:0 14px;border-radius:var(--r);border:1px solid var(--bd);background:transparent;font-size:12px;font-family:var(--f);font-weight:600;color:var(--tx2);cursor:pointer}
+.btn-p{height:32px;padding:0 16px;border-radius:var(--r);border:none;background:var(--ac);font-size:12px;font-family:var(--f);font-weight:700;color:#fff;cursor:pointer}
+.btn-p:disabled{background:var(--bg3);color:var(--tx3);cursor:not-allowed}
+.empty-w{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:40px;text-align:center}
+.empty-ic{font-size:30px;opacity:.15}
+.empty-t{font-size:15px;font-weight:600;color:var(--tx2)}
+.empty-s{font-size:13px;color:var(--tx3);max-width:220px;line-height:1.5}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--nv);color:#fff;padding:9px 14px;border-radius:var(--rm);font-size:13px;z-index:999;transform:translateY(48px);opacity:0;transition:all .3s;pointer-events:none;max-width:280px;border-left:3px solid var(--ac)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ─── EMPTY STATE (zero entries) ─── */
+.entry-empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:360px;padding:40px;text-align:center;gap:12px}
+.ees-icon{font-size:40px;opacity:.2;margin-bottom:4px}
+.ees-title{font-size:16px;font-weight:600;color:var(--tx2);letter-spacing:-.01em}
+.ees-sub{font-size:13px;color:var(--tx3);max-width:260px;line-height:1.6}
+.ees-cta{margin-top:8px;height:38px;padding:0 20px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.ees-cta:hover{background:var(--ach)}
+
+/* ─── Enterprise browser mode ─── */
+.ent-status{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--rm);font-size:12px;margin-top:10px}
+.ent-status.checking{background:var(--bg3);color:var(--tx3)}
+.ent-status.ready{background:var(--gnl);color:var(--gn);border:1px solid rgba(34,165,90,.2)}
+.ent-status.needs-login{background:var(--aml);color:var(--am);border:1px solid rgba(217,119,6,.2)}
+.ent-status.error{background:var(--rdl);color:var(--rd);border:1px solid rgba(220,38,38,.2)}
+.ent-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ent-status.checking .ent-status-dot{background:var(--tx3);animation:pulse 1.2s ease-in-out infinite}
+.ent-status.ready .ent-status-dot{background:var(--gn)}
+.ent-status.needs-login .ent-status-dot{background:var(--am)}
+.ent-status.error .ent-status-dot{background:var(--rd)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ent-login-btn{margin-top:8px;width:100%;height:38px;background:var(--nv);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.ent-login-btn:hover{background:#253352}
+.ent-progress{margin-top:10px;font-size:11px;font-family:var(--fm);color:var(--ac);display:none}
+.ent-progress.show{display:block}
+.ent-progress-bar{height:2px;background:var(--bd);border-radius:1px;overflow:hidden;margin-top:4px}
+.ent-progress-fill{height:100%;background:var(--ac);border-radius:1px;transition:width .4s ease;width:0%}
+
+/* ── Clipboard import button ─────────────────────────── */
+.clip-btn{width:100%;height:44px;background:var(--nv);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+.clip-btn:hover{background:#253352}
+.clip-btn.success{background:var(--gn)!important}
+.clip-btn.error{background:var(--rd)!important}
+.clip-divider{display:flex;align-items:center;gap:10px;margin:14px 0 6px;color:var(--tx3);font-size:11px;font-family:var(--fm)}
+.clip-divider::before,.clip-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+</style>
+</head>
+<body>
+
+<div class="sb">
+  <div class="sb-brand">
+    <div class="brand"><div class="bdot"></div>EcomWiki</div>
+    <div class="bsub">KNOWLEDGE BASE · v5.0</div>
+  </div>
+
+  <div class="nsec"><span id="ns-nav">导航</span></div>
+  <button class="ni act" id="ni-ov" onclick="goP('overview')"><span class="ni-ic">⊞</span><span id="ni-ov-l">知识框架</span></button>
+  <button class="ni" id="ni-ask" onclick="goP('ask')"><span class="ni-ic">◎</span><span id="ni-ask-l">问 Agent</span></button>
+  <button class="ni" id="ni-cfg" onclick="goP('settings')"><span class="ni-ic">⚙</span><span id="ni-cfg-l">设置 / API Key</span></button>
+
+  <div class="sdiv"></div>
+  <div class="nsec"><span id="ns-lib">词条库</span><span id="e-badge" style="font-size:9px;font-family:var(--fm);background:rgba(255,255,255,.06);color:rgba(255,255,255,.25);padding:0 5px;border-radius:10px">0</span></div>
+  <div class="sw"><input class="si" id="s-inp" placeholder="搜索词条..." oninput="renderL()"></div>
+  <div class="sfl">
+    <button class="fc act" onclick="setF('all')" data-v="all" id="fc-all">全部</button>
+    <button class="fc" onclick="setF('CMS')" data-v="CMS">CMS</button>
+    <button class="fc" onclick="setF('BI')" data-v="BI">BI</button>
+    <button class="fc" onclick="setF('WMS')" data-v="WMS">WMS</button>
+    <button class="fc" onclick="setF('广告')" data-v="广告" id="fc-ads">广告</button>
+    <button class="fc" onclick="setF('ERP')" data-v="ERP">ERP</button>
+    <button class="fc" onclick="setF('运营')" data-v="运营" id="fc-ops">运营</button>
+  </div>
+  <div class="el" id="el"></div>
+  <div class="lr">
+    <button class="lb act" onclick="setLang('zh')" id="lb-zh">中文</button>
+    <button class="lb" onclick="setLang('en')" id="lb-en">EN</button>
+  </div>
+  <div class="sf">
+    <span class="sfc"><span id="sf-n">0</span> <span id="sf-l">词条</span></span>
+    <div class="sfb-row">
+      <button class="sfb" onclick="expJSON()" title="Export JSON">↓</button>
+      <button class="sfb" onclick="document.getElementById('imp-in').click()" title="Import JSON">↑</button>
+      <input type="file" id="imp-in" accept=".json" style="display:none" onchange="impJSON(event)">
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="panel act" id="panel-overview">
+    <div class="ov">
+      <div class="ov-t" id="ov-t"></div>
+      <div class="ov-s" id="ov-s"></div>
+      <div class="sec-lbl" id="ov-fw"></div>
+      <div class="fw-g" id="fw-g"></div>
+      <div class="sec-lbl" id="ov-mkt"></div>
+      <div class="mk-g" id="mk-g"></div>
+      <div class="sec-lbl" id="ov-ht"></div>
+      <div class="ht-c"><div class="ht-t" id="ht-t"></div><div id="ht-steps"></div></div>
+    </div>
+  </div>
+
+  <!-- ASK -->
+  <div class="panel" id="panel-ask">
+    <div class="ask-w" id="ask-idle">
+      <div class="ask-card">
+        <div class="ask-ic">◎</div>
+        <div class="ask-t" id="ask-t"></div>
+        <div class="ask-s" id="ask-s"></div>
+
+        <!-- Mode toggle -->
+        <div class="mode-bar">
+          <button class="mode-btn act" id="mode-api" onclick="setMode('api')" id="mode-api-btn">🔑 API Key 模式</button>
+          <button class="mode-btn" id="mode-paste-btn" onclick="setMode('paste')">📋 手动粘贴模式</button>
+        </div>
+
+        <!-- API mode -->
+        <div id="api-mode-wrap">
+          <div class="ask-row">
+            <input class="ask-in" id="ask-in" onkeydown="if(event.key==='Enter')doAsk()">
+            <button class="ask-btn" id="ask-btn" onclick="doAsk()"></button>
+          </div>
+          <div class="ask-exs" id="ask-exs">
+            <button class="ask-ex" onclick="sq('ROAS')">ROAS</button>
+            <button class="ask-ex" onclick="sq('动销率')">动销率</button>
+            <button class="ask-ex" onclick="sq('FBA')">FBA</button>
+            <button class="ask-ex" onclick="sq('ACoS')">ACoS</button>
+            <button class="ask-ex" onclick="sq('私域流量')">私域流量</button>
+            <button class="ask-ex" onclick="sq('直播电商')">直播电商</button>
+          </div>
+          <div class="apikey-banner" id="apikey-banner">
+            <span>⚠️</span>
+            <span id="apikey-banner-text">未设置 API Key。<a onclick="goP('settings')" style="cursor:pointer">点击前往设置</a>，或切换到「手动粘贴模式」。</span>
+          </div>
+        </div>
+
+        <!-- Paste mode -->
+        <div class="paste-wrap" id="paste-mode-wrap">
+          <div>
+            <input class="ask-in" id="paste-term-in" placeholder="输入要查询的名词..." style="width:100%;margin-bottom:10px" oninput="updatePrompt()">
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-lbl">
+              <span id="prompt-lbl-text">复制下方 Prompt → 粘贴给任意 AI</span>
+              <button class="copy-btn" onclick="copyPrompt()">复制</button>
+            </div>
+            <div class="prompt-text" id="prompt-display"></div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--tx3);margin-bottom:6px;font-family:var(--fm)" id="paste-instruction">将 AI 的 JSON 回复粘贴到下方：</div>
+            <textarea class="paste-ta" id="paste-ta" placeholder='粘贴 AI 的完整回复（无需任何处理，直接粘贴即可）...'></textarea>
+          </div>
+          <button class="paste-submit" onclick="submitPaste()" id="paste-submit-btn">导入词条 →</button>
+        </div>
+
+        <!-- ── CLIPBOARD IMPORT (always visible) ── -->
+        <div class="clip-divider"><span id="clip-or-text">或</span></div>
+        <button class="clip-btn" id="clip-btn" onclick="importClipboard()">
+          <span id="clip-btn-icon">📋</span>
+          <span id="clip-btn-text">从剪贴板导入 AI 回复</span>
+        </button>
+        <div style="font-size:10px;color:var(--tx3);text-align:center;margin-top:6px;font-family:var(--fm)" id="clip-hint">复制 AI 的完整回复后点击上方按钮，自动解析导入词条</div>
+
+      </div>
+    </div>
+    <div class="load-w" id="ask-load" style="display:none">
+      <div class="lspin"></div>
+      <div class="lt" id="l-t">Agent 正在分析...</div>
+      <div class="ls" id="l-s">搜索行业资料</div>
+      <div class="lbar"><div class="lbf"></div></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="panel" id="panel-settings">
+    <div class="settings-w">
+      <div class="settings-t" id="cfg-t"></div>
+      <div class="settings-s" id="cfg-s"></div>
+
+      <div class="settings-card">
+        <div class="settings-card-t" id="cfg-provider-t"></div>
+        <div class="settings-card-s" id="cfg-provider-s"></div>
+        <div class="provider-tabs">
+          <button class="ptab act" onclick="setProvider('anthropic')" id="ptab-anthropic">Anthropic</button>
+          <button class="ptab" onclick="setProvider('openrouter')" id="ptab-openrouter">OpenRouter</button>
+          <button class="ptab" onclick="setProvider('n8n')" id="ptab-n8n">n8n Webhook</button>
+          <button class="ptab" onclick="setProvider('enterprise')" id="ptab-enterprise">🏢 Enterprise SSO</button>
+        </div>
+        <div class="provider-info" id="provider-info"></div>
+        <div class="settings-card-t" id="cfg-key-t" style="margin-bottom:4px"></div>
+        <div class="settings-card-s" id="cfg-key-s"></div>
+        <div class="settings-row">
+          <input class="settings-in" id="key-input" type="password" placeholder="sk-...">
+          <button class="settings-save-btn" onclick="saveKey()" id="save-key-btn"></button>
+          <button class="settings-clr-btn" onclick="clearKey()" id="clr-key-btn"></button>
+        </div>
+        <div class="key-status" id="key-status"></div>
+        <!-- Enterprise mode status (shown only for enterprise provider) -->
+        <div id="ent-ui" style="display:none">
+          <div class="ent-status checking" id="ent-status">
+            <div class="ent-status-dot"></div>
+            <span id="ent-status-text">正在检测 Claude 登录状态...</span>
+          </div>
+          <button class="ent-login-btn" id="ent-login-btn" onclick="entOpenLogin()" style="display:none"></button>
+          <div class="ent-progress" id="ent-progress">
+            <span id="ent-progress-text">正在查询 Claude...</span>
+            <div class="ent-progress-bar"><div class="ent-progress-fill" id="ent-progress-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-card-t" id="cfg-data-t"></div>
+        <div class="settings-card-s" id="cfg-data-s"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="settings-save-btn" id="cfg-exp-btn" onclick="expJSON()"></button>
+          <button class="settings-save-btn" id="cfg-imp-btn" style="background:var(--bg3);color:var(--tx2)" onclick="document.getElementById('imp-in2').click()"></button>
+          <input type="file" id="imp-in2" accept=".json" style="display:none" onchange="impJSON(event)">
+          <button class="settings-clr-btn" id="cfg-clr-btn" onclick="clearAllData()"></button>
+        </div>
+      </div>
+
+      <div class="settings-card" style="background:var(--bg3)">
+        <div class="settings-card-t" id="cfg-paste-t"></div>
+        <div class="settings-card-s" id="cfg-paste-s"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTRY -->
+  <div class="panel" id="panel-entry">
+    <div id="e-detail" style="display:flex;flex-direction:column;flex:1;min-height:0"></div>
+  </div>
+
+  <!-- EMPTY -->
+  <div class="panel" id="panel-empty">
+    <div class="empty-w">
+      <div class="empty-ic">📂</div>
+      <div class="empty-t" id="empty-t"></div>
+      <div class="empty-s" id="empty-s"></div>
+      <button class="ees-cta" id="empty-cta" onclick="goP('ask')"></button>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTX MENU -->
+<div class="ctx" id="ctx-m">
+  <div class="ctx-i" onclick="openFU()"><span>💬</span><span id="ctx-fu"></span></div>
+  <div class="ctx-i" onclick="openED()"><span>✏️</span><span id="ctx-ed"></span></div>
+</div>
+
+<!-- MODAL -->
+<div class="mo" id="mo">
+  <div class="md">
+    <div class="md-h"><div class="md-t" id="md-t"></div><button class="md-x" onclick="closeMO()">×</button></div>
+    <div class="md-b">
+      <div><div class="md-cl" id="md-cl">选中内容</div><div class="md-ctx" id="md-ctx"></div></div>
+      <!-- API followup textarea -->
+      <div id="fu-api-wrap">
+        <textarea class="md-ta" id="md-ta" rows="3"></textarea>
+      </div>
+      <!-- Paste followup -->
+      <div id="fu-paste-wrap" style="display:none">
+        <div class="fu-prompt-box">
+          <div class="fu-prompt-lbl"><span>复制给任意 AI</span><button class="copy-btn" onclick="copyFUPrompt()">复制</button></div>
+          <div class="fu-prompt-txt" id="fu-prompt-txt"></div>
+        </div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:5px;font-family:var(--fm)">粘贴 AI 的回复：</div>
+        <textarea class="md-ta" id="md-paste-ta" rows="4" placeholder="粘贴 AI 的回复文本..."></textarea>
+      </div>
+    </div>
+    <div class="md-f">
+      <button class="btn-s" onclick="closeMO()" id="md-cancel">取消</button>
+      <button class="btn-p" onclick="submitMO()" id="md-sub">发送 →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<!-- Enterprise bridge: hidden iframe to communicate with claude.ai -->
+<iframe id="ent-bridge" style="display:none;width:0;height:0;border:none;position:absolute;left:-9999px" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+
+<script>
+/* ═══ I18N ═══════════════════════════════════════════ */
+var I={
+  zh:{'ns.nav':'导航','ni.ov':'知识框架','ni.ask':'问 Agent','ni.cfg':'设置 / API Key','ns.lib':'词条库','si.ph':'搜索词条...','sf.l':'词条','fc.all':'全部','fc.ads':'广告','fc.ops':'运营','ov.t':'电商知识体系框架','ov.s':'你的电商知识库。支持 API Key 直连、手动粘贴两种查询路径，词条自动按框架分类归档。','ov.fw':'知识模块','ov.mkt':'覆盖市场','ov.ht':'使用指南','ht.t':'EcomWiki 使用指南','ht.1':'【API Key 模式】在「设置」里配置 Anthropic 或 OpenRouter 的 API Key，然后在「问 Agent」里直接输入名词，自动查询并生成词条。','ht.2':'【手动粘贴模式】没有 API Key？切换到「手动粘贴模式」，①输入名词后复制生成的指令，②粘贴给任意 AI（Claude.ai、ChatGPT 等），③将 AI 的完整回复直接粘贴回来导入即可，无需处理格式。','ht.3':'【追问】在词条页面选中任意文字，右键点击「追问选中内容」，系统会调用 AI 进行深度解析，结果自动保存为评论。没有 API Key 时也可手动粘贴 AI 回复。','ht.4':'【导出与备份】点击词条页右上角可导出单个词条为 HTML 文件随时分享；在「设置」里可导出全部词条为 JSON 文件，用于备份或在其他设备上恢复。','fw.01':'ERP 系统','fw.02':'WMS 库存管理','fw.03':'CMS 内容运营','fw.04':'BI 数据看板','fw.05':'广告推广','fw.06':'社媒 & 直播','mkt.cn':'中国','mkt.kr':'韩国','mkt.jp':'日本','mkt.us':'北美','ask.t':'查询电商名词','ask.s':'输入名词获取覆盖概念解释、四市场对比、数据参考值和真实案例的结构化解析。','ask.ph':'输入名词，如 ROAS、动销率、FBA...','ask.btn':'查询 →','l.t':'Agent 正在分析...','l.s0':'搜索行业资料','l.s1':'分析四市场差异','l.s2':'整理数据参考值','l.s3':'生成结构化词条','e.entries':'词条','e.concept':'概念解释','e.formula':'公式','e.who':'谁在关注','e.markets':'四市场解读','e.data':'数据参考值','e.case':'Real Case','e.case.l':'案例','e.metric':'指标','e.val':'参考值','e.note':'说明','e.fups':'追问 / 副词条','e.nocomments':'暂无追问记录','e.export':'导出 HTML','ctx.fu':'追问选中内容','ctx.ed':'标记修改','md.fu.t':'追问','md.ed.t':'标记修改','md.cl':'选中内容','md.fu.ph':'输入你的追问...','md.ed.ph':'输入修改建议...','md.cancel':'取消','md.fu.sub':'发送 →','md.ed.sub':'保存','empty.t':'暂无词条','empty.s':'前往「问 Agent」查询你的第一个电商名词。','toast.ok':'词条已生成并保存','toast.dup':'词条已存在，已跳转','toast.del':'词条已删除','toast.exp':'JSON 已导出','toast.html':'HTML 已导出','toast.fu':'追问已保存','toast.err':'生成失败，请重试','toast.keysaved':'API Key 已保存','toast.keycleared':'API Key 已清除','toast.copied':'已复制到剪贴板','toast.datecleared':'数据已清空','confirm.del':'确认删除这个词条？','confirm.clear':'确认清空所有词条数据？此操作不可恢复。',
+    'clip.btn':'从剪贴板导入 AI 回复',
+    'clip.hint':'复制 AI 的完整回复后点击上方按钮，自动解析导入词条',
+    'clip.or':'或',
+    'ent.tab':'企业 SSO（无需 API Key）',
+    'ent.info.title':'企业浏览器模式',
+    'ent.info.desc':'无需 API Key。通过你浏览器里已登录的 Claude Enterprise 账户自动查询，适合 Claude for Enterprise 用户。',
+    'ent.claude.url.label':'Claude 访问地址',
+    'ent.claude.url.desc':'填入你们企业的 Claude 访问地址。不确定的话保持默认值 https://claude.ai 即可。',
+    'ent.status.checking':'正在检测 Claude 登录状态...',
+    'ent.status.ready':'✓ Claude 已登录，可以开始查询',
+    'ent.status.needs-login':'需要先登录 Claude Enterprise',
+    'ent.status.error':'无法访问 Claude，请检查地址设置',
+    'ent.login.btn':'打开 Claude 并登录 →',
+    'ent.progress.opening':'正在打开 Claude...',
+    'ent.progress.injecting':'正在输入查询...',
+    'ent.progress.waiting':'等待 Claude 回复...',
+    'ent.progress.extracting':'提取结果...',
+    'ent.err.not-logged-in':'请先在浏览器中登录 Claude Enterprise',
+    'ent.err.timeout':'Claude 响应超时，请重试',
+    'ent.err.no-json':'Claude 未返回有效的 JSON 格式，请重试',
+    'ent.err.blocked':'无法访问 Claude 页面，请检查网络或 Claude 地址设置',
+    'ov.empty.title':'知识框架',
+    'ov.empty.sub':'首次使用？前往「问 Agent」输入任意电商名词，系统会自动分析并归档到这里。',
+    'ov.empty.cta':'开始查询 →',
+    'list.empty.title':'词条库为空',
+    'list.empty.sub':'还没有保存任何词条。前往「问 Agent」开始查询。',
+    'list.empty.cta':'问 Agent →',
+    'cfg.t':'设置 / API Key','cfg.s':'配置 AI 服务以启用自动查询。支持 Anthropic（官方）和 OpenRouter（多模型网关，免费额度充足）。Key 仅存在本地，不经任何服务器。',
+    'cfg.provider.t':'选择 AI 提供商','cfg.provider.s':'三个选项均支持浏览器直连。推荐：无 API Key 用 n8n（自建代理）；有 Key 用 Anthropic 或 OpenRouter。',
+    'cfg.key.t':'API Key','cfg.key.s':'Key 仅保存在你本机的 localStorage，不经过任何中间服务器。',
+    'cfg.data.t':'数据管理','cfg.data.s':'所有词条数据存储在本地浏览器 localStorage 中。导出 JSON 文件可在其他设备恢复。',
+    'cfg.exp.btn':'导出所有词条 JSON','cfg.imp.btn':'导入 JSON','cfg.clr.btn':'清空所有数据',
+    'cfg.paste.t':'手动粘贴模式','cfg.paste.s':'不想配置 API Key？可切换到「手动粘贴模式」。系统生成 Prompt，你粘贴给任意 AI 获取回复，再将 JSON 粘贴回来即可——但推荐使用 API Key 模式以获得完整体验。',
+    'cfg.save.btn':'保存','cfg.clr.key.btn':'清除'
+  },
+  en:{'ns.nav':'Navigation','ni.ov':'Framework','ni.ask':'Ask Agent','ni.cfg':'Settings / API Key','ns.lib':'Library','si.ph':'Search entries...','sf.l':'entries','fc.all':'All','fc.ads':'Ads','fc.ops':'Ops','ov.t':'Ecommerce Knowledge Framework','ov.s':'Your ecommerce knowledge base. Supports API Key mode and manual paste mode. Every queried term is auto-tagged and archived by framework.','ov.fw':'Knowledge Modules','ov.mkt':'Markets','ov.ht':'How To Use','ht.t':'How to use EcomWiki','ht.1':'[API Key Mode] Go to Settings and configure an Anthropic or OpenRouter API Key. Then type any ecommerce term in Ask Agent to auto-generate a full structured entry.','ht.2':'[Manual Paste Mode] No API Key? Switch to Manual Paste Mode. ① Enter a term and copy the generated prompt. ② Paste it to any AI (Claude.ai, ChatGPT, etc.). ③ Paste the AI\'s full response back — no JSON formatting needed.','ht.3':'[Follow-up] Select any text in an entry and right-click to follow up. AI analyzes the selected context and the response is saved as a comment. Works with paste mode too if you have no API Key.','ht.4':'[Export & Backup] Click the export button on any entry to save it as a shareable HTML file. Go to Settings to export all entries as JSON for backup or cross-device migration.','fw.01':'ERP System','fw.02':'WMS Inventory','fw.03':'CMS Content','fw.04':'BI Dashboard','fw.05':'Advertising','fw.06':'Social & Live','mkt.cn':'China','mkt.kr':'Korea','mkt.jp':'Japan','mkt.us':'N. America','ask.t':'Query Any Ecommerce Term','ask.s':'Enter a term to get a structured breakdown: concept, four-market comparison, data benchmarks, real cases.','ask.ph':'Enter a term, e.g. ROAS, FBA, sell-through rate...','ask.btn':'Ask →','l.t':'Agent is analyzing...','l.s0':'Searching industry data','l.s1':'Analyzing market differences','l.s2':'Compiling data benchmarks','l.s3':'Generating structured entry','e.entries':'Entries','e.concept':'Concept','e.formula':'Formula','e.who':'Who Cares','e.markets':'Four Markets','e.data':'Data Reference','e.case':'Real Case','e.case.l':'Case Study','e.metric':'Metric','e.val':'Value','e.note':'Note','e.fups':'Follow-ups','e.nocomments':'No follow-ups yet','e.export':'Export HTML','ctx.fu':'Follow up on this','ctx.ed':'Suggest edit','md.fu.t':'Follow Up','md.ed.t':'Suggest Edit','md.cl':'Selected Text','md.fu.ph':'Enter your question...','md.ed.ph':'Enter your correction...','md.cancel':'Cancel','md.fu.sub':'Send →','md.ed.sub':'Save','empty.t':'No entries yet','empty.s':'Go to「Ask Agent」to create your first entry.','toast.ok':'Entry generated & saved','toast.dup':'Entry exists, navigating','toast.del':'Entry deleted','toast.exp':'JSON exported','toast.html':'HTML exported','toast.fu':'Follow-up saved','toast.err':'Generation failed, please retry','toast.keysaved':'API Key saved','toast.keycleared':'API Key cleared','toast.copied':'Copied to clipboard','toast.datecleared':'Data cleared','confirm.del':'Delete this entry?','confirm.clear':'Clear all entry data? This cannot be undone.',
+    'clip.btn':'Import from clipboard',
+    'clip.hint':'Copy the AI\'s full response, then click the button above to auto-parse and import',
+    'clip.or':'or',
+    'ent.tab':'Enterprise SSO (no API key)',
+    'ent.info.title':'Enterprise Browser Mode',
+    'ent.info.desc':'No API Key needed. Queries Claude automatically using your existing Enterprise login session in the browser. Designed for Claude for Enterprise users.',
+    'ent.claude.url.label':'Claude URL',
+    'ent.claude.url.desc':'Enter your company\'s Claude URL. If unsure, leave the default https://claude.ai.',
+    'ent.status.checking':'Checking Claude login status...',
+    'ent.status.ready':'✓ Claude is logged in — ready to query',
+    'ent.status.needs-login':'You need to log into Claude Enterprise first',
+    'ent.status.error':'Cannot reach Claude — check the URL in settings',
+    'ent.login.btn':'Open Claude & Log In →',
+    'ent.progress.opening':'Opening Claude...',
+    'ent.progress.injecting':'Sending query...',
+    'ent.progress.waiting':'Waiting for Claude response...',
+    'ent.progress.extracting':'Extracting result...',
+    'ent.err.not-logged-in':'Please log into Claude Enterprise in your browser first',
+    'ent.err.timeout':'Claude timed out — please try again',
+    'ent.err.no-json':'Claude did not return valid JSON — please retry',
+    'ent.err.blocked':'Cannot access Claude — check network or Claude URL setting',
+    'ov.empty.title':'Knowledge Framework',
+    'ov.empty.sub':'First time here? Go to「Ask Agent」, type any ecommerce term, and it will be analyzed and archived here automatically.',
+    'ov.empty.cta':'Start querying →',
+    'list.empty.title':'No entries yet',
+    'list.empty.sub':'You haven\'t saved any entries. Go to Ask Agent to get started.',
+    'list.empty.cta':'Ask Agent →',
+    'cfg.t':'Settings / API Key','cfg.s':'Configure your AI service to enable auto queries. Supports Anthropic (official) and OpenRouter (multi-model gateway with free daily quota). Keys are stored locally only.',
+    'cfg.provider.t':'Choose AI Provider','cfg.provider.s':'All three support direct browser calls. Recommended: use n8n (proxy, no key needed in browser) or Anthropic/OpenRouter if you have your own key.',
+    'cfg.key.t':'API Key','cfg.key.s':'Your key is saved only in your local localStorage — never transmitted to any intermediate server.',
+    'cfg.data.t':'Data Management','cfg.data.s':'All entries are stored in your local browser localStorage. Export JSON to back up or migrate to another device.',
+    'cfg.exp.btn':'Export All Entries (JSON)','cfg.imp.btn':'Import JSON','cfg.clr.btn':'Clear All Data',
+    'cfg.paste.t':'Manual Paste Mode','cfg.paste.s':'No API Key? Switch to Manual Paste Mode in Ask Agent. The app generates a structured prompt — copy it to any AI (Claude.ai, ChatGPT, Gemini, etc.), paste the JSON response back, and it auto-parses into an entry.',
+    'cfg.save.btn':'Save','cfg.clr.key.btn':'Clear'
+  }
+};
+function t(k){return(I[G.lang]||I.zh)[k]||I.zh[k]||k;}
+
+/* ═══ FRAMEWORK DATA ══════════════════════════════════ */
+var FW=[
+  {n:'01',tags:{zh:['财务对账','采购订单','多仓协同','OMS'],en:['Financials','Purchase Orders','Multi-warehouse','OMS']}},
+  {n:'02',tags:{zh:['SKU管理','安全库存','补货策略','动销率'],en:['SKU Mgmt','Safety Stock','Replenishment','Sell-through']}},
+  {n:'03',tags:{zh:['A+页面','详情页','DAM','本地化'],en:['A+ Pages','Detail Page','DAM','Localization']}},
+  {n:'04',tags:{zh:['GMV','CVR','ROAS','ACoS','归因'],en:['GMV','CVR','ROAS','ACoS','Attribution']}},
+  {n:'05',tags:{zh:['PPC','自动出价','竞品词','再营销'],en:['PPC','Auto Bidding','Competitor KW','Remarketing']}},
+  {n:'06',tags:{zh:['KOL/KOC','直播电商','私域流量','内容日历'],en:['KOL/KOC','Live Commerce','Private Traffic','Content Calendar']}}
+];
+var MKTS=[
+  {f:'🇨🇳',k:'mkt.cn',p:{zh:'淘宝·天猫·京东·抖音·拼多多',en:'Taobao·Tmall·JD·Douyin·Pinduoduo'}},
+  {f:'🇰🇷',k:'mkt.kr',p:{zh:'Coupang·Naver·Kakao·11Street',en:'Coupang·Naver·Kakao·11Street'}},
+  {f:'🇯🇵',k:'mkt.jp',p:{zh:'Rakuten·Amazon JP·Yahoo!',en:'Rakuten·Amazon JP·Yahoo!'}},
+  {f:'🇺🇸',k:'mkt.us',p:{zh:'Amazon·Walmart·Shopify',en:'Amazon·Walmart·Shopify'}}
+];
+
+/* ═══ STATE ══════════════════════════════════════════ */
+var G={lang:'zh',panel:'overview',eid:null,filter:'all',mmode:null,sel:'',entries:[],provider:'anthropic',askMode:'api',_providerList:['anthropic','openrouter']};
+
+/* ═══ STORAGE ═════════════════════════════════════════*/
+function sv(){localStorage.setItem('ewk5',JSON.stringify({entries:G.entries,lang:G.lang,provider:G.provider,askMode:G.askMode}));}
+function lv(){
+  var r=localStorage.getItem('ewk5');
+  if(r){try{var d=JSON.parse(r);
+    if(d.entries)G.entries=d.entries;
+    if(d.lang)G.lang=d.lang;
+    // Sanitize legacy provider values (openai/deepseek no longer supported)
+    if(d.provider&&['anthropic','openrouter','n8n','enterprise'].indexOf(d.provider)>-1)G.provider=d.provider;
+    if(d.askMode)G.askMode=d.askMode;
+  }catch(e){}}
+}
+function getKey(){return localStorage.getItem('ewk5_key_'+G.provider)||'';}
+function saveKeyToStorage(k){localStorage.setItem('ewk5_key_'+G.provider,k);}
+function clearKeyFromStorage(){localStorage.removeItem('ewk5_key_'+G.provider);}
+
+/* ═══ JSON SCHEMA (shared between API + paste prompt) ═ */
+var SCHEMA_INSTR='请严格按照以下模板格式回复，\n用##标签标记每个字段，不要添加任何额外格式：\n\n##NAME##\n[名词原文]\n##SUBTITLE##\n[英文名称 — 一句话描述]\n##SYSTEM##\n[只填一个：CMS 或 BI 或 WMS 或 ERP 或 广告 或 运营]\n##STAGES##\n[阶段标签1] | [阶段标签2]\n##CONCEPT##\n[第一段概念解释]\n\n[第二段深入分析]\n\n[第三段实际应用]\n##FORMULA##\n[核心公式，每个公式一行，无公式则写：无]\n##WHO##\n[角色1] | [角色2] | [角色3] | [角色4]\n##CN##\n[中文本地术语]\n[中国市场要点1]\n[中国市场要点2]\n[中国市场要点3]\n[中国市场要点4]\n[中国市场要点5]\n##KR##\n[한국어 용어]\n[韩国市场要点1]\n[韩国市场要点2]\n[韩国市场要点3]\n[韩国市场要点4]\n[韩国市场要点5]\n##JP##\n[日本語の用語]\n[日本市场要点1]\n[日本市场要点2]\n[日本市场要点3]\n[日本市场要点4]\n[日本市场要点5]\n##US##\n[English term]\n[北美市场要点1]\n[北美市场要点2]\n[北美市场要点3]\n[北美市场要点4]\n[北美市场要点5]\n##DATA##\n[指标名称] | [参考值] | [green] | [说明]\n[指标名称] | [参考值] | [amber] | [说明]\n[指标名称] | [参考值] | [red] | [说明]\n[指标名称] | [参考值] | [blue] | [说明]\n##CASE_TITLE##\n[来源机构 — 案例标题]\n##CASE_DESC##\n[2-3句话描述，包含具体数字和结论]\n##CASE_URL##\n[https://真实来源链接]\n\n要求：所有内容用中文，专有名词和URL除外。';
+var PROVIDERS={
+  anthropic:{
+    name:'Anthropic (Claude Sonnet)',
+    keyPrefix:'sk-ant-',
+    infoZh:'获取 Key：<a href="https://console.anthropic.com/account/keys" target="_blank">console.anthropic.com</a><br>Anthropic 原生支持浏览器直连，无需任何代理。建议充值 $5 起步。',
+    infoEn:'Get Key: <a href="https://console.anthropic.com/account/keys" target="_blank">console.anthropic.com</a><br>Anthropic natively supports direct browser calls. Recommended starting credit: $5.',
+    call:async function(prompt,sys,key){
+      var res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'x-api-key':key,
+          'anthropic-version':'2023-06-01',
+          'anthropic-dangerous-direct-browser-access':'true'
+        },
+        body:JSON.stringify({
+          model:'claude-sonnet-4-5',
+          max_tokens:2000,
+          system:sys,
+          messages:[{role:'user',content:prompt}]
+        })
+      });
+      if(!res.ok){
+        var e=await res.text();
+        var msg='';
+        try{var j=JSON.parse(e);msg=j.error&&j.error.message?j.error.message:e.slice(0,200);}catch(x){msg=e.slice(0,200);}
+        throw new Error('Anthropic '+res.status+': '+msg);
+      }
+      var d=await res.json();
+      if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+      return d.content&&d.content[0]?d.content[0].text:'';
+    }
+  },
+  openrouter:{
+    name:'OpenRouter (Claude / GPT-4o / Gemini / DeepSeek)',
+    keyPrefix:'sk-or-',
+    infoZh:'获取 Key：<a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a><br>OpenRouter 专为浏览器端设计，明确支持 CORS。免费额度每天可用，一个 Key 可调用所有主流模型（Claude、GPT-4o、Gemini、DeepSeek 等）。强烈推荐没有 Anthropic Key 的用户使用。',
+    infoEn:'Get Key: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a><br>OpenRouter is purpose-built for browser use with explicit CORS support. Daily free tier available. One key covers all major models (Claude, GPT-4o, Gemini, DeepSeek, etc.). Highly recommended if you don\'t have an Anthropic key.',
+    call:async function(prompt,sys,key){
+      var res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+key,
+          'HTTP-Referer':'https://ecomwiki.app',
+          'X-Title':'EcomWiki'
+        },
+        body:JSON.stringify({
+          model:'anthropic/claude-sonnet-4-5',
+          max_tokens:2000,
+          messages:[
+            {role:'system',content:sys},
+            {role:'user',content:prompt}
+          ]
+        })
+      });
+      if(!res.ok){
+        var e=await res.text();
+        var msg='';
+        try{var j=JSON.parse(e);msg=j.error&&j.error.message?j.error.message:e.slice(0,200);}catch(x){msg=e.slice(0,200);}
+        throw new Error('OpenRouter '+res.status+': '+msg);
+      }
+      var d=await res.json();
+      if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+      return d.choices&&d.choices[0]?d.choices[0].message.content:'';
+    }
+  },
+  n8n:{
+    name:'n8n Webhook',
+    keyPrefix:'https://',
+    infoZh:'粘贴你的 n8n Webhook URL。n8n 作为服务端代理调用 AI，完全绕过浏览器 CORS 限制。你的 API Key 安全地存储在 n8n 服务器上，不暴露在浏览器中。<br><a href="https://n8n.io" target="_blank">→ 注册免费 n8n Cloud</a>',
+    infoEn:'Paste your n8n Webhook URL. n8n acts as a server-side proxy — fully bypasses browser CORS. Your API key stays on the n8n server, never exposed in the browser.<br><a href="https://n8n.io" target="_blank">→ Get free n8n Cloud</a>',
+    call:async function(prompt,sys,key){
+      if(!key||!key.startsWith('http'))throw new Error('INVALID_N8N_URL');
+      var res=await fetch(key,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({term:prompt,system_prompt:sys})
+      });
+      if(!res.ok){var e=await res.text();throw new Error('n8n '+res.status+': '+e.slice(0,120));}
+      return await res.text();
+    }
+  }
+};
+
+async function callAPI(prompt,sysPrompt){
+  var key=getKey();
+  if(!key)throw new Error('NO_KEY');
+  var p=PROVIDERS[G.provider]||PROVIDERS.anthropic;
+  return p.call(prompt,sysPrompt||SCHEMA_INSTR,key);
+}
+
+/* ═══ MODE SWITCHING ══════════════════════════════════ */
+function setMode(m){
+  G.askMode=m;sv();
+  document.getElementById('mode-api').classList.toggle('act',m==='api');
+  document.getElementById('mode-paste-btn').classList.toggle('act',m==='paste');
+  document.getElementById('api-mode-wrap').style.display=m==='api'?'block':'none';
+  document.getElementById('paste-mode-wrap').classList.toggle('show',m==='paste');
+  checkKeyBanner();
+  if(m==='paste')updatePrompt();
+}
+
+function checkKeyBanner(){
+  var banner=document.getElementById('apikey-banner');
+  // Enterprise mode: no key needed, check login status instead
+  if(G.provider==='enterprise'){banner.classList.remove('show');return;}
+  var key=getKey();
+  var hasKey=G.provider==='n8n'?(key&&key.startsWith('http')):!!key;
+  if(G.askMode==='api'&&!hasKey){banner.classList.add('show');}else{banner.classList.remove('show');}
+}
+
+/* ═══ ASK (API MODE) ══════════════════════════════════ */
+function sq(v){document.getElementById('ask-in').value=v;document.getElementById('ask-in').focus();}
+var _si=0,_st;var _ss=['l.s0','l.s1','l.s2','l.s3'];
+
+async function doAsk(){
+  var term=(document.getElementById('ask-in').value||'').trim();if(!term)return;
+  var ex=G.entries.find(function(e){return e.name.toLowerCase()===term.toLowerCase();});
+  if(ex){showE(ex.id);toast(t('toast.dup'));return;}
+  // Enterprise mode: bypass API key, use browser automation
+  if(G.provider==='enterprise'){
+    doAskEnterprise(term);
+    return;
+  }
+  var key=getKey();
+  if(!key){goP('settings');toast(G.lang==='zh'?'请先在设置中配置 API Key':'Please configure your API Key in Settings');return;}
+  document.getElementById('ask-idle').style.display='none';
+  document.getElementById('ask-load').style.display='flex';
+  document.getElementById('ask-btn').disabled=true;
+  document.getElementById('l-t').textContent=t('l.t');
+  _si=0;document.getElementById('l-s').textContent=t(_ss[0]);
+  _st=setInterval(function(){_si=(_si+1)%4;document.getElementById('l-s').textContent=t(_ss[_si]);},1300);
+  try{
+    var raw=await callAPI(buildPrompt(term));
+    parseAndSave(raw);
+  }catch(err){
+    clearInterval(_st);
+    document.getElementById('ask-load').style.display='none';
+    document.getElementById('ask-idle').style.display='flex';
+    document.getElementById('ask-btn').disabled=false;
+    var msg;
+    if(err.message==='NO_KEY'){msg=G.lang==='zh'?'请先在设置中配置 API Key':'Please configure API Key in Settings';}
+    else if(err.message==='INVALID_N8N_URL'){msg=G.lang==='zh'?'n8n URL 无效，请检查设置':'Invalid n8n URL — check Settings';}
+    else{msg=t('toast.err')+': '+err.message.slice(0,80);}
+    toast(msg);console.error(err);
+  }
+}
+
+function parseStructuredText(raw) {
+  // Parse the ## section format from AI response
+  function extractSection(text, tag) {
+    var re = new RegExp('##' + tag + '##\\s*([\\s\\S]*?)(?=##[A-Z_]+##|$)');
+    var m = text.match(re);
+    return m ? m[1].trim() : '';
+  }
+  function extractLines(text, tag) {
+    var block = extractSection(text, tag);
+    return block.split('\n').map(function(l){return l.trim();}).filter(function(l){return l && l !== '无';});
+  }
+  function parseMarket(text, tag) {
+    var lines = extractLines(text, tag);
+    if (!lines.length) return null;
+    return { term: lines[0] || '', points: lines.slice(1, 6) };
+  }
+  function parseData(text) {
+    var block = extractSection(text, 'DATA');
+    return block.split('\n').map(function(l){
+      var parts = l.split('|').map(function(p){return p.trim();});
+      if (parts.length < 2) return null;
+      return { label: parts[0], val: parts[1], badge: parts[2]||'blue', note: parts[3]||'' };
+    }).filter(Boolean);
+  }
+
+  var name = extractSection(raw, 'NAME');
+  if (!name) return null; // Not our format
+
+  var cnRaw = parseMarket(raw, 'CN');
+  var krRaw = parseMarket(raw, 'KR');
+  var jpRaw = parseMarket(raw, 'JP');
+  var usRaw = parseMarket(raw, 'US');
+
+  // concept: replace blank lines with \n\n
+  var conceptRaw = extractSection(raw, 'CONCEPT');
+  var concept = conceptRaw.replace(/\n\s*\n/g, '\n\n').replace(/\n/g, '\n');
+
+  var formulaRaw = extractLines(raw, 'FORMULA');
+  var formula = formulaRaw.length ? formulaRaw.join('\n') : null;
+
+  return {
+    name: name,
+    subtitle: extractSection(raw, 'SUBTITLE'),
+    system: extractSection(raw, 'SYSTEM').replace(/[^A-Za-z\u4e00-\u9fff]/g,''),
+    stages: extractSection(raw, 'STAGES').split('|').map(function(s){return s.trim();}).filter(Boolean),
+    concept: concept,
+    formula: formula,
+    who: extractSection(raw, 'WHO').split('|').map(function(s){return s.trim();}).filter(Boolean),
+    markets: [
+      cnRaw ? {flag:'\ud83c\udde8\ud83c\uddf3', name:'中国', term: cnRaw.term, points: cnRaw.points} : null,
+      krRaw ? {flag:'\ud83c\uddf0\ud83c\uddf7', name:'韩国', term: krRaw.term, points: krRaw.points} : null,
+      jpRaw ? {flag:'\ud83c\uddef\ud83c\uddf5', name:'日本', term: jpRaw.term, points: jpRaw.points} : null,
+      usRaw ? {flag:'\ud83c\uddfa\ud83c\uddf8', name:'北美 Amazon', term: usRaw.term, points: usRaw.points} : null,
+    ].filter(Boolean),
+    data: parseData(raw),
+    realCase: {
+      title: extractSection(raw, 'CASE_TITLE'),
+      desc: extractSection(raw, 'CASE_DESC'),
+      url: extractSection(raw, 'CASE_URL')
+    },
+    comments: []
+  };
+}
+
+function sanitizeJSON(raw) {
+  // Step 1: Strip markdown fences
+  var s=raw.replace(/^```(?:json)?\s*/i,'').replace(/\s*```\s*$/i,'').trim();
+  // Step 2: Extract outermost JSON object
+  var start=s.indexOf('{');
+  var end=s.lastIndexOf('}');
+  if(start>0&&end>start)s=s.slice(start,end+1);
+  // Step 3: Fix literal newlines INSIDE string values (most common AI mistake)
+  // Replace real newline chars inside quoted strings with \n escape
+  var result='';
+  var inString=false;
+  var escape=false;
+  for(var i=0;i<s.length;i++){
+    var ch=s[i];
+    if(escape){result+=ch;escape=false;continue;}
+    if(ch==='\\'){result+=ch;escape=true;continue;}
+    if(ch==='"'){inString=!inString;result+=ch;continue;}
+    if(inString){
+      if(ch==='\n'){result+='\\n';continue;}
+      if(ch==='\r'){result+='\\r';continue;}
+      if(ch==='\t'){result+='\\t';continue;}
+    }
+    result+=ch;
+  }
+  // Step 4: Fix trailing commas before ] or }
+  result=result.replace(/,\s*([}\]])/g,'$1');
+  return result;
+}
+
+function parseAndSave(raw,isManual){
+  clearInterval(_st);
+  if(!raw||!raw.trim()){
+    toast(t('toast.err')+': empty response');
+    if(!isManual){document.getElementById('ask-load').style.display='none';document.getElementById('ask-idle').style.display='flex';document.getElementById('ask-btn').disabled=false;}
+    return null;
+  }
+  // Try structured text format first (paste mode from AI)
+  var structured = parseStructuredText(raw);
+  if (structured && structured.name) {
+    structured.id = 'e_' + Date.now();
+    structured.createdAt = new Date().toISOString().slice(0,10);
+    G.entries.unshift(structured); sv();
+    if (!isManual) {
+      document.getElementById('ask-load').style.display='none';
+      document.getElementById('ask-idle').style.display='flex';
+      document.getElementById('ask-in').value='';
+      document.getElementById('ask-btn').disabled=false;
+    }
+    renderL(); showE(structured.id); toast(t('toast.ok'));
+    return structured;
+  }
+
+  // Fall back to JSON parsing (API mode)
+  try{
+    var clean=sanitizeJSON(raw);
+    var entry=JSON.parse(clean);
+    entry.id='e_'+Date.now();
+    entry.createdAt=new Date().toISOString().slice(0,10);
+    if(!entry.comments)entry.comments=[];
+    G.entries.unshift(entry);sv();
+    if(!isManual){document.getElementById('ask-load').style.display='none';document.getElementById('ask-idle').style.display='flex';document.getElementById('ask-in').value='';document.getElementById('ask-btn').disabled=false;}
+    renderL();showE(entry.id);toast(t('toast.ok'));
+    return entry;
+  }catch(err){
+    // Last resort: try JSON5-style relaxed parse by extracting fields manually
+    var fallback=tryFallbackParse(raw);
+    if(fallback){
+      fallback.id='e_'+Date.now();
+      fallback.createdAt=new Date().toISOString().slice(0,10);
+      if(!fallback.comments)fallback.comments=[];
+      G.entries.unshift(fallback);sv();
+      if(!isManual){document.getElementById('ask-load').style.display='none';document.getElementById('ask-idle').style.display='flex';document.getElementById('ask-in').value='';document.getElementById('ask-btn').disabled=false;}
+      renderL();showE(fallback.id);toast(t('toast.ok'));
+      return fallback;
+    }
+    if(!isManual){document.getElementById('ask-load').style.display='none';document.getElementById('ask-idle').style.display='flex';document.getElementById('ask-btn').disabled=false;}
+    toast(t('toast.err')+': JSON parse failed — '+err.message.slice(0,50));
+    console.error('Parse error:',err,'\nRaw:',raw.slice(0,300));
+    return null;
+  }
+}
+
+function tryFallbackParse(raw){
+  // Attempt to extract a partial entry when JSON is malformed
+  // Extract key fields with regex as last resort
+  try{
+    var name=raw.match(/"name"\s*:\s*"([^"]+)"/);
+    var subtitle=raw.match(/"subtitle"\s*:\s*"([^"]+)"/);
+    var system=raw.match(/"system"\s*:\s*"([^"]+)"/);
+    if(!name)return null;
+    // Re-sanitize more aggressively: replace all control chars
+    var clean=raw.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g,'');
+    // Replace unescaped newlines in string values more aggressively
+    clean=clean.replace(/"([^"]*?)"/g,function(match,val){
+      return '"'+val.replace(/\n/g,'\\n').replace(/\r/g,'').replace(/\t/g,' ')+'"';
+    });
+    // Remove trailing commas
+    clean=clean.replace(/,\s*([}\]])/g,'$1');
+    var start=clean.indexOf('{');var end=clean.lastIndexOf('}');
+    if(start>=0&&end>start)clean=clean.slice(start,end+1);
+    return JSON.parse(clean);
+  }catch(e2){
+    return null;
+  }
+}
+
+/* ═══ PASTE MODE ══════════════════════════════════════ */
+function updatePrompt(){
+  var term=(document.getElementById('paste-term-in').value||'').trim();
+  var pd=document.getElementById('prompt-display');
+  if(!term){pd.textContent=G.lang==='zh'?'← 先输入要查询的名词':'← Enter a term first';return;}
+  pd.textContent=buildPrompt(term);
+}
+
+function copyPrompt(){
+  var term=(document.getElementById('paste-term-in').value||'').trim();
+  if(!term){toast(G.lang==='zh'?'请先输入名词':'Enter a term first');return;}
+  navigator.clipboard.writeText(buildPrompt(term)).then(function(){toast(t('toast.copied'));}).catch(function(){toast(t('toast.err'));});
+}
+
+function submitPaste(){
+  var raw=(document.getElementById('paste-ta').value||'').trim();
+  if(!raw){toast(G.lang==='zh'?'请粘贴 AI 返回的内容':'Please paste the AI response');return;}
+  var entry=parseAndSave(raw,true);
+  if(entry){document.getElementById('paste-ta').value='';document.getElementById('paste-term-in').value='';updatePrompt();}
+}
+
+/* ═══ SETTINGS ════════════════════════════════════════ */
+function setProvider(p){
+  G.provider=p;sv();
+  document.querySelectorAll('.ptab').forEach(function(b){b.classList.toggle('act',b.id==='ptab-'+p);});
+  updateProviderInfo();
+  updateKeyStatus();
+  document.getElementById('key-input').value='';
+  document.getElementById('key-input').placeholder=p==='n8n'?'https://your-n8n-instance.com/webhook/...':'sk-...';
+  document.getElementById('key-input').type=(p==='n8n'||p==='enterprise')?'text':'password';
+  document.getElementById('cfg-key-t').textContent=p==='n8n'?(G.lang==='zh'?'Webhook URL':'Webhook URL'):t('cfg.key.t');
+  document.getElementById('cfg-key-s').textContent=p==='n8n'?(G.lang==='zh'?'粘贴你的 n8n Webhook 触发器 URL。':'Paste your n8n Webhook trigger URL.'):t('cfg.key.s');
+  // Enterprise mode: show/hide enterprise UI, configure for URL input
+  entShowUI(p==='enterprise');
+  // Hide key input row entirely for enterprise (replaced by enterprise UI)
+  var keyRow=document.querySelector('.settings-row');
+  if(keyRow) keyRow.style.display=(p==='enterprise')?'none':'flex';
+  checkKeyBanner();
+}
+
+function updateProviderInfo(){
+  if(G.provider==='enterprise'){
+    var info=t('ent.info.desc');
+    document.getElementById('provider-info').textContent=info;
+    return;
+  }
+  var p=PROVIDERS[G.provider];
+  if(p){document.getElementById('provider-info').innerHTML=G.lang==='zh'?p.infoZh:p.infoEn;}
+}
+
+function updateKeyStatus(){
+  var k=getKey();var el=document.getElementById('key-status');
+  el.style.display='block';
+  if(k){el.className='key-status key-ok';el.textContent='✓ '+(G.lang==='zh'?'API Key 已配置 (':'Key configured (')+k.slice(0,8)+'...)';}
+  else{el.className='key-status key-none';el.textContent=G.lang==='zh'?'未配置 API Key':'No API Key configured';}
+}
+
+function saveKey(){
+  var k=(document.getElementById('key-input').value||'').trim();
+  if(!k){toast(G.lang==='zh'?'请输入 API Key':'Please enter an API Key');return;}
+  saveKeyToStorage(k);document.getElementById('key-input').value='';
+  updateKeyStatus();checkKeyBanner();toast(t('toast.keysaved'));
+}
+
+function clearKey(){
+  clearKeyFromStorage();document.getElementById('key-input').value='';
+  updateKeyStatus();checkKeyBanner();toast(t('toast.keycleared'));
+}
+
+function clearAllData(){
+  if(!confirm(t('confirm.clear')))return;
+  G.entries=[];sv();renderL();goP('ask');toast(t('toast.datecleared'));
+}
+
+/* ═══ PANEL ════════════════════════════════════════ */
+function goP(p){
+  G.panel=p;
+  ['overview','ask','entry','empty','settings'].forEach(function(id){document.getElementById('panel-'+id).classList.toggle('act',id===p);});
+  ['ni-ov','ni-ask','ni-cfg'].forEach(function(id){
+    var tgt=id==='ni-ov'?'overview':id==='ni-ask'?'ask':'settings';
+    document.getElementById(id).classList.toggle('act',tgt===p);
+  });
+  if(p==='entry'||p==='empty'){['ni-ov','ni-ask','ni-cfg'].forEach(function(id){document.getElementById(id).classList.remove('act');});}
+  if(p==='settings'){updateProviderInfo();updateKeyStatus();}
+  if(p==='overview'){renderOV();}
+  if(p==='ask'){applyL();}
+}
+
+/* ═══ ENTRY LIST ════════════════════════════════════ */
+function setF(v){G.filter=v;document.querySelectorAll('.fc').forEach(function(c){c.classList.toggle('act',c.dataset.v===v);});renderL();}
+
+function renderL(){
+  var q=(document.getElementById('s-inp').value||'').toLowerCase().trim();
+  var fl=G.entries.filter(function(e){return(!q||e.name.toLowerCase().includes(q)||(e.subtitle||'').toLowerCase().includes(q))&&(G.filter==='all'||e.system===G.filter);});
+  document.getElementById('sf-n').textContent=fl.length;
+  document.getElementById('e-badge').textContent=G.entries.length;
+  var el=document.getElementById('el');
+  if(!fl.length){
+    var msg=q
+      ?'<div class="sempty">'+(G.lang==='zh'?'无匹配词条':'No matches')+'</div>'
+      :'<div class="sempty" style="line-height:1.6;padding:16px 14px">'
+        +(G.lang==='zh'
+          ?'空空如也<br><span style="font-size:10px;opacity:.6">前往「问 Agent」查询第一个词条</span>'
+          :'No entries yet<br><span style="font-size:10px;opacity:.6">Go to Ask Agent to create one</span>')
+        +'</div>';
+    el.innerHTML=msg;
+    return;
+  }
+  el.innerHTML=fl.map(function(e){
+    var ac=G.eid===e.id?' act':'';
+    var cc=e.comments&&e.comments.length?' <span style="font-size:9px;background:rgba(74,124,248,.2);color:rgba(255,255,255,.6);padding:0 4px;border-radius:8px">'+e.comments.length+'</span>':'';
+    return '<div class="ei'+ac+'" onclick="showE(\''+e.id+'\')">'
+      +'<div class="en">'+esc(e.name)+cc+'</div>'
+      +'<div class="esys">'+esc(e.system||'')+'</div>'
+      +'<button class="edel" onclick="event.stopPropagation();delE(\''+e.id+'\')">×</button>'
+      +'</div>';
+  }).join('');
+}
+
+/* ═══ SHOW ENTRY ════════════════════════════════════ */
+function showE(id){
+  var entry=G.entries.find(function(e){return e.id===id;});if(!entry)return;
+  G.eid=id;renderL();
+  var bm={green:'dg',amber:'da',red:'dr',blue:'db'};
+  var mkt=(entry.markets||[]).map(function(m){return '<div class="mdc"><div class="mdc-h">'+m.flag+' '+esc(m.name)+' <span class="mdc-tm">'+esc(m.term||'')+'</span></div><ul class="mdc-b">'+(m.points||[]).map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></div>';}).join('');
+  var dh=entry.data&&entry.data.length?'<div class="sec"><div class="slbl">'+t('e.data')+'</div><table class="dtbl"><thead><tr><th>'+t('e.metric')+'</th><th>'+t('e.val')+'</th><th>'+t('e.note')+'</th></tr></thead><tbody>'+entry.data.map(function(d){return '<tr><td>'+esc(d.label)+'</td><td><span class="dbg '+(bm[d.badge]||'db')+'">'+esc(d.val)+'</span></td><td style="color:var(--tx3)">'+esc(d.note||'')+'</td></tr>';}).join('')+'</tbody></table></div>':'';
+  var cas=entry.realCase?'<div class="sec"><div class="slbl">'+t('e.case')+'</div><div class="rc-c"><div class="rc-lbl">'+t('e.case.l')+'</div><div class="rc-t">'+esc(entry.realCase.title||'')+'</div><div class="rc-d">'+esc(entry.realCase.desc||'')+'</div><a class="rc-u" href="'+esc(entry.realCase.url||'')+'" target="_blank">'+esc(entry.realCase.url||'')+'</a></div></div>':'';
+  var cmh=(entry.comments&&entry.comments.length)?entry.comments.map(function(c){return '<div class="cmt-c"><div class="cmt-q"><span class="cmt-ql">Q</span>'+esc(c.q)+'</div><div class="cmt-a">'+esc(c.a)+'</div><div class="cmt-dt">'+esc(c.date||'')+'</div></div>';}).join(''):'<div class="no-cmt">'+t('e.nocomments')+'</div>';
+  var fh=entry.formula?'<div class="sec"><div class="slbl">'+t('e.formula')+'</div><div class="formula">'+esc(entry.formula).replace(/\n/g,'<br>')+'</div></div>':'';
+  var stgs=(entry.stages||[]).slice(0,2).map(function(s,i){return '<span class="echip '+(i===0?'ec-sys':'ec-stg')+'">'+esc(s)+'</span>';}).join('');
+  document.getElementById('e-detail').innerHTML=
+    '<div class="eh"><div class="ebc"><span>'+t('e.entries')+'</span><span class="ebc-s">›</span><span>'+esc(entry.system||'')+'</span><span class="ebc-s">›</span><span style="color:var(--tx)">'+esc(entry.name)+'</span></div>'
+    +'<div class="eh-row"><div><div class="e-title">'+esc(entry.name)+'</div><div class="e-sub">'+esc(entry.subtitle||'')+'</div><div class="e-chips">'+stgs+'</div></div>'
+    +'<div class="eh-act"><button class="eh-btn" onclick="expHTML(\''+id+'\')">'+t('e.export')+'</button></div></div></div>'
+    +'<div class="ebody" id="eb_'+id+'">'
+    +fh
+    +'<div class="sec"><div class="slbl">'+t('e.concept')+'</div><div class="stxt">'+esc(entry.concept||'').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div>'
+    +'<div class="sec"><div class="slbl">'+t('e.who')+'</div><div class="who-l">'+(entry.who||[]).map(function(w){return '<span class="who-p">'+esc(w)+'</span>';}).join('')+'</div></div>'
+    +'<div class="sec"><div class="slbl">'+t('e.markets')+'</div><div class="mkg">'+mkt+'</div></div>'
+    +dh+cas
+    +'<div class="cmts-w"><div class="cmts-hd"><span class="cmts-t">'+t('e.fups')+'</span><span class="cmt-cnt">'+((entry.comments||[]).length)+'</span></div><div id="cmts_'+id+'">'+cmh+'</div></div></div>';
+  goP('entry');
+}
+
+function delE(id){if(!confirm(t('confirm.del')))return;G.entries=G.entries.filter(function(e){return e.id!==id;});if(G.eid===id){G.eid=null;G.entries.length?showE(G.entries[0].id):goP('ask');}sv();renderL();toast(t('toast.del'));}
+
+/* ═══ CONTEXT MENU / FOLLOW-UP ══════════════════════ */
+document.addEventListener('contextmenu',function(e){
+  var sel=window.getSelection?window.getSelection().toString().trim():'';
+  if(sel&&G.eid&&document.getElementById('panel-entry').classList.contains('act')){
+    e.preventDefault();G.sel=sel;
+    var m=document.getElementById('ctx-m');
+    m.style.left=Math.min(e.clientX,window.innerWidth-160)+'px';
+    m.style.top=Math.min(e.clientY,window.innerHeight-80)+'px';
+    m.classList.add('open');
+    document.getElementById('ctx-fu').textContent=t('ctx.fu');
+    document.getElementById('ctx-ed').textContent=t('ctx.ed');
+  }
+});
+document.addEventListener('click',function(e){if(!e.target.closest('.ctx'))document.getElementById('ctx-m').classList.remove('open');});
+
+function openFU(){
+  document.getElementById('ctx-m').classList.remove('open');G.mmode='fu';
+  document.getElementById('md-t').textContent=t('md.fu.t');
+  document.getElementById('md-cl').textContent=t('md.cl');
+  document.getElementById('md-ctx').textContent=G.sel.slice(0,180)+(G.sel.length>180?'...':'');
+  var hasKey=!!getKey();
+  // Show right input based on mode/key
+  document.getElementById('fu-api-wrap').style.display=hasKey?'block':'none';
+  document.getElementById('fu-paste-wrap').style.display=hasKey?'none':'block';
+  document.getElementById('md-ta').placeholder=t('md.fu.ph');document.getElementById('md-ta').value='';
+  document.getElementById('md-paste-ta').value='';
+  document.getElementById('md-sub').textContent=t('md.fu.sub');
+  document.getElementById('md-cancel').textContent=t('md.cancel');
+  document.getElementById('mo').classList.add('open');
+  var entry=G.entries.find(function(e){return e.id===G.eid;});
+  if(!hasKey&&entry){
+    document.getElementById('fu-prompt-txt').textContent=buildFUPrompt(entry.name,G.sel,'[在这里输入你的追问]');
+  }
+  setTimeout(function(){document.getElementById(hasKey?'md-ta':'md-paste-ta').focus();},80);
+}
+
+function openED(){
+  document.getElementById('ctx-m').classList.remove('open');G.mmode='ed';
+  document.getElementById('md-t').textContent=t('md.ed.t');
+  document.getElementById('md-cl').textContent=t('md.cl');
+  document.getElementById('md-ctx').textContent=G.sel.slice(0,180)+(G.sel.length>180?'...':'');
+  document.getElementById('fu-api-wrap').style.display='block';
+  document.getElementById('fu-paste-wrap').style.display='none';
+  document.getElementById('md-ta').placeholder=t('md.ed.ph');document.getElementById('md-ta').value=G.sel;
+  document.getElementById('md-sub').textContent=t('md.ed.sub');
+  document.getElementById('md-cancel').textContent=t('md.cancel');
+  document.getElementById('mo').classList.add('open');
+  setTimeout(function(){document.getElementById('md-ta').focus();},80);
+}
+
+function copyFUPrompt(){
+  var entry=G.entries.find(function(e){return e.id===G.eid;});
+  var q=(document.getElementById('md-ta').value||'').trim()||(G.lang==='zh'?'请解释一下这段内容':'Please explain this');
+  if(!entry)return;
+  navigator.clipboard.writeText(buildFUPrompt(entry.name,G.sel,q)).then(function(){toast(t('toast.copied'));}).catch(function(){});
+}
+
+function closeMO(){document.getElementById('mo').classList.remove('open');}
+
+async function submitMO(){
+  var entry=G.entries.find(function(e){return e.id===G.eid;});if(!entry){closeMO();return;}
+  var sb=document.getElementById('md-sub');sb.disabled=true;sb.textContent='...';
+  if(G.mmode==='fu'){
+    var hasKey=!!getKey();
+    if(hasKey){
+      var q=(document.getElementById('md-ta').value||'').trim();if(!q){sb.disabled=false;sb.textContent=t('md.fu.sub');return;}
+      try{
+        var ans=await callAPI(buildFUPrompt(entry.name,G.sel,q),'You are an expert ecommerce knowledge assistant. Answer follow-up questions concisely in Chinese (2-3 paragraphs). Be specific and practical.');
+        entry.comments=entry.comments||[];entry.comments.push({q:q,a:ans,date:new Date().toISOString().slice(0,10)});
+        sv();closeMO();showE(entry.id);
+        setTimeout(function(){var el=document.getElementById('cmts_'+entry.id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},300);
+        toast(t('toast.fu'));
+      }catch(err){toast(t('toast.err'));console.error(err);}
+    }else{
+      var pasteAns=(document.getElementById('md-paste-ta').value||'').trim();if(!pasteAns){sb.disabled=false;return;}
+      entry.comments=entry.comments||[];entry.comments.push({q:(document.getElementById('md-ta').value||G.sel).slice(0,80),a:pasteAns,date:new Date().toISOString().slice(0,10)});
+      sv();closeMO();showE(entry.id);toast(t('toast.fu'));
+    }
+  }else{
+    var inp=(document.getElementById('md-ta').value||'').trim();if(!inp){sb.disabled=false;return;}
+    entry.comments=entry.comments||[];entry.comments.push({q:'✏️ '+G.sel.slice(0,50)+(G.sel.length>50?'…':''),a:inp,date:new Date().toISOString().slice(0,10)});
+    sv();closeMO();showE(entry.id);toast(t('toast.ok'));
+  }
+  sb.disabled=false;
+}
+
+/* ═══ EXPORT/IMPORT ══════════════════════════════════ */
+function expJSON(){var b=new Blob([JSON.stringify({entries:G.entries,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ecomwiki_'+new Date().toISOString().slice(0,10)+'.json';a.click();toast(t('toast.exp'));}
+function impJSON(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(e2){try{var d=JSON.parse(e2.target.result);var n=0;if(d.entries&&Array.isArray(d.entries))d.entries.forEach(function(en){if(!G.entries.find(function(x){return x.id===en.id;})){G.entries.push(en);n++;}});sv();renderL();toast(n+(G.lang==='zh'?' 个词条导入成功':' entries imported'));}catch(e){toast(t('toast.err'));}};r.readAsText(f);ev.target.value='';}
+
+function expHTML(id){
+  var e=G.entries.find(function(x){return x.id===id;});if(!e)return;
+  var bs={green:'background:#E8F7EE;color:#22A55A;border:1px solid rgba(34,165,90,.2)',amber:'background:#FEF3C7;color:#D97706;border:1px solid rgba(217,119,6,.2)',red:'background:#FEE2E2;color:#DC2626;border:1px solid rgba(220,38,38,.2)',blue:'background:#DBEAFE;color:#1D4ED8;border:1px solid rgba(29,78,216,.2)'};
+  var mkt=(e.markets||[]).map(function(m){return '<div style="background:#fff;border:1px solid #e5e2db;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;margin-bottom:5px">'+m.flag+' '+esc(m.name)+' <span style="font-size:10px;font-family:monospace;color:#9c9a94">'+esc(m.term||'')+'</span></div><ul style="font-size:12px;color:#5c5a54;line-height:1.65;list-style:none">'+(m.points||[]).map(function(p){return '<li style="padding-left:10px;position:relative;margin-bottom:2px"><span style="position:absolute;left:0">–</span>'+esc(p)+'</li>';}).join('')+'</ul></div>';}).join('');
+  var dr=(e.data||[]).map(function(d){return '<tr><td style="padding:7px 9px;border-bottom:1px solid #f0eee9;color:#5c5a54">'+esc(d.label)+'</td><td style="padding:7px 9px;border-bottom:1px solid #f0eee9"><span style="font-size:10px;font-family:monospace;padding:2px 6px;border-radius:3px;font-weight:700;'+(bs[d.badge]||bs.blue)+'">'+esc(d.val)+'</span></td><td style="padding:7px 9px;border-bottom:1px solid #f0eee9;color:#9c9a94">'+esc(d.note||'')+'</td></tr>';}).join('');
+  var cm=(e.comments||[]).map(function(c){return '<div style="background:#fff;border:1px solid #e5e2db;border-left:3px solid #4a7cf8;border-radius:10px;padding:12px 14px;margin-bottom:9px"><div style="font-size:12px;font-weight:600;margin-bottom:6px;display:flex;gap:8px"><span style="font-family:monospace;font-size:9px;font-weight:700;color:#4a7cf8;background:#eef3ff;padding:2px 5px;border-radius:3px;flex-shrink:0;margin-top:1px">Q</span>'+esc(c.q)+'</div><div style="font-size:12px;color:#5c5a54;line-height:1.65;padding-left:25px">'+esc(c.a)+'</div></div>';}).join('');
+  var html='<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>'+esc(e.name)+' — EcomWiki</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#f8f7f4;color:#1a1916;font-family:"Space Grotesk",sans-serif;font-size:14px;line-height:1.6;padding:32px 20px}.w{max-width:720px;margin:0 auto}.h{background:#1b2742;border-radius:14px;padding:20px 24px;margin-bottom:12px}.mg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.sec{background:#fff;border:1px solid #e5e2db;border-radius:10px;padding:15px 18px;margin-bottom:11px}.sl{font-size:10px;font-family:"Space Mono",monospace;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9c9a94;margin-bottom:8px}.fm{font-family:"Space Mono",monospace;font-size:12px;background:#1b2742;color:#93c5fd;border-radius:8px;padding:11px 14px;line-height:1.9;border-left:3px solid #4a7cf8}.ft{text-align:center;font-size:10px;color:#9c9a94;font-family:"Space Mono",monospace;margin-top:18px;padding-top:12px;border-top:1px solid #e5e2db}@media(max-width:500px){.mg{grid-template-columns:1fr}}</style></head><body><div class="w"><div class="h"><div style="font-size:10px;font-family:\'Space Mono\',monospace;color:rgba(255,255,255,.3);margin-bottom:6px">EcomWiki · '+esc(e.system||'')+'</div><div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:3px">'+esc(e.name)+'</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-bottom:9px">'+esc(e.subtitle||'')+'</div>'+(e.stages||[]).map(function(s){return '<span style="font-size:9px;font-family:\'Space Mono\',monospace;padding:2px 7px;border-radius:3px;background:#eef3ff;color:#1d4ed8;border:1px solid rgba(74,124,248,.3);display:inline-block;margin-right:4px;font-weight:700">'+esc(s)+'</span>';}).join('')+'</div>'+(e.formula?'<div class="sec"><div class="sl">公式</div><div class="fm">'+esc(e.formula).replace(/\n/g,'<br>')+'</div></div>':'')+'<div class="sec"><div class="sl">概念解释</div><div style="font-size:13px;color:#5c5a54;line-height:1.78">'+esc(e.concept||'').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div><div class="sec"><div class="sl">四市场解读</div><div class="mg">'+mkt+'</div></div>'+(dr?'<div class="sec"><div class="sl">数据参考值</div><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">指标</th><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">参考值</th><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">说明</th></tr></thead><tbody>'+dr+'</tbody></table></div>':'')+(e.realCase?'<div class="sec" style="background:#1b2742;border:none"><div class="sl" style="color:rgba(255,255,255,.35)">Real Case</div><div style="font-size:9px;font-family:\'Space Mono\',monospace;font-weight:700;color:#4a7cf8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">案例</div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:3px">'+esc(e.realCase.title||'')+'</div><div style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:7px">'+esc(e.realCase.desc||'')+'</div><a href="'+esc(e.realCase.url||'')+'" style="font-size:10px;font-family:\'Space Mono\',monospace;color:#93c5fd;text-decoration:none;word-break:break-all" target="_blank">'+esc(e.realCase.url||'')+'</a></div>':'')+(cm?'<div class="sec"><div class="sl">追问记录</div>'+cm+'</div>':'')+'<div class="ft">Generated by EcomWiki · '+new Date().toISOString().slice(0,10)+'</div></div></body></html>';
+  var b=new Blob([html],{type:'text/html'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ecomwiki_'+esc(e.name).replace(/\s+/g,'_')+'.html';a.click();toast(t('toast.html'));
+}
+
+/* ═══ LANG ════════════════════════════════════════════ */
+function setLang(l){
+  G.lang=l;sv();
+  document.getElementById('lb-zh').classList.toggle('act',l==='zh');
+  document.getElementById('lb-en').classList.toggle('act',l==='en');
+  applyL();renderL();renderOV();
+  if(G.panel==='entry'&&G.eid)showE(G.eid);
+  if(G.panel==='settings'){updateProviderInfo();updateKeyStatus();}
+  document.getElementById('empty-t').textContent=t('empty.t');
+  document.getElementById('empty-s').textContent=t('empty.s');
+  // Settings panel
+  document.getElementById('cfg-t').textContent=t('cfg.t');
+  document.getElementById('cfg-s').textContent=t('cfg.s');
+  document.getElementById('cfg-provider-t').textContent=t('cfg.provider.t');
+  document.getElementById('cfg-provider-s').textContent=t('cfg.provider.s');
+  document.getElementById('cfg-key-t').textContent=t('cfg.key.t');
+  document.getElementById('cfg-key-s').textContent=t('cfg.key.s');
+  document.getElementById('cfg-data-t').textContent=t('cfg.data.t');
+  document.getElementById('cfg-data-s').textContent=t('cfg.data.s');
+  document.getElementById('cfg-exp-btn').textContent=t('cfg.exp.btn');
+  document.getElementById('cfg-imp-btn').textContent=t('cfg.imp.btn');
+  document.getElementById('cfg-clr-btn').textContent=t('cfg.clr.btn');
+  document.getElementById('cfg-paste-t').textContent=t('cfg.paste.t');
+  document.getElementById('cfg-paste-s').textContent=t('cfg.paste.s');
+  document.getElementById('save-key-btn').textContent=t('cfg.save.btn');
+  document.getElementById('clr-key-btn').textContent=t('cfg.clr.key.btn');
+  // Provider tab subtitle
+  var orBtn=document.getElementById('ptab-openrouter');
+  if(orBtn) orBtn.textContent='OpenRouter ('+(G.lang==='zh'?'多模型':'Multi-model')+')';
+  // Clipboard button
+  var clipBtn=document.getElementById('clip-btn-text');
+  if(clipBtn) clipBtn.textContent=t('clip.btn');
+  var clipHint=document.getElementById('clip-hint');
+  if(clipHint) clipHint.textContent=t('clip.hint');
+  var clipOr=document.getElementById('clip-or-text');
+  if(clipOr) clipOr.textContent=t('clip.or');
+  var n8nBtn=document.getElementById('ptab-n8n');
+  if(n8nBtn) n8nBtn.textContent='n8n '+(G.lang==='zh'?'（推荐）':'(Recommended)');
+  var entBtn=document.getElementById('ptab-enterprise');
+  if(entBtn) entBtn.textContent=(G.lang==='zh'?'🏢 企业 SSO':'🏢 Enterprise SSO');
+  // If currently on enterprise, refresh its UI text
+  if(G.provider==='enterprise') entShowUI(true);
+  // Empty state CTA
+  var emptyCta=document.getElementById('empty-cta');
+  if(emptyCta) emptyCta.textContent=t('list.empty.cta');
+}
+
+function applyL(){
+  var l=G.lang;
+  document.getElementById('ns-nav').textContent=t('ns.nav');
+  document.getElementById('ni-ov-l').textContent=t('ni.ov');
+  document.getElementById('ni-ask-l').textContent=t('ni.ask');
+  document.getElementById('ni-cfg-l').textContent=t('ni.cfg');
+  document.getElementById('ns-lib').textContent=t('ns.lib');
+  document.getElementById('s-inp').placeholder=t('si.ph');
+  document.getElementById('sf-l').textContent=t('sf.l');
+  document.getElementById('fc-all').textContent=t('fc.all');
+  document.getElementById('fc-ads').textContent=t('fc.ads');
+  document.getElementById('fc-ops').textContent=t('fc.ops');
+  document.getElementById('ask-t').textContent=t('ask.t');
+  document.getElementById('ask-s').textContent=t('ask.s');
+  document.getElementById('ask-in').placeholder=t('ask.ph');
+  document.getElementById('ask-btn').textContent=t('ask.btn');
+  document.getElementById('mode-api').textContent=l==='zh'?'🔑 API Key 模式':'🔑 API Key Mode';
+  document.getElementById('mode-paste-btn').textContent=l==='zh'?'📋 手动粘贴模式':'📋 Manual Paste Mode';
+  document.getElementById('prompt-lbl-text').textContent=l==='zh'?'1. 复制下方指令 → 粘贴给任意 AI':'1. Copy prompt → Paste to any AI';
+  document.getElementById('paste-instruction').textContent=l==='zh'?'2. 复制 AI 的完整回复 → 粘贴到下方：':'2. Copy the full AI response → Paste below:';
+  document.getElementById('paste-submit-btn').textContent=l==='zh'?'导入词条 →':'Import Entry →';
+  document.getElementById('apikey-banner-text').innerHTML=l==='zh'?'未设置 API Key。<a onclick="goP(\'settings\')" style="cursor:pointer">点击前往设置</a>，或切换到「手动粘贴模式」。':'No API Key set. <a onclick="goP(\'settings\')" style="cursor:pointer">Go to Settings</a> or switch to Manual Paste Mode.';
+  document.getElementById('empty-t').textContent=t('empty.t');
+  document.getElementById('empty-s').textContent=t('empty.s');
+  // Settings panel
+  document.getElementById('cfg-t').textContent=t('cfg.t');
+  document.getElementById('cfg-s').textContent=t('cfg.s');
+  document.getElementById('cfg-provider-t').textContent=t('cfg.provider.t');
+  document.getElementById('cfg-provider-s').textContent=t('cfg.provider.s');
+  document.getElementById('cfg-key-t').textContent=t('cfg.key.t');
+  document.getElementById('cfg-key-s').textContent=t('cfg.key.s');
+  document.getElementById('cfg-data-t').textContent=t('cfg.data.t');
+  document.getElementById('cfg-data-s').textContent=t('cfg.data.s');
+  document.getElementById('cfg-exp-btn').textContent=t('cfg.exp.btn');
+  document.getElementById('cfg-imp-btn').textContent=t('cfg.imp.btn');
+  document.getElementById('cfg-clr-btn').textContent=t('cfg.clr.btn');
+  document.getElementById('cfg-paste-t').textContent=t('cfg.paste.t');
+  document.getElementById('cfg-paste-s').textContent=t('cfg.paste.s');
+  document.getElementById('save-key-btn').textContent=t('cfg.save.btn');
+  document.getElementById('clr-key-btn').textContent=t('cfg.clr.key.btn');
+  // Provider tab subtitle
+  var orBtn=document.getElementById('ptab-openrouter');
+  if(orBtn) orBtn.textContent='OpenRouter ('+(G.lang==='zh'?'多模型':'Multi-model')+')';
+  // Clipboard button
+  var clipBtn=document.getElementById('clip-btn-text');
+  if(clipBtn) clipBtn.textContent=t('clip.btn');
+  var clipHint=document.getElementById('clip-hint');
+  if(clipHint) clipHint.textContent=t('clip.hint');
+  var clipOr=document.getElementById('clip-or-text');
+  if(clipOr) clipOr.textContent=t('clip.or');
+  var n8nBtn=document.getElementById('ptab-n8n');
+  if(n8nBtn) n8nBtn.textContent='n8n '+(G.lang==='zh'?'（推荐）':'(Recommended)');
+  var entBtn=document.getElementById('ptab-enterprise');
+  if(entBtn) entBtn.textContent=(G.lang==='zh'?'🏢 企业 SSO':'🏢 Enterprise SSO');
+  // If currently on enterprise, refresh its UI text
+  if(G.provider==='enterprise') entShowUI(true);
+  // Empty state CTA
+  var emptyCta=document.getElementById('empty-cta');
+  if(emptyCta) emptyCta.textContent=t('list.empty.cta');
+}
+
+function renderOV(){
+  // Always render the full framework content
+  document.getElementById('ov-t').textContent=t('ov.t');
+  document.getElementById('ov-s').textContent=t('ov.s');
+  document.getElementById('ov-fw').textContent=t('ov.fw');
+  document.getElementById('ov-mkt').textContent=t('ov.mkt');
+  document.getElementById('ov-ht').textContent=t('ov.ht');
+  document.getElementById('ht-t').textContent=t('ht.t');
+  document.getElementById('fw-g').innerHTML=FW.map(function(f){var tags=(f.tags[G.lang]||f.tags.zh);return '<div class="fw-c"><div class="fw-n">'+f.n+'</div><div class="fw-t">'+t('fw.'+f.n)+'</div><div class="fw-tags">'+tags.map(function(tag){return '<span class="fw-tag">'+esc(tag)+'</span>';}).join('')+'</div></div>';}).join('');
+  document.getElementById('mk-g').innerHTML=MKTS.map(function(m){var pd=(m.p[G.lang]||m.p.zh);return '<div class="mk-c"><div class="mk-fl">'+m.f+'</div><div class="mk-nm">'+t(m.k)+'</div><div class="mk-d">'+esc(pd)+'</div></div>';}).join('');
+  document.getElementById('ht-steps').innerHTML=[1,2,3,4].map(function(i){return '<div class="hs"><div class="hs-n">'+i+'</div><div class="hs-t">'+t('ht.'+i)+'</div></div>';}).join('');
+}
+
+/* ═══ UTILS ══════════════════════════════════════════ */
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},3000);}
+
+/* ═══ SEED DATA ══════════════════════════════════════ */
+var SEEDS=[
+  {id:'s1',name:'A+页面',system:'CMS',subtitle:'Enhanced Brand Content — 品牌增强型商品详情页',createdAt:'2026-04-24',stages:['内容运营 CMS','品牌运营周期②内容建设'],formula:null,concept:'A+页面（Enhanced Brand Content，EBC）是电商平台给已注册品牌提供的增强型商品详情页功能。允许品牌用模块化图文、视频、对比表替代纯文字描述，在买家浏览详情页时呈现完整的品牌与产品叙事。\n\n核心逻辑：流量已经花钱引来了，A+页面决定这个访客会不会买。它不帮你获客，它帮你转化。提升转化率、建立品牌印象、防御竞品挤占页面流量是其三大价值。',who:['品牌内容运营','电商视觉设计师','Listing运营','Brand Manager','UX设计师'],markets:[{flag:'🇨🇳',name:'中国',term:'详情页/主图',points:['平台：天猫/京东/淘宝','无独立A+概念','等效：详情页长图','视频+直播优先','节日素材频繁替换']},{flag:'🇰🇷',name:'韩국',term:'상세페이지',points:['平台：Coupang/Naver','强调品质感视觉','移动端竖向长图','认证/成分表重要','Coupang有模板限制']},{flag:'🇯🇵',name:'日本',term:'商品説明ページ',points:['平台：Rakuten/Amazon JP','信息密度极高','规格参数表为核心','信任背书文案多','季节性素材替换']},{flag:'🇺🇸',name:'北美 Amazon',term:'A+ Content / EBC',points:['需Brand Registry','最多7个模块','Premium A+含视频','不影响SEO索引','平均转化率+5.6%']}],data:[{label:'平均CVR提升',val:'+5.6%',badge:'green',note:'Amazon官方数据'},{label:'高质量A+',val:'+10%',badge:'green',note:'部分品类可达'},{label:'Premium A+',val:'+20%',badge:'green',note:'视频+互动模块'},{label:'退货率下降',val:'-15%',badge:'green',note:'信息透明度提升'}],realCase:{title:'BellaVix Agency — A+ Content CVR Case Study',desc:'将侧重品牌介绍的A+内容改为聚焦产品功能和使用场景的视觉化版本后，转化率出现明显跳升。宠物品类加入尺码对照图后退货率显著下降。',url:'https://www.bellavix.com/case-study-increasing-amazon-conversion-rates-with-a-content/'},comments:[{q:'为什么日本电商季节性波动极强？',a:'原因多层叠加：① 礼仪驱动的赠礼经济——お中元（7月）和お歳暮（12月）是社交义务而非促销；② 情人节/白色情人节/母亲节/父亲节各有对应品类爆发；③ 财年换季期（3月底-4月初）带动家电、服装集中采购；④ 消费者对「当季商品」认知极严格，过季品滞销率高；⑤ Rakuten Super Sale有固定季度日历，消费者主动等待囤货，放大峰谷落差。',date:'2026-04-24'}]},
+  {id:'s2',name:'GMV',system:'BI',subtitle:'Gross Merchandise Value — 成交总额',createdAt:'2026-04-24',stages:['BI 数据看板','全运营周期核心指标'],formula:'GMV = 商品售价 × 销售数量（所有SKU求和）',concept:'GMV（Gross Merchandise Value）是电商最顶层的业务健康度指标，代表一段时间内通过平台成交的所有商品总价值。不扣减退货、折扣、平台佣金、运费——是「毛」的概念。\n\nGMV ≠ 品牌真正赚到的钱。GMV是「规模的镜子」，Revenue才是「钱包的镜子」。GMV高但NMV低（高退货率）意味着详情页信息不准确或选品有问题。',who:['Brand Manager（最终目标KPI）','运营总监（月度目标拆解）','数据分析师（趋势监控）','广告投手（ROI分母）'],markets:[{flag:'🇨🇳',name:'中国',term:'成交额/GMV',points:['天猫/抖音以GMV排名品牌','双11 GMV是全年旗帜数字','含预售定金膨胀部分','直播GMV单独统计']},{flag:'🇰🇷',name:'韩국',term:'거래액',points:['Coupang内部称거래액','市场规模$147B（2025）','移动端占比75%以上','退货率高，NMV更接近实际']},{flag:'🇯🇵',name:'日本',term:'流通総額',points:['Rakuten公开GMV季报','市场规模约$148B','季节性波动极强','品牌目标多以季度拆解']},{flag:'🇺🇸',name:'北美 Amazon',term:'Ordered Revenue/Sales',points:['Amazon 2024 GMV约$550B','3P卖家占60%+交易量','Prime Day/Q4是GMV峰值','不公开品牌GMV数据']}],data:[{label:'Taobao 2024',val:'$724B',badge:'green',note:'全球第一'},{label:'Amazon 2024',val:'$550B',badge:'green',note:'全球第三'},{label:'健康GMV增速',val:'15-20%/yr',badge:'blue',note:'行业参考值'},{label:'增速<市场CAGR',val:'警戒',badge:'red',note:'市场份额在流失'}],realCase:{title:'Oberlo — Top Online Marketplaces by GMV 2024',desc:'2024年全球前100大电商平台合计GMV达3.8万亿美元，较6年前翻倍。排名前三的淘宝、天猫、Amazon合计超1.8万亿，占前100名总量的48.1%。',url:'https://www.oberlo.com/statistics/top-online-marketplaces-worldwide-by-gmv'},comments:[]},
+  {id:'s3',name:'补货策略',system:'WMS',subtitle:'Replenishment Strategy — 库存补货计划与触发机制',createdAt:'2026-04-24',stages:['WMS 库存管理','供应链 & 仓储'],formula:'补货触发点 = （日均销量 × Lead Time天数）+ 安全库存\nEOQ = √（2 × 年需求量 × 订货成本 ÷ 单位持有成本）',concept:'补货策略是供应链与库存管理的核心执行模块，解决「什么时候、补多少、用什么方式把货补回来」的问题——既不断货（lost sales），也不压货（占用现金和仓储成本）。\n\n两个极端都有代价。断货在Amazon上尤其致命：排名下跌，listing进入休眠，补货后要重新爬升。反过来，压货超过90天触发长期仓储费，直接吃利润。',who:['供应链经理（核心执行者）','仓储运营（WMS操作）','Brand Manager','财务（占压资金管控）'],markets:[{flag:'🇨🇳',name:'中国',term:'备货/补货策略',points:['大促节点驱动（双11/618）','备货周期T-60开始锁仓','直播带货需实时库存联动','滞销清仓周期短']},{flag:'🇰🇷',name:'韩国',term:'재고 보충 전략',points:['Coupang要求仓库在韩','Rocket Delivery需本地常备库存','退货率高，安全库存需提升']},{flag:'🇯🇵',name:'日本',term:'在庫補充戦略',points:['季节性节点极强','Rakuten福袋需提前3个月备货','消费者对缺货容忍度极低']},{flag:'🇺🇸',name:'北美 Amazon',term:'FBA Replenishment',points:['FBA全程Lead Time 30-60天','推荐持有30-60天库存','安全库存建议+20%热销品','Q4前需8月开始发货']}],data:[{label:'安全库存起始比例',val:'+20%',badge:'green',note:'热销品正常库存基础上多备'},{label:'FBA推荐持仓天数',val:'30-60天',badge:'green',note:'低于28天触发低库存费'},{label:'FBA过剩库存阈值',val:'>90天',badge:'red',note:'面临长期仓储费'},{label:'断货对Amazon排名',val:'-8位',badge:'red',note:'平均7-10天断货排名下降约8位'}],realCase:{title:'Q4 2024 Rolling Inbound 实战案例 — Onramp Funds',desc:'一位FBA卖家在2024年Q4提前至8月开始滚动发货，在FBA处理延误长达21天的情况下全季维持了92%的产品可用率。',url:'https://www.onrampfunds.com/resources/amazon-sellers-plan-inventory-long-fba-lead-times'},comments:[]},
+  {id:'s4',name:'Automated Bidding',system:'广告',subtitle:'自动出价 / 智能出价 — 算法实时竞拍出价机制',createdAt:'2026-04-24',stages:['广告推广系统','品牌运营周期③流量获取'],formula:'ACoS = 广告花费 ÷ 广告带来销售额 × 100%\nROAS = 广告带来销售额 ÷ 广告花费',concept:'Automated Bidding（自动出价/智能出价）是让算法代替人工实时决定每次竞拍出多少钱的机制。广告主设定高层目标（目标ACoS、目标ROAS），算法在每次广告曝光机会出现时，在毫秒级别内计算并提交最优出价。\n\n核心价值：规模化解决手工调价不可能完成的任务——数千个关键词，算法每秒处理数百万次出价决策。关键权衡：自动出价解决规模问题，代价是透明度和控制感。新品数据不足时开启，反而比手动更贵。',who:['广告投手（日常操盘核心）','电商运营经理（预算审批）','数据分析师（ROI归因）','Brand Manager（ACoS目标设定）'],markets:[{flag:'🇨🇳',name:'中国',term:'智能出价/oCPX',points:['阿里妈妈：oCPX为核心模式','直通车智能调价','抖音：oCPM/ROI出价','需积累7-15天数据再开启','AIGB生成式模型2024年上线']},{flag:'🇰🇷',name:'韩国',term:'자동 입찰',points:['Naver广告：智能입찰 目标CPA','Kakao：oCPC转化出价','Coupang Ads以CPC为主','韩国竞争激烈，CPC普遍偏高']},{flag:'🇯🇵',name:'日本',term:'自動入札',points:['Rakuten广告以CPC手动为主','Amazon JP同步支持动态出价','日本广告主偏保守，手动控制多']},{flag:'🇺🇸',name:'北美 Amazon',term:'Dynamic Bidding',points:['Fixed/Down Only/Up&Down三档','Down Only实测ACoS最优','Up&Down适合新品爆量期','Rule-based 2024年新功能','需≥30天+30次转化才能启用']}],data:[{label:'Down Only vs Up&Down',val:'Down Only最优',badge:'green',note:'130,000个campaign实测'},{label:'Up&Down首页最大加价',val:'+100%',badge:'red',note:'$1.50出价实际可被加到$3.00'},{label:'健康ACoS参考范围',val:'15%-30%',badge:'green',note:'因品类和毛利率差异大'},{label:'智能出价冷启动期（中国）',val:'7-15天',badge:'amber',note:'开启后不建议频繁调价'}],realCase:{title:'bidx.io — 130,000个Amazon Campaign动态出价对比研究（2024年2月）',desc:'分析13万个广告活动后发现，Down Only策略ACoS始终低于Up&Down。该结论在2019、2021、2024三次研究中保持一致。',url:'https://www.bidx.io/blog/dynamic-bidding-strategies-amazon-2024'},comments:[]}
+];
+
+/* ═══ ENTERPRISE BROWSER MODE ENGINE ════════════════════
+   Works entirely in the browser — no API key, no server.
+   Uses the user's existing Claude Enterprise SSO session.
+═══════════════════════════════════════════════════════ */
+var ENT = {
+  claudeUrl: 'https://claude.ai',
+  win: null,
+  pending: null,
+  pollTimer: null,
+  statusTimeout: null
+};
+
+/* Read/save enterprise claude URL */
+function entGetUrl(){ return localStorage.getItem('ewk5_ent_url')||'https://claude.ai'; }
+function entSaveUrl(u){ localStorage.setItem('ewk5_ent_url',u); ENT.claudeUrl=u; }
+
+/* Show/hide enterprise UI in settings */
+function entShowUI(show){
+  var ui=document.getElementById('ent-ui');
+  var keyRow=document.querySelector('.settings-row');
+  var keyLabel=document.getElementById('cfg-key-t');
+  var keyDesc=document.getElementById('cfg-key-s');
+  if(show){
+    // Replace key input area with Claude URL input
+    ui.style.display='block';
+    var keyInput=document.getElementById('key-input');
+    keyInput.type='url';
+    keyInput.placeholder='https://claude.ai';
+    keyInput.value=entGetUrl();
+    keyLabel.textContent=t('ent.claude.url.label');
+    keyDesc.textContent=t('ent.claude.url.desc');
+    document.getElementById('save-key-btn').onclick=function(){
+      var u=(document.getElementById('key-input').value||'').trim()||'https://claude.ai';
+      entSaveUrl(u);
+      entCheckStatus();
+      toast(t('toast.keysaved'));
+    };
+    // Start status check
+    ENT.claudeUrl=entGetUrl();
+    entCheckStatus();
+  } else {
+    ui.style.display='none';
+    document.getElementById('save-key-btn').onclick=saveKey;
+    document.getElementById('key-input').type='password';
+    document.getElementById('key-input').placeholder='sk-...';
+  }
+}
+
+/* Set status indicator */
+function entSetStatus(state, msg){
+  var el=document.getElementById('ent-status');
+  var txt=document.getElementById('ent-status-text');
+  var btn=document.getElementById('ent-login-btn');
+  if(!el)return;
+  el.className='ent-status '+state;
+  txt.textContent=msg||t('ent.status.'+state);
+  btn.style.display=(state==='needs-login'||state==='error')?'block':'none';
+  btn.textContent=t('ent.login.btn');
+}
+
+/* Check if Claude is logged in by probing login state via fetch */
+async function entCheckStatus(){
+  entSetStatus('checking', t('ent.status.checking'));
+  try{
+    // Try fetching Claude home — if it redirects to login, user is not authenticated
+    var res=await fetch(ENT.claudeUrl+'/api/auth/session',{
+      method:'GET',credentials:'include',mode:'cors',
+      headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      var data=await res.json().catch(function(){return null;});
+      // If we get a valid session response with user data = logged in
+      if(data&&(data.account_id||data.id||data.user)){
+        entSetStatus('ready','');
+        checkKeyBanner();
+        return true;
+      }
+    }
+    // Try alternate check - just ping the page
+    var res2=await fetch(ENT.claudeUrl,{method:'HEAD',credentials:'include',mode:'no-cors'});
+    // no-cors succeeds even for redirects but status is 0 (opaque)
+    // We'll use a more reliable check: open a hidden window
+    entSetStatus('needs-login','');
+    return false;
+  }catch(e){
+    // CORS blocked = different origin or network issue
+    // Try window.open approach instead
+    entSetStatus('needs-login', t('ent.status.needs-login'));
+    return false;
+  }
+}
+
+/* Open Claude login in a new tab */
+function entOpenLogin(){
+  var win=window.open(ENT.claudeUrl,'_blank');
+  if(!win){
+    toast(G.lang==='zh'?'请允许弹出窗口':'Please allow popups for this app');
+    return;
+  }
+  ENT.win=win;
+  // Poll until the window is on claude.ai and logged in
+  var attempts=0;
+  var checkLogin=setInterval(function(){
+    attempts++;
+    try{
+      if(win.closed){
+        clearInterval(checkLogin);
+        entCheckStatus();
+        return;
+      }
+      // Try reading URL — works if same origin
+      var url=win.location.href;
+      if(url&&url.indexOf('/login')===-1&&url.indexOf('/auth')===-1){
+        clearInterval(checkLogin);
+        setTimeout(function(){
+          entSetStatus('ready','');
+          checkKeyBanner();
+          toast(G.lang==='zh'?'Claude 登录成功！':'Claude login successful!');
+        }, 1500);
+      }
+    }catch(e){
+      // Cross-origin blocked = still on claude.ai but different page = probably logging in
+      // Just wait for user to close window
+    }
+    if(attempts>120){ clearInterval(checkLogin); entCheckStatus(); } // 2 min timeout
+  }, 1000);
+}
+
+/* Set progress bar */
+function entProgress(pct, msg){
+  var el=document.getElementById('ent-progress');
+  var fill=document.getElementById('ent-progress-fill');
+  var txt=document.getElementById('ent-progress-text');
+  if(!el)return;
+  el.classList.toggle('show', pct>0);
+  if(fill)fill.style.width=pct+'%';
+  if(txt&&msg)txt.textContent=msg;
+}
+
+/* ── MAIN ENTERPRISE QUERY FUNCTION ──────────────────── */
+async function entCallClaude(prompt){
+  return new Promise(function(resolve, reject){
+    var timeout=null;
+    var win=null;
+    var pollInterval=null;
+    var resolved=false;
+    var TIMEOUT_MS=90000; // 90 seconds
+
+    function cleanup(){
+      if(timeout)clearTimeout(timeout);
+      if(pollInterval)clearInterval(pollInterval);
+      if(win&&!win.closed){
+        try{ win.close(); }catch(e){}
+      }
+    }
+
+    function done(result){ if(!resolved){resolved=true;cleanup();resolve(result);} }
+    function fail(err){ if(!resolved){resolved=true;cleanup();reject(new Error(err));} }
+
+    // Set overall timeout
+    timeout=setTimeout(function(){ fail('ENT_TIMEOUT'); }, TIMEOUT_MS);
+
+    // Open claude.ai/new in a background tab
+    entProgress(10, t('ent.progress.opening'));
+    win=window.open(ENT.claudeUrl+'/new','ecomwiki_claude_bridge');
+    if(!win){ fail('ENT_POPUP_BLOCKED'); return; }
+
+    // Wait for page to load, then inject
+    var loadAttempts=0;
+    var injected=false;
+    var lastResponseLength=0;
+    var stableCount=0;
+
+    pollInterval=setInterval(function(){
+      loadAttempts++;
+      try{
+        if(win.closed){ fail('ENT_WINDOW_CLOSED'); return; }
+
+        var doc=win.document;
+        if(!doc||!doc.body){ return; } // still loading
+
+        var url=win.location.href||'';
+        // Check if redirected to login page
+        if(url.indexOf('/login')>-1||url.indexOf('/auth')>-1){
+          entProgress(0,'');
+          fail('ENT_NOT_LOGGED_IN');
+          return;
+        }
+
+        // ── PHASE 1: Inject the prompt ──
+        if(!injected&&loadAttempts>3){
+          entProgress(30, t('ent.progress.injecting'));
+
+          // Find the input field — claude.ai uses a contenteditable div
+          var input=doc.querySelector('div[contenteditable="true"][data-testid]')
+            ||doc.querySelector('div[contenteditable="true"].ProseMirror')
+            ||doc.querySelector('div[contenteditable="true"]')
+            ||doc.querySelector('textarea[placeholder]');
+
+          if(input){
+            injected=true;
+            entProgress(50, t('ent.progress.waiting'));
+
+            // Inject text into the input
+            if(input.tagName==='TEXTAREA'){
+              input.value=prompt;
+              input.dispatchEvent(new Event('input',{bubbles:true}));
+              input.dispatchEvent(new Event('change',{bubbles:true}));
+            } else {
+              // contenteditable
+              input.focus();
+              doc.execCommand('selectAll');
+              doc.execCommand('insertText',false,prompt);
+              input.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:prompt}));
+            }
+
+            // Submit after short delay (let React/Svelte state update)
+            setTimeout(function(){
+              if(resolved)return;
+              // Find send button
+              var btn=doc.querySelector('button[aria-label*="Send"]')
+                ||doc.querySelector('button[data-testid*="send"]')
+                ||doc.querySelector('button[type="submit"]')
+                ||doc.querySelector('button svg[data-icon="send"]')?.closest('button');
+
+              if(btn&&!btn.disabled){
+                btn.click();
+              } else {
+                // Fallback: simulate Enter keypress
+                input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
+              }
+            }, 800);
+          }
+        }
+
+        // ── PHASE 2: Wait for and extract response ──
+        if(injected){
+          entProgress(70, t('ent.progress.waiting'));
+
+          // Look for Claude's response — streaming indicator gone = done
+          var isStreaming=doc.querySelector('[data-testid="streaming-indicator"]')
+            ||doc.querySelector('.animate-pulse')
+            ||doc.querySelector('[class*="loading"]');
+
+          // Find response containers
+          var responses=doc.querySelectorAll('[data-testid*="message"][class*="assistant"],[data-testid="message"],[class*="assistant-message"]');
+          if(!responses||responses.length===0){
+            responses=doc.querySelectorAll('.prose,[class*="markdown"],[class*="response"]');
+          }
+
+          var lastResponse=responses[responses.length-1];
+          var currentText=lastResponse?lastResponse.innerText||lastResponse.textContent||'':'';
+
+          if(currentText.length>50&&!isStreaming){
+            stableCount++;
+          } else {
+            stableCount=0;
+          }
+
+          // Stable for 3 checks = done
+          if(stableCount>=3){
+            entProgress(90, t('ent.progress.extracting'));
+            // Extract JSON from the response
+            var jsonText='';
+            var jsonMatch=currentText.match(/\{[\s\S]*"name"[\s\S]*"concept"[\s\S]*\}/);
+            if(jsonMatch){
+              jsonText=jsonMatch[0];
+            } else {
+              // Try finding code blocks
+              var codeBlocks=lastResponse?lastResponse.querySelectorAll('code,pre'):[];
+              for(var i=0;i<codeBlocks.length;i++){
+                var txt=codeBlocks[i].textContent||'';
+                if(txt.indexOf('"name"')>-1&&txt.indexOf('"concept"')>-1){
+                  jsonText=txt;break;
+                }
+              }
+            }
+            if(jsonText){
+              entProgress(100,'');
+              setTimeout(function(){ entProgress(0,''); },500);
+              done(jsonText);
+            } else if(stableCount>=6){
+              // Extended wait, still no JSON — return full text for parseAndSave to handle
+              done(currentText);
+            }
+          }
+        }
+      }catch(e){
+        // Cross-origin error: window navigated away from claude.ai (e.g., login page)
+        if(e.name==='SecurityError'||e.toString().indexOf('cross-origin')>-1){
+          if(injected){
+            fail('ENT_CROSS_ORIGIN');
+          }
+          // If not yet injected, still loading — wait
+        }
+      }
+    }, 1000); // poll every 1 second
+  });
+}
+
+/* ── ENTERPRISE doAsk WRAPPER ─────────────────────────── */
+async function doAskEnterprise(term){
+  var prompt=buildPrompt(term);
+
+  // Show loading state
+  document.getElementById('ask-idle').style.display='none';
+  document.getElementById('ask-load').style.display='flex';
+  document.getElementById('ask-btn').disabled=true;
+  document.getElementById('l-t').textContent=t('l.t');
+  document.getElementById('l-s').textContent=t('ent.progress.opening');
+
+  var loadSteps=[t('ent.progress.opening'),t('ent.progress.injecting'),t('ent.progress.waiting'),t('ent.progress.extracting')];
+  var stepIdx=0;
+  var stepTimer=setInterval(function(){
+    stepIdx=(stepIdx+1)%loadSteps.length;
+    document.getElementById('l-s').textContent=loadSteps[stepIdx];
+  },4000);
+
+  try{
+    var raw=await entCallClaude(prompt);
+    clearInterval(stepTimer);
+    parseAndSave(raw,false);
+  }catch(err){
+    clearInterval(stepTimer);
+    document.getElementById('ask-load').style.display='none';
+    document.getElementById('ask-idle').style.display='flex';
+    document.getElementById('ask-btn').disabled=false;
+    entProgress(0,'');
+
+    var errMap={
+      'ENT_NOT_LOGGED_IN':t('ent.err.not-logged-in'),
+      'ENT_TIMEOUT':t('ent.err.timeout'),
+      'ENT_POPUP_BLOCKED':(G.lang==='zh'?'请在浏览器中允许弹出窗口，然后重试':'Please allow popups in your browser, then retry'),
+      'ENT_WINDOW_CLOSED':(G.lang==='zh'?'Claude 窗口被关闭，请重试':'Claude window was closed — please retry'),
+      'ENT_CROSS_ORIGIN':(G.lang==='zh'?'Claude 会话已过期，请重新登录':'Claude session expired — please log in again')
+    };
+    var msg=errMap[err.message]||(t('toast.err')+': '+err.message.slice(0,80));
+    toast(msg);
+    // If not logged in, show login prompt
+    if(err.message==='ENT_NOT_LOGGED_IN'||err.message==='ENT_CROSS_ORIGIN'){
+      entSetStatus('needs-login','');
+      goP('settings');
+    }
+    console.error('[EcomWiki Enterprise]',err);
+  }
+}
+
+/* ── buildPrompt helper (used by enterprise + paste modes) ─ */
+function buildPrompt(term){
+  return SCHEMA_INSTR + '\n\n现在请严格按模板解释这个电商名词：' + term;
+}
+
+
+/* ── CLIPBOARD IMPORT ─────────────────────────────────────
+   Reads clipboard, tries structured text first, then JSON.
+   Works whether user copied from AI in Skill mode or manually.
+─────────────────────────────────────────────────────────── */
+async function importClipboard(){
+  var btn = document.getElementById('clip-btn');
+  var icon = document.getElementById('clip-btn-icon');
+  var txt = document.getElementById('clip-btn-text');
+
+  // Button feedback: loading
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  txt.textContent = G.lang==='zh' ? '正在读取剪贴板...' : 'Reading clipboard...';
+
+  try {
+    var raw = await navigator.clipboard.readText();
+    if (!raw || !raw.trim()) {
+      throw new Error('EMPTY');
+    }
+
+    // Try to parse
+    var result = parseAndSave(raw.trim(), true);
+    if (result) {
+      // Success
+      btn.classList.add('success');
+      icon.textContent = '✅';
+      txt.textContent = (G.lang==='zh' ? '词条「' : 'Entry "') + result.name + (G.lang==='zh' ? '」已导入！' : '" imported!');
+      setTimeout(function(){
+        btn.classList.remove('success');
+        btn.disabled = false;
+        icon.textContent = '📋';
+        txt.textContent = G.lang==='zh' ? '从剪贴板导入 AI 回复' : 'Import from clipboard';
+      }, 2500);
+    } else {
+      throw new Error('PARSE_FAIL');
+    }
+  } catch(err) {
+    btn.classList.add('error');
+    icon.textContent = '❌';
+    var errMsg;
+    if (err.message === 'EMPTY') {
+      errMsg = G.lang==='zh' ? '剪贴板为空，请先复制 AI 回复' : 'Clipboard is empty — copy the AI response first';
+    } else if (err.name === 'NotAllowedError') {
+      errMsg = G.lang==='zh' ? '请允许访问剪贴板权限' : 'Please allow clipboard access';
+    } else {
+      errMsg = G.lang==='zh' ? '解析失败，请检查内容格式' : 'Parse failed — check response format';
+    }
+    txt.textContent = errMsg;
+    setTimeout(function(){
+      btn.classList.remove('error');
+      btn.disabled = false;
+      icon.textContent = '📋';
+      txt.textContent = G.lang==='zh' ? '从剪贴板导入 AI 回复' : 'Import from clipboard';
+    }, 3000);
+  }
+}
+
+/* ═══ INIT ════════════════════════════════════════════ */
+function init(){
+  lv();
+  document.getElementById('lb-zh').classList.toggle('act',G.lang==='zh');
+  document.getElementById('lb-en').classList.toggle('act',G.lang==='en');
+  document.querySelectorAll('.ptab').forEach(function(b){b.classList.toggle('act',b.id==='ptab-'+G.provider);});
+  applyL();renderOV();renderL();
+  setMode(G.askMode||'api');
+  // Init enterprise URL from storage
+  ENT.claudeUrl=entGetUrl();
+  goP('ask');
+}
+init();
+</script>
+</body>
+</html>
