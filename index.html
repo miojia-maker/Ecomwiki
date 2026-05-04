@@ -1294,9 +1294,158 @@ async function submitMO(){
       sv();closeMO();showE(entry.id);toast(t('toast.fu'));
     }
   }else{
-    var inp=(document.getElementById('md-ta').value||'').trim();if(!inp){sb.disabled=false;return;}
-    entry.comments=entry.comments||[];entry.comments.push({q:'✏️ '+G.sel.slice(0,50)+(G.sel.length>50?'…':''),a:inp,date:new Date().toISOString().slice(0,10)});
-    sv();closeMO();showE(entry.id);toast(t('toast.ok'));
+    // ── EDIT MODE: replace selected text in-place ──────────────
+    var inp=(document.getElementById('md-ta').value||'').trim();
+    if(!inp){sb.disabled=false;return;}
+    var L=G.lang;
+    var oldText=G.sel;
+    var replaced=false;
+
+    // Helper: replace oldText with inp inside a string (bilingual-aware)
+    function replaceIn(str){
+      if(typeof str==='string' && str.indexOf(oldText)>=0){
+        return {val:str.replace(oldText,inp), hit:true};
+      }
+      return {val:str, hit:false};
+    }
+
+    // Try replacing in each text field, searching current language first
+    function tryField(field){
+      if(!field) return false;
+      if(typeof field==='object'){
+        // Try current lang first, then other
+        var langs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
+        for(var i=0;i<langs.length;i++){
+          var l=langs[i];
+          if(field[l] && typeof field[l]==='string' && field[l].indexOf(oldText)>=0){
+            field[l]=field[l].replace(oldText,inp);
+            return true;
+          }
+        }
+      } else if(typeof field==='string' && field.indexOf(oldText)>=0){
+        return true; // caller handles string fields
+      }
+      return false;
+    }
+
+    // 1. Try concept
+    if(!replaced && entry.concept){
+      if(typeof entry.concept==='object'){
+        var langs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
+        for(var i=0;i<langs.length;i++){
+          var l=langs[i];
+          if(entry.concept[l] && entry.concept[l].indexOf(oldText)>=0){
+            entry.concept[l]=entry.concept[l].replace(oldText,inp);
+            replaced=true; break;
+          }
+        }
+      } else if(typeof entry.concept==='string' && entry.concept.indexOf(oldText)>=0){
+        entry.concept=entry.concept.replace(oldText,inp);
+        replaced=true;
+      }
+    }
+    // 2. Try subtitle
+    if(!replaced && entry.subtitle){
+      if(typeof entry.subtitle==='object'){
+        var langs2=['en','zh'].sort(function(a,b){return a===L?-1:1;});
+        for(var i=0;i<langs2.length;i++){
+          var l2=langs2[i];
+          if(entry.subtitle[l2] && entry.subtitle[l2].indexOf(oldText)>=0){
+            entry.subtitle[l2]=entry.subtitle[l2].replace(oldText,inp);
+            replaced=true; break;
+          }
+        }
+      } else if(typeof entry.subtitle==='string' && entry.subtitle.indexOf(oldText)>=0){
+        entry.subtitle=entry.subtitle.replace(oldText,inp);
+        replaced=true;
+      }
+    }
+    // 3. Try formula
+    if(!replaced && entry.formula){
+      var fStr=typeof entry.formula==='object'?(entry.formula[L]||entry.formula.en||entry.formula.zh||''):entry.formula||'';
+      if(fStr.indexOf(oldText)>=0){
+        if(typeof entry.formula==='object'){
+          entry.formula[L]=fStr.replace(oldText,inp);
+        } else {
+          entry.formula=fStr.replace(oldText,inp);
+        }
+        replaced=true;
+      }
+    }
+    // 4. Try who (array)
+    if(!replaced && entry.who){
+      var whoArr=entry.who&&typeof entry.who==='object'&&!Array.isArray(entry.who)
+        ?(entry.who[L]||entry.who.en||entry.who.zh||[])
+        :(entry.who||[]);
+      for(var wi=0;wi<whoArr.length;wi++){
+        if(whoArr[wi].indexOf(oldText)>=0){
+          whoArr[wi]=whoArr[wi].replace(oldText,inp);
+          replaced=true; break;
+        }
+      }
+    }
+    // 5. Try realCase.desc
+    if(!replaced && entry.realCase && entry.realCase.desc){
+      var d=entry.realCase.desc;
+      if(typeof d==='object'){
+        var descLangs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
+        for(var i=0;i<descLangs.length;i++){
+          var dl=descLangs[i];
+          if(d[dl] && d[dl].indexOf(oldText)>=0){
+            d[dl]=d[dl].replace(oldText,inp);
+            replaced=true; break;
+          }
+        }
+      } else if(typeof d==='string' && d.indexOf(oldText)>=0){
+        entry.realCase.desc=d.replace(oldText,inp);
+        replaced=true;
+      }
+    }
+    // 6. Try realCase.title
+    if(!replaced && entry.realCase && entry.realCase.title && entry.realCase.title.indexOf(oldText)>=0){
+      entry.realCase.title=entry.realCase.title.replace(oldText,inp);
+      replaced=true;
+    }
+    // 7. Try market points
+    if(!replaced && entry.markets){
+      outer: for(var mi=0;mi<entry.markets.length;mi++){
+        var m=entry.markets[mi];
+        var pts=m.points&&typeof m.points==='object'&&!Array.isArray(m.points)
+          ?(m.points[L]||m.points.en||m.points.zh||[])
+          :(m.points||[]);
+        for(var pi=0;pi<pts.length;pi++){
+          if(pts[pi].indexOf(oldText)>=0){
+            pts[pi]=pts[pi].replace(oldText,inp);
+            replaced=true; break outer;
+          }
+        }
+      }
+    }
+    // 8. Try data labels/notes
+    if(!replaced && entry.data){
+      var dataArr=entry.data&&typeof entry.data==='object'&&!Array.isArray(entry.data)
+        ?(entry.data[L]||entry.data.en||entry.data.zh||[])
+        :(entry.data||[]);
+      for(var di=0;di<dataArr.length;di++){
+        var row=dataArr[di];
+        if(row.label && row.label.indexOf(oldText)>=0){row.label=row.label.replace(oldText,inp);replaced=true;break;}
+        if(row.note  && row.note.indexOf(oldText)>=0) {row.note=row.note.replace(oldText,inp);replaced=true;break;}
+        if(row.val   && row.val.indexOf(oldText)>=0)  {row.val=row.val.replace(oldText,inp);replaced=true;break;}
+      }
+    }
+
+    if(replaced){
+      sv();
+      closeMO();
+      showE(entry.id);
+      toast(G.lang==='zh'?'✓ 修改已保存':'✓ Edit saved');
+    } else {
+      // Fallback: couldn't locate the exact text, save as note
+      entry.comments=entry.comments||[];
+      entry.comments.push({q:'✏️ '+oldText.slice(0,50)+(oldText.length>50?'…':''),a:inp,date:new Date().toISOString().slice(0,10)});
+      sv();closeMO();showE(entry.id);
+      toast(G.lang==='zh'?'⚠️ 未定位原文，已保存为备注':'⚠️ Could not locate text, saved as note');
+    }
   }
   sb.disabled=false;
 }
