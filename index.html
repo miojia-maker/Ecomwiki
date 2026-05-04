@@ -1407,6 +1407,8 @@ function applyL(){
   
 
 
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
 function renderOV(){
   document.getElementById('ov-t').textContent=t('ov.t');
   document.getElementById('ov-s').textContent=t('ov.s');
@@ -1565,7 +1567,6 @@ function renderOvFilter(){
   }).join('');
   listEl.innerHTML=header+rows;
 }
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(function(){el.classList.remove('show');},3000);}
 
 /* ═══ SEED DATA ══════════════════════════════════════ */
@@ -2253,6 +2254,14 @@ function init(){
   document.querySelectorAll('.ptab').forEach(function(b){b.classList.toggle('act',b.id==='ptab-'+G.provider);});
   applyL();renderOV();renderL();
   goP('overview');
-}</script>
+}
+
+// Auto-init when DOM is ready
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',init);
+}else{
+  init();
+}
+</script>
 </body>
 </html>
