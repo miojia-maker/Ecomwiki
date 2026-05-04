@@ -646,7 +646,7 @@ function saveKeyToStorage(k){localStorage.setItem('ewk5_key_'+G.provider,k);}
 function clearKeyFromStorage(){localStorage.removeItem('ewk5_key_'+G.provider);}
 
 /* ═══ JSON SCHEMA (shared between API + paste prompt) ═ */
-var SCHEMA_INSTR='You are an ecommerce knowledge assistant. When asked about any ecommerce term, respond STRICTLY using the labeled section format below. Use NO markdown -- no bold, no headers, no bullets. Only ##TAGS## and plain text.\n\nEach section must appear exactly once in this order:\n\n##NAME_EN##\n[Term in English]\n##NAME_ZH##\n[Term in Chinese]\n##SUBTITLE_EN##\n[English name -- one-line description]\n##SUBTITLE_ZH##\n[Chinese subtitle -- one-line description]\n##SYSTEM##\n[One of: CMS / BI / WMS / ERP / Advertising / Operations]\n##STAGES##\n[Stage tag 1] | [Stage tag 2]\n##CONCEPT_EN##\n[Paragraph 1: core definition in English]\n\n[Paragraph 2: mechanism or formula rationale in English]\n\n[Paragraph 3: practical implications in English]\n##CONCEPT_ZH##\n[First paragraph in Chinese]\n\n[Second paragraph in Chinese]\n\n[Third paragraph in Chinese]\n##FORMULA##\n[Each formula on its own line. Write: none if not applicable]\n##WHO_EN##\n[Role 1 (context)] | [Role 2] | [Role 3] | [Role 4]\n##WHO_ZH##\n[Chinese role 1] | [Chinese role 2] | [Chinese role 3] | [Chinese role 4]\n##CN##\n[Chinese local term]\n[CN point 1 in English]\n[CN point 2 in English]\n[CN point 3 in English]\n[CN point 4 in English]\n[CN point 5 in English]\n##KR##\n[Korean term]\n[KR point 1 in English]\n[KR point 2 in English]\n[KR point 3 in English]\n[KR point 4 in English]\n[KR point 5 in English]\n##JP##\n[Japanese term]\n[JP point 1 in English]\n[JP point 2 in English]\n[JP point 3 in English]\n[JP point 4 in English]\n[JP point 5 in English]\n##US##\n[English term]\n[US point 1 in English]\n[US point 2 in English]\n[US point 3 in English]\n[US point 4 in English]\n[US point 5 in English]\n##DATA_EN##\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n##DATA_ZH##\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n##CASE_TITLE##\n[Source -- Case title]\n##CASE_DESC_EN##\n[2-3 sentences with specific numbers, in English]\n##CASE_DESC_ZH##\n[2-3 sentences in Chinese]\n##CASE_URL##\n[https://real source URL]\n\nRules:\n- DATA_EN and DATA_ZH: 4-6 rows each. badge: green=good, amber=caution, red=bad, blue=neutral.\n- Each market section: first line is local term, followed by 5 points in English.\n- CONCEPT_EN and CONCEPT_ZH: 3 paragraphs separated by blank lines.\n- Start response with ##NAME_EN## and end after ##CASE_URL##. Nothing before or after.';
+var SCHEMA_INSTR='You are an ecommerce knowledge assistant. When asked about any ecommerce term, respond STRICTLY using the labeled section format below. Use NO markdown -- no bold, no headers, no bullets. Only ##TAGS## and plain text.\n\nEach section must appear exactly once in this order:\n\n##NAME_EN##\n[Term in English]\n##NAME_ZH##\n[Term in Chinese]\n##SUBTITLE_EN##\n[English name -- one-line description]\n##SUBTITLE_ZH##\n[Chinese subtitle -- one-line description]\n##SYSTEM##\n[One of: CMS / BI / WMS / ERP / Advertising / Operations]\n##STAGES##\n[Stage tag 1] | [Stage tag 2]\n##CONCEPT_EN##\n[Paragraph 1: core definition in English]\n\n[Paragraph 2: mechanism or formula rationale in English]\n\n[Paragraph 3: practical implications in English]\n##CONCEPT_ZH##\n[First paragraph in Chinese]\n\n[Second paragraph in Chinese]\n\n[Third paragraph in Chinese]\n##FORMULA##\n[Each formula on its own line. Write: none if not applicable]\n##WHO_EN##\n[Role 1 (context)] | [Role 2] | [Role 3] | [Role 4]\n##WHO_ZH##\n[Chinese role 1] | [Chinese role 2] | [Chinese role 3] | [Chinese role 4]\n##CN##\n[本地术语 / local term]\n[CN Point 1 in English]\n[CN Point 2 in English]\n[CN Point 3 in English]\n[CN Point 4 in English]\n[CN Point 5 in English]\n##CN_ZH##\n[本地术语]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##KR##\n[현지 용어 / local term]\n[KR Point 1 in English]\n[KR Point 2 in English]\n[KR Point 3 in English]\n[KR Point 4 in English]\n[KR Point 5 in English]\n##KR_ZH##\n[현지 용어]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##JP##\n[現地用語 / local term]\n[JP Point 1 in English]\n[JP Point 2 in English]\n[JP Point 3 in English]\n[JP Point 4 in English]\n[JP Point 5 in English]\n##JP_ZH##\n[現地用語]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##US##\n[English term]\n[US Point 1 in English]\n[US Point 2 in English]\n[US Point 3 in English]\n[US Point 4 in English]\n[US Point 5 in English]\n##US_ZH##\n[英文术语]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##DATA_EN##\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n##DATA_ZH##\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n##CASE_TITLE##\n[Source -- Case title]\n##CASE_DESC_EN##\n[2-3 sentences with specific numbers, in English]\n##CASE_DESC_ZH##\n[2-3 sentences in Chinese]\n##CASE_URL##\n[https://real source URL]\n\nRules:\n- DATA_EN and DATA_ZH: 4-6 rows each. badge: green=good, amber=caution, red=bad, blue=neutral.\n- Each market section: first line is local term, followed by 5 points in English.\n- CONCEPT_EN and CONCEPT_ZH: 3 paragraphs separated by blank lines.\n- Start response with ##NAME_EN## and end after ##CASE_URL##. Nothing before or after.';
 var PROVIDERS={
   anthropic:{
     name:'Anthropic (Claude Sonnet)',
@@ -798,9 +798,17 @@ function parseStructuredText(raw) {
   function lns(tag) {
     return sec(tag).split('\n').map(function(l){return l.trim();}).filter(function(l){return l && l !== '无' && l !== 'none';});
   }
-  function mkt(tag) {
-    var ls = lns(tag);
-    return ls.length ? { term: ls[0], points: ls.slice(1,6) } : null;
+  function mkt(enTag, zhTag) {
+    var enLs = lns(enTag);
+    if (!enLs.length) return null;
+    var zhLs = zhTag ? lns(zhTag) : [];
+    return {
+      term: enLs[0],
+      points: {
+        en: enLs.slice(1,6),
+        zh: zhLs.length > 1 ? zhLs.slice(1,6) : enLs.slice(1,6)
+      }
+    };
   }
   function parseData(tag) {
     return lns(tag).map(function(l){
@@ -829,7 +837,7 @@ function parseStructuredText(raw) {
     if (!nameL) return null;
     var conceptL = parseConcept('CONCEPT');
     var formulaL = lns('FORMULA');
-    var cn=mkt('CN'),kr=mkt('KR'),jp=mkt('JP'),us=mkt('US');
+    var cn=mkt('CN','CN_ZH'),kr=mkt('KR','KR_ZH'),jp=mkt('JP','JP_ZH'),us=mkt('US','US_ZH');
     return {
       name: nameL,
       subtitle: sec('SUBTITLE'),
@@ -859,7 +867,7 @@ function parseStructuredText(raw) {
   var nameZh = sec('NAME_ZH');
   if (!nameEn && !nameZh) return null; // Not our format
 
-  var cn=mkt('CN'),kr=mkt('KR'),jp=mkt('JP'),us=mkt('US');
+  var cn=mkt('CN','CN_ZH'),kr=mkt('KR','KR_ZH'),jp=mkt('JP','JP_ZH'),us=mkt('US','US_ZH');
   var formulaLns = lns('FORMULA');
   var formula = (formulaLns.length && formulaLns[0] !== 'none' && formulaLns[0] !== '无')
     ? formulaLns.join('\n') : null;
@@ -1168,8 +1176,12 @@ function showE(id){
   var caseDesc=entry.realCase?gl(entry.realCase.desc):'';
   var bm={green:'dg',amber:'da',red:'dr',blue:'db'};
   var mkt=(entry.markets||[]).map(function(m){
+    // points can be {en:[...], zh:[...]} or legacy plain array
+    var pts=m.points&&typeof m.points==='object'&&!Array.isArray(m.points)
+      ?(m.points[G.lang]||m.points.en||m.points.zh||[])
+      :(m.points||[]);
     return '<div class="mdc"><div class="mdc-h">'+m.flag+' '+esc(gl(m.name))+' <span class="mdc-tm">'+esc(m.term||'')+'</span></div>'
-      +'<ul class="mdc-b">'+(m.points||[]).map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></div>';
+      +'<ul class="mdc-b">'+pts.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul></div>';
   }).join('');
   var dh=data.length?'<div class="sec"><div class="slbl">'+t('e.data')+'</div><table class="dtbl">'
     +'<thead><tr><th>'+t('e.metric')+'</th><th>'+t('e.val')+'</th><th>'+t('e.note')+'</th></tr></thead><tbody>'
@@ -1263,6 +1275,7 @@ function copyFUPrompt(){
 }
 
 function closeMO(){document.getElementById('mo').classList.remove('open');}
+function submitFU(){submitMO();}
 
 async function submitMO(){
   var entry=G.entries.find(function(e){return e.id===G.eid;});if(!entry){closeMO();return;}
@@ -1312,7 +1325,7 @@ function expHTML(id){
   var eCaseDesc=e.realCase?gl(e.realCase.desc):'';
   var eFormula=gl(e.formula)||e.formula;
   var bs={green:'background:#E8F7EE;color:#22A55A;border:1px solid rgba(34,165,90,.2)',amber:'background:#FEF3C7;color:#D97706;border:1px solid rgba(217,119,6,.2)',red:'background:#FEE2E2;color:#DC2626;border:1px solid rgba(220,38,38,.2)',blue:'background:#DBEAFE;color:#1D4ED8;border:1px solid rgba(29,78,216,.2)'};
-  var mkt=(e.markets||[]).map(function(m){return '<div style="background:#fff;border:1px solid #e5e2db;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;margin-bottom:5px">'+m.flag+' '+esc(gl(m.name))+' <span style="font-size:10px;font-family:monospace;color:#9c9a94">'+esc(m.term||'')+'</span></div><ul style="font-size:12px;color:#5c5a54;line-height:1.65;list-style:none">'+(m.points||[]).map(function(p){return '<li style="padding-left:10px;position:relative;margin-bottom:2px"><span style="position:absolute;left:0">–</span>'+esc(p)+'</li>';}).join('')+'</ul></div>';}).join('');
+  var mkt=(e.markets||[]).map(function(m){return '<div style="background:#fff;border:1px solid #e5e2db;border-radius:10px;padding:13px"><div style="font-size:12px;font-weight:600;margin-bottom:5px">'+m.flag+' '+esc(gl(m.name))+' <span style="font-size:10px;font-family:monospace;color:#9c9a94">'+esc(m.term||'')+'</span></div><ul style="font-size:12px;color:#5c5a54;line-height:1.65;list-style:none">'+(m.points&&typeof m.points==='object'&&!Array.isArray(m.points)?(m.points[G.lang]||m.points.en||m.points.zh||[]):(m.points||[])).map(function(p){return '<li style="padding-left:10px;position:relative;margin-bottom:2px"><span style="position:absolute;left:0">–</span>'+esc(p)+'</li>';}).join('')+'</ul></div>';}).join('');
   var dr=eData.map(function(d){return '<tr><td style="padding:7px 9px;border-bottom:1px solid #f0eee9;color:#5c5a54">'+esc(d.label)+'</td><td style="padding:7px 9px;border-bottom:1px solid #f0eee9"><span style="font-size:10px;font-family:monospace;padding:2px 6px;border-radius:3px;font-weight:700;'+(bs[d.badge]||bs.blue)+'">'+esc(d.val)+'</span></td><td style="padding:7px 9px;border-bottom:1px solid #f0eee9;color:#9c9a94">'+esc(d.note||'')+'</td></tr>';}).join('');
   var cm=(e.comments||[]).map(function(c){return '<div style="background:#fff;border:1px solid #e5e2db;border-left:3px solid #4a7cf8;border-radius:10px;padding:12px 14px;margin-bottom:9px"><div style="font-size:12px;font-weight:600;margin-bottom:6px;display:flex;gap:8px"><span style="font-family:monospace;font-size:9px;font-weight:700;color:#4a7cf8;background:#eef3ff;padding:2px 5px;border-radius:3px;flex-shrink:0;margin-top:1px">Q</span>'+esc(c.q)+'</div><div style="font-size:12px;color:#5c5a54;line-height:1.65;padding-left:25px">'+esc(c.a)+'</div></div>';}).join('');
   var html='<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><title>'+esc(eName)+' — EcomWiki</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#f8f7f4;color:#1a1916;font-family:"Space Grotesk",sans-serif;font-size:14px;line-height:1.6;padding:32px 20px}.w{max-width:720px;margin:0 auto}.h{background:#1b2742;border-radius:14px;padding:20px 24px;margin-bottom:12px}.mg{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.sec{background:#fff;border:1px solid #e5e2db;border-radius:10px;padding:15px 18px;margin-bottom:11px}.sl{font-size:10px;font-family:"Space Mono",monospace;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#9c9a94;margin-bottom:8px}.fm{font-family:"Space Mono",monospace;font-size:12px;background:#1b2742;color:#93c5fd;border-radius:8px;padding:11px 14px;line-height:1.9;border-left:3px solid #4a7cf8}.ft{text-align:center;font-size:10px;color:#9c9a94;font-family:"Space Mono",monospace;margin-top:18px;padding-top:12px;border-top:1px solid #e5e2db}@media(max-width:500px){.mg{grid-template-columns:1fr}}</style></head><body><div class="w"><div class="h"><div style="font-size:10px;font-family:\'Space Mono\',monospace;color:rgba(255,255,255,.3);margin-bottom:6px">EcomWiki · '+esc(e.system||'')+'</div><div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:3px">'+esc(eName)+'</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-bottom:9px">'+esc(eSubtitle||'')+'</div>'+(e.stages||[]).map(function(s){return '<span style="font-size:9px;font-family:\'Space Mono\',monospace;padding:2px 7px;border-radius:3px;background:#eef3ff;color:#1d4ed8;border:1px solid rgba(74,124,248,.3);display:inline-block;margin-right:4px;font-weight:700">'+esc(s)+'</span>';}).join('')+'</div>'+(e.formula?'<div class="sec"><div class="sl">公式</div><div class="fm">'+esc(eFormula).replace(/\n/g,'<br>')+'</div></div>':'')+'<div class="sec"><div class="sl">概念解释</div><div style="font-size:13px;color:#5c5a54;line-height:1.78">'+esc(eConcept||'').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div><div class="sec"><div class="sl">四市场解读</div><div class="mg">'+mkt+'</div></div>'+(dr?'<div class="sec"><div class="sl">数据参考值</div><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">指标</th><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">参考值</th><th style="text-align:left;font-family:\'Space Mono\',monospace;font-size:9px;font-weight:700;color:#9c9a94;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-bottom:1.5px solid #e5e2db">说明</th></tr></thead><tbody>'+dr+'</tbody></table></div>':'')+(e.realCase?'<div class="sec" style="background:#1b2742;border:none"><div class="sl" style="color:rgba(255,255,255,.35)">Real Case</div><div style="font-size:9px;font-family:\'Space Mono\',monospace;font-weight:700;color:#4a7cf8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">案例</div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:3px">'+esc(e.realCase.title||'')+'</div><div style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:7px">'+esc(eCaseDesc)+'</div><a href="'+esc(e.realCase.url||'')+'" style="font-size:10px;font-family:\'Space Mono\',monospace;color:#93c5fd;text-decoration:none;word-break:break-all" target="_blank">'+esc(e.realCase.url||'')+'</a></div>':'')+(cm?'<div class="sec"><div class="sl">追问记录</div>'+cm+'</div>':'')+'<div class="ft">Generated by EcomWiki · '+new Date().toISOString().slice(0,10)+'</div></div></body></html>';
@@ -1616,561 +1629,6 @@ var SEEDS=[
   {id:'s3',name:'补货策略',system:'WMS',subtitle:'Replenishment Strategy — 库存补货计划与触发机制',createdAt:'2026-04-24',stages:['WMS 库存管理','供应链 & 仓储'],formula:'补货触发点 = （日均销量 × Lead Time天数）+ 安全库存\nEOQ = √（2 × 年需求量 × 订货成本 ÷ 单位持有成本）',concept:'补货策略是供应链与库存管理的核心执行模块，解决「什么时候、补多少、用什么方式把货补回来」的问题——既不断货（lost sales），也不压货（占用现金和仓储成本）。\n\n两个极端都有代价。断货在Amazon上尤其致命：排名下跌，listing进入休眠，补货后要重新爬升。反过来，压货超过90天触发长期仓储费，直接吃利润。',who:['供应链经理（核心执行者）','仓储运营（WMS操作）','Brand Manager','财务（占压资金管控）'],markets:[{flag:'🇨🇳',name:'中国',term:'备货/补货策略',points:['大促节点驱动（双11/618）','备货周期T-60开始锁仓','直播带货需实时库存联动','滞销清仓周期短']},{flag:'🇰🇷',name:'韩国',term:'재고 보충 전략',points:['Coupang要求仓库在韩','Rocket Delivery需本地常备库存','退货率高，安全库存需提升']},{flag:'🇯🇵',name:'日本',term:'在庫補充戦略',points:['季节性节点极强','Rakuten福袋需提前3个月备货','消费者对缺货容忍度极低']},{flag:'🇺🇸',name:'北美 Amazon',term:'FBA Replenishment',points:['FBA全程Lead Time 30-60天','推荐持有30-60天库存','安全库存建议+20%热销品','Q4前需8月开始发货']}],data:[{label:'安全库存起始比例',val:'+20%',badge:'green',note:'热销品正常库存基础上多备'},{label:'FBA推荐持仓天数',val:'30-60天',badge:'green',note:'低于28天触发低库存费'},{label:'FBA过剩库存阈值',val:'>90天',badge:'red',note:'面临长期仓储费'},{label:'断货对Amazon排名',val:'-8位',badge:'red',note:'平均7-10天断货排名下降约8位'}],realCase:{title:'Q4 2024 Rolling Inbound 实战案例 — Onramp Funds',desc:'一位FBA卖家在2024年Q4提前至8月开始滚动发货，在FBA处理延误长达21天的情况下全季维持了92%的产品可用率。',url:'https://www.onrampfunds.com/resources/amazon-sellers-plan-inventory-long-fba-lead-times'},comments:[]},
   {id:'s4',name:'Automated Bidding',system:'广告',subtitle:'自动出价 / 智能出价 — 算法实时竞拍出价机制',createdAt:'2026-04-24',stages:['广告推广系统','品牌运营周期③流量获取'],formula:'ACoS = 广告花费 ÷ 广告带来销售额 × 100%\nROAS = 广告带来销售额 ÷ 广告花费',concept:'Automated Bidding（自动出价/智能出价）是让算法代替人工实时决定每次竞拍出多少钱的机制。广告主设定高层目标（目标ACoS、目标ROAS），算法在每次广告曝光机会出现时，在毫秒级别内计算并提交最优出价。\n\n核心价值：规模化解决手工调价不可能完成的任务——数千个关键词，算法每秒处理数百万次出价决策。关键权衡：自动出价解决规模问题，代价是透明度和控制感。新品数据不足时开启，反而比手动更贵。',who:['广告投手（日常操盘核心）','电商运营经理（预算审批）','数据分析师（ROI归因）','Brand Manager（ACoS目标设定）'],markets:[{flag:'🇨🇳',name:'中国',term:'智能出价/oCPX',points:['阿里妈妈：oCPX为核心模式','直通车智能调价','抖音：oCPM/ROI出价','需积累7-15天数据再开启','AIGB生成式模型2024年上线']},{flag:'🇰🇷',name:'韩国',term:'자동 입찰',points:['Naver广告：智能입찰 目标CPA','Kakao：oCPC转化出价','Coupang Ads以CPC为主','韩国竞争激烈，CPC普遍偏高']},{flag:'🇯🇵',name:'日本',term:'自動入札',points:['Rakuten广告以CPC手动为主','Amazon JP同步支持动态出价','日本广告主偏保守，手动控制多']},{flag:'🇺🇸',name:'北美 Amazon',term:'Dynamic Bidding',points:['Fixed/Down Only/Up&Down三档','Down Only实测ACoS最优','Up&Down适合新品爆量期','Rule-based 2024年新功能','需≥30天+30次转化才能启用']}],data:[{label:'Down Only vs Up&Down',val:'Down Only最优',badge:'green',note:'130,000个campaign实测'},{label:'Up&Down首页最大加价',val:'+100%',badge:'red',note:'$1.50出价实际可被加到$3.00'},{label:'健康ACoS参考范围',val:'15%-30%',badge:'green',note:'因品类和毛利率差异大'},{label:'智能出价冷启动期（中国）',val:'7-15天',badge:'amber',note:'开启后不建议频繁调价'}],realCase:{title:'bidx.io — 130,000个Amazon Campaign动态出价对比研究（2024年2月）',desc:'分析13万个广告活动后发现，Down Only策略ACoS始终低于Up&Down。该结论在2019、2021、2024三次研究中保持一致。',url:'https://www.bidx.io/blog/dynamic-bidding-strategies-amazon-2024'},comments:[]}
 ];
-
-/* ═══ ENTERPRISE BROWSER MODE ENGINE ════════════════════
-   Works entirely in the browser — no API key, no server.
-   Uses the user's existing Claude Enterprise SSO session.
-═══════════════════════════════════════════════════════ */
-var ENT = {
-  claudeUrl: 'https://claude.ai',
-  win: null,
-  pending: null,
-  pollTimer: null,
-  statusTimeout: null
-};
-
-/* Read/save enterprise claude URL */
-function entGetUrl(){ return localStorage.getItem('ewk5_ent_url')||'https://claude.ai'; }
-function entSaveUrl(u){ localStorage.setItem('ewk5_ent_url',u); ENT.claudeUrl=u; }
-
-/* Show/hide enterprise UI in settings */
-function entShowUI(show){
-  var ui=document.getElementById('ent-ui');
-  var keyRow=document.querySelector('.settings-row');
-  var keyLabel=document.getElementById('cfg-key-t');
-  var keyDesc=document.getElementById('cfg-key-s');
-  if(show){
-    // Replace key input area with Claude URL input
-    ui.style.display='block';
-    var keyInput=document.getElementById('key-input');
-    keyInput.type='url';
-    keyInput.placeholder='https://claude.ai';
-    keyInput.value=entGetUrl();
-    keyLabel.textContent=t('ent.claude.url.label');
-    keyDesc.textContent=t('ent.claude.url.desc');
-    document.getElementById('save-key-btn').onclick=function(){
-      var u=(document.getElementById('key-input').value||'').trim()||'https://claude.ai';
-      entSaveUrl(u);
-      entCheckStatus();
-      toast(t('toast.keysaved'));
-    };
-    // Start status check
-    ENT.claudeUrl=entGetUrl();
-    entCheckStatus();
-  } else {
-    ui.style.display='none';
-    document.getElementById('save-key-btn').onclick=saveKey;
-    document.getElementById('key-input').type='password';
-    document.getElementById('key-input').placeholder='sk-...';
-  }
-}
-
-/* Set status indicator */
-function entSetStatus(state, msg){
-  var el=document.getElementById('ent-status');
-  var txt=document.getElementById('ent-status-text');
-  var btn=document.getElementById('ent-login-btn');
-  if(!el)return;
-  el.className='ent-status '+state;
-  txt.textContent=msg||t('ent.status.'+state);
-  btn.style.display=(state==='needs-login'||state==='error')?'block':'none';
-  btn.textContent=t('ent.login.btn');
-}
-
-/* Check if Claude is logged in by probing login state via fetch */
-async function entCheckStatus(){
-  entSetStatus('checking', t('ent.status.checking'));
-  try{
-    // Try fetching Claude home — if it redirects to login, user is not authenticated
-    var res=await fetch(ENT.claudeUrl+'/api/auth/session',{
-      method:'GET',credentials:'include',mode:'cors',
-      headers:{'Accept':'application/json'}
-    });
-    if(res.ok){
-      var data=await res.json().catch(function(){return null;});
-      // If we get a valid session response with user data = logged in
-      if(data&&(data.account_id||data.id||data.user)){
-        entSetStatus('ready','');
-        checkKeyBanner();
-        return true;
-      }
-    }
-    // Try alternate check - just ping the page
-    var res2=await fetch(ENT.claudeUrl,{method:'HEAD',credentials:'include',mode:'no-cors'});
-    // no-cors succeeds even for redirects but status is 0 (opaque)
-    // We'll use a more reliable check: open a hidden window
-    entSetStatus('needs-login','');
-    return false;
-  }catch(e){
-    // CORS blocked = different origin or network issue
-    // Try window.open approach instead
-    entSetStatus('needs-login', t('ent.status.needs-login'));
-    return false;
-  }
-}
-
-/* Open Claude login in a new tab */
-function entOpenLogin(){
-  var win=window.open(ENT.claudeUrl,'_blank');
-  if(!win){
-    toast(G.lang==='zh'?'请允许弹出窗口':'Please allow popups for this app');
-    return;
-  }
-  ENT.win=win;
-  // Poll until the window is on claude.ai and logged in
-  var attempts=0;
-  var checkLogin=setInterval(function(){
-    attempts++;
-    try{
-      if(win.closed){
-        clearInterval(checkLogin);
-        entCheckStatus();
-        return;
-      }
-      // Try reading URL — works if same origin
-      var url=win.location.href;
-      if(url&&url.indexOf('/login')===-1&&url.indexOf('/auth')===-1){
-        clearInterval(checkLogin);
-        setTimeout(function(){
-          entSetStatus('ready','');
-          checkKeyBanner();
-          toast(G.lang==='zh'?'Claude 登录成功！':'Claude login successful!');
-        }, 1500);
-      }
-    }catch(e){
-      // Cross-origin blocked = still on claude.ai but different page = probably logging in
-      // Just wait for user to close window
-    }
-    if(attempts>120){ clearInterval(checkLogin); entCheckStatus(); } // 2 min timeout
-  }, 1000);
-}
-
-/* Set progress bar */
-function entProgress(pct, msg){
-  var el=document.getElementById('ent-progress');
-  var fill=document.getElementById('ent-progress-fill');
-  var txt=document.getElementById('ent-progress-text');
-  if(!el)return;
-  el.classList.toggle('show', pct>0);
-  if(fill)fill.style.width=pct+'%';
-  if(txt&&msg)txt.textContent=msg;
-}
-
-/* ── MAIN ENTERPRISE QUERY FUNCTION ──────────────────── */
-async function entCallClaude(prompt){
-  return new Promise(function(resolve, reject){
-    var timeout=null;
-    var win=null;
-    var pollInterval=null;
-    var resolved=false;
-    var TIMEOUT_MS=90000; // 90 seconds
-
-    function cleanup(){
-      if(timeout)clearTimeout(timeout);
-      if(pollInterval)clearInterval(pollInterval);
-      if(win&&!win.closed){
-        try{ win.close(); }catch(e){}
-      }
-    }
-
-    function done(result){ if(!resolved){resolved=true;cleanup();resolve(result);} }
-    function fail(err){ if(!resolved){resolved=true;cleanup();reject(new Error(err));} }
-
-    // Set overall timeout
-    timeout=setTimeout(function(){ fail('ENT_TIMEOUT'); }, TIMEOUT_MS);
-
-    // Open claude.ai/new in a background tab
-    entProgress(10, t('ent.progress.opening'));
-    win=window.open(ENT.claudeUrl+'/new','ecomwiki_claude_bridge');
-    if(!win){ fail('ENT_POPUP_BLOCKED'); return; }
-
-    // Wait for page to load, then inject
-    var loadAttempts=0;
-    var injected=false;
-    var lastResponseLength=0;
-    var stableCount=0;
-
-    pollInterval=setInterval(function(){
-      loadAttempts++;
-      try{
-        if(win.closed){ fail('ENT_WINDOW_CLOSED'); return; }
-
-        var doc=win.document;
-        if(!doc||!doc.body){ return; } // still loading
-
-        var url=win.location.href||'';
-        // Check if redirected to login page
-        if(url.indexOf('/login')>-1||url.indexOf('/auth')>-1){
-          entProgress(0,'');
-          fail('ENT_NOT_LOGGED_IN');
-          return;
-        }
-
-        // ── PHASE 1: Inject the prompt ──
-        if(!injected&&loadAttempts>3){
-          entProgress(30, t('ent.progress.injecting'));
-
-          // Find the input field — claude.ai uses a contenteditable div
-          var input=doc.querySelector('div[contenteditable="true"][data-testid]')
-            ||doc.querySelector('div[contenteditable="true"].ProseMirror')
-            ||doc.querySelector('div[contenteditable="true"]')
-            ||doc.querySelector('textarea[placeholder]');
-
-          if(input){
-            injected=true;
-            entProgress(50, t('ent.progress.waiting'));
-
-            // Inject text into the input
-            if(input.tagName==='TEXTAREA'){
-              input.value=prompt;
-              input.dispatchEvent(new Event('input',{bubbles:true}));
-              input.dispatchEvent(new Event('change',{bubbles:true}));
-            } else {
-              // contenteditable
-              input.focus();
-              doc.execCommand('selectAll');
-              doc.execCommand('insertText',false,prompt);
-              input.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertText',data:prompt}));
-            }
-
-            // Submit after short delay (let React/Svelte state update)
-            setTimeout(function(){
-              if(resolved)return;
-              // Find send button
-              var btn=doc.querySelector('button[aria-label*="Send"]')
-                ||doc.querySelector('button[data-testid*="send"]')
-                ||doc.querySelector('button[type="submit"]')
-                ||doc.querySelector('button svg[data-icon="send"]')?.closest('button');
-
-              if(btn&&!btn.disabled){
-                btn.click();
-              } else {
-                // Fallback: simulate Enter keypress
-                input.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
-              }
-            }, 800);
-          }
-        }
-
-        // ── PHASE 2: Wait for and extract response ──
-        if(injected){
-          entProgress(70, t('ent.progress.waiting'));
-
-          // Look for Claude's response — streaming indicator gone = done
-          var isStreaming=doc.querySelector('[data-testid="streaming-indicator"]')
-            ||doc.querySelector('.animate-pulse')
-            ||doc.querySelector('[class*="loading"]');
-
-          // Find response containers
-          var responses=doc.querySelectorAll('[data-testid*="message"][class*="assistant"],[data-testid="message"],[class*="assistant-message"]');
-          if(!responses||responses.length===0){
-            responses=doc.querySelectorAll('.prose,[class*="markdown"],[class*="response"]');
-          }
-
-          var lastResponse=responses[responses.length-1];
-          var currentText=lastResponse?lastResponse.innerText||lastResponse.textContent||'':'';
-
-          if(currentText.length>50&&!isStreaming){
-            stableCount++;
-          } else {
-            stableCount=0;
-          }
-
-          // Stable for 3 checks = done
-          if(stableCount>=3){
-            entProgress(90, t('ent.progress.extracting'));
-            // Extract JSON from the response
-            var jsonText='';
-            var jsonMatch=currentText.match(/\{[\s\S]*"name"[\s\S]*"concept"[\s\S]*\}/);
-            if(jsonMatch){
-              jsonText=jsonMatch[0];
-            } else {
-              // Try finding code blocks
-              var codeBlocks=lastResponse?lastResponse.querySelectorAll('code,pre'):[];
-              for(var i=0;i<codeBlocks.length;i++){
-                var txt=codeBlocks[i].textContent||'';
-                if(txt.indexOf('"name"')>-1&&txt.indexOf('"concept"')>-1){
-                  jsonText=txt;break;
-                }
-              }
-            }
-            if(jsonText){
-              entProgress(100,'');
-              setTimeout(function(){ entProgress(0,''); },500);
-              done(jsonText);
-            } else if(stableCount>=6){
-              // Extended wait, still no JSON — return full text for parseAndSave to handle
-              done(currentText);
-            }
-          }
-        }
-      }catch(e){
-        // Cross-origin error: window navigated away from claude.ai (e.g., login page)
-        if(e.name==='SecurityError'||e.toString().indexOf('cross-origin')>-1){
-          if(injected){
-            fail('ENT_CROSS_ORIGIN');
-          }
-          // If not yet injected, still loading — wait
-        }
-      }
-    }, 1000); // poll every 1 second
-  });
-}
-
-/* ── ENTERPRISE doAsk WRAPPER ─────────────────────────── */
-async function doAskEnterprise(term){
-  var prompt=buildPrompt(term);
-
-  // Show loading state
-  document.getElementById('ask-idle').style.display='none';
-  document.getElementById('ask-load').style.display='flex';
-  document.getElementById('ask-btn').disabled=true;
-  document.getElementById('l-t').textContent=t('l.t');
-  document.getElementById('l-s').textContent=t('ent.progress.opening');
-
-  var loadSteps=[t('ent.progress.opening'),t('ent.progress.injecting'),t('ent.progress.waiting'),t('ent.progress.extracting')];
-  var stepIdx=0;
-  var stepTimer=setInterval(function(){
-    stepIdx=(stepIdx+1)%loadSteps.length;
-    document.getElementById('l-s').textContent=loadSteps[stepIdx];
-  },4000);
-
-  try{
-    var raw=await entCallClaude(prompt);
-    clearInterval(stepTimer);
-    parseAndSave(raw,false);
-  }catch(err){
-    clearInterval(stepTimer);
-    document.getElementById('ask-load').style.display='none';
-    document.getElementById('ask-idle').style.display='flex';
-    document.getElementById('ask-btn').disabled=false;
-    entProgress(0,'');
-
-    var errMap={
-      'ENT_NOT_LOGGED_IN':t('ent.err.not-logged-in'),
-      'ENT_TIMEOUT':t('ent.err.timeout'),
-      'ENT_POPUP_BLOCKED':(G.lang==='zh'?'请在浏览器中允许弹出窗口，然后重试':'Please allow popups in your browser, then retry'),
-      'ENT_WINDOW_CLOSED':(G.lang==='zh'?'Claude 窗口被关闭，请重试':'Claude window was closed — please retry'),
-      'ENT_CROSS_ORIGIN':(G.lang==='zh'?'Claude 会话已过期，请重新登录':'Claude session expired — please log in again')
-    };
-    var msg=errMap[err.message]||(t('toast.err')+': '+err.message.slice(0,80));
-    toast(msg);
-    // If not logged in, show login prompt
-    if(err.message==='ENT_NOT_LOGGED_IN'||err.message==='ENT_CROSS_ORIGIN'){
-      entSetStatus('needs-login','');
-      goP('settings');
-    }
-    console.error('[EcomWiki Enterprise]',err);
-  }
-}
-
-/* ── buildPrompt helper (used by enterprise + paste modes) ─ */
-function buildPrompt(term){
-  return SCHEMA_INSTR + '\n\n现在请严格按模板解释这个电商名词：' + term;
-}
-
-
-function updateDlgNoKey(){
-  var warn=document.getElementById('dlg-no-key-warn');
-  if(warn)warn.style.display=getKey()?'none':'block';
-  var askBtn=document.getElementById('dlg-ask-btn');
-  if(askBtn)askBtn.disabled=!getKey();
-}
-
-async function dlgImportClipboard(){
-  var btn=document.getElementById('dlg-clip-btn');
-  var ico=document.getElementById('dlg-clip-ico');
-  var lbl=document.getElementById('dlg-clip-lbl');
-  var status=document.getElementById('dlg-clip-status');
-  if(!btn)return;
-  btn.disabled=true;
-  ico.textContent='⏳';
-  lbl.textContent=G.lang==='zh'?'正在读取剪贴板...':'Reading clipboard...';
-  status.textContent='';status.className='dlg-clip-status';
-  try{
-    var raw=await navigator.clipboard.readText();
-    if(!raw||!raw.trim())throw new Error('EMPTY');
-    var entry=parseAndSave(raw.trim(),true);
-    if(entry){
-      var eName=entry.name&&typeof entry.name==='object'?(entry.name[G.lang]||entry.name.en||entry.name.zh||''):(entry.name||'');
-      status.textContent=(G.lang==='zh'?'✓ 词条「'+eName+'」导入成功！':'✓ Entry "'+eName+'" imported!');
-      status.className='dlg-clip-status ok';
-      ico.textContent='✅';
-      lbl.textContent=G.lang==='zh'?'导入成功！':'Imported!';
-      setTimeout(function(){closeAddDialog();},1600);
-    } else {
-      throw new Error('PARSE_FAIL');
-    }
-  }catch(err){
-    var msg;
-    if(err.message==='EMPTY')msg=G.lang==='zh'?'剪贴板为空，请先复制 AI 回复':'Clipboard is empty — copy the AI response first';
-    else if(err.name==='NotAllowedError')msg=G.lang==='zh'?'请允许访问剪贴板':'Please allow clipboard access';
-    else msg=G.lang==='zh'?'解析失败，请检查内容格式':'Parse failed — check the response format';
-    status.textContent=msg;
-    status.className='dlg-clip-status err';
-    ico.textContent='📋';
-    lbl.textContent=G.lang==='zh'?'从剪贴板导入':'Import from Clipboard';
-    btn.disabled=false;
-  }
-}
-
-async function dlgDoAsk(){
-  var inp=document.getElementById('dlg-ask-inp');
-  var term=(inp?inp.value||'':'').trim();
-  if(!term){inp&&inp.focus();return;}
-  var key=getKey();
-  if(!key){goP('settings');closeAddDialog();return;}
-  var btn=document.getElementById('dlg-ask-btn');
-  var load=document.getElementById('dlg-load');
-  var loadT=document.getElementById('dlg-load-t');
-  if(btn)btn.disabled=true;
-  if(load)load.style.display='flex';
-  if(loadT)loadT.textContent=G.lang==='zh'?'正在查询 Claude...':'Querying Claude...';
-  try{
-    var ex=G.entries.find(function(e){
-      var n=e.name&&typeof e.name==='object'?e.name.en||e.name.zh:e.name||'';
-      return n.toLowerCase()===term.toLowerCase();
-    });
-    if(ex){closeAddDialog();showE(ex.id);toast(t('toast.dup'));return;}
-    var raw=await callAPI(buildPrompt(term), SCHEMA_INSTR);
-    parseAndSave(raw,false);
-    closeAddDialog();
-  }catch(err){
-    var errMsg=err.message==='NO_KEY'?(G.lang==='zh'?'请先在设置中配置 API Key':'Please configure API Key in Settings'):(t('toast.err')+': '+err.message.slice(0,60));
-    toast(errMsg);
-  }finally{
-    if(btn)btn.disabled=false;
-    if(load)load.style.display='none';
-  }
-}
-
-function dlgSubmitPaste(){
-  var ta=document.getElementById('dlg-paste-ta');
-  var raw=(ta?ta.value||'':'').trim();
-  if(!raw){toast(G.lang==='zh'?'请粘贴 AI 返回的内容':'Please paste the AI response');return;}
-  var entry=parseAndSave(raw,true);
-  if(entry){if(ta)ta.value='';closeAddDialog();}
-}
-
-function closeLangMenu(){
-  var m=document.getElementById('lang-menu');
-  var t=document.getElementById('lang-trigger');
-  if(m)m.classList.remove('open');
-  if(t)t.classList.remove('open');
-}
-
-
-function toggleLangMenu(){
-  var t2=document.getElementById('lang-trigger');
-  var m=document.getElementById('lang-menu');
-  if(!t2||!m)return;
-  var open=m.classList.toggle('open');
-  t2.classList.toggle('open',open);
-  if(open){var close=function(e){if(!document.getElementById('lang-dd').contains(e.target)){m.classList.remove('open');t2.classList.remove('open');document.removeEventListener('click',close);}};setTimeout(function(){document.addEventListener('click',close);},0);}
-}
-function openAddDialog(){
-  var dlg=document.getElementById('add-dlg-ov');
-  if(dlg)dlg.classList.add('open');
-  updateDlgNoKey();
-  applyDlgL();
-}
-function closeAddDialog(){
-  var dlg=document.getElementById('add-dlg-ov');
-  if(dlg)dlg.classList.remove('open');
-  var s=document.getElementById('dlg-status');if(s){s.textContent='';s.className='dlg-status';}
-  var icon=document.getElementById('dlg-clip-icon');if(icon)icon.textContent='\ud83d\udccb';
-  var bl=document.getElementById('dlg-clip-btn-l');if(bl)bl.textContent=G.lang==='zh'?'\u4ece\u526a\u8d34\u677f\u7c98\u8d34':'Paste from Clipboard';
-  var btn=document.getElementById('dlg-clip-btn');if(btn)btn.disabled=false;
-}
-function applyDlgL(){
-  var L=G.lang;
-  var map={'dlg-t':L==='zh'?'\u6dfb\u52a0\u8bcd\u6761':'Add Entry','dlg-clip-t':L==='zh'?'\u4ece\u526a\u8d34\u677f\u5bfc\u5165':'Import from Clipboard','dlg-clip-s':L==='zh'?'\u4f7f\u7528 EcomWiki Skill \u5411 Claude \u63d0\u95ee\uff0c\u590d\u5236\u5b8c\u6574\u56de\u590d\uff0c\u70b9\u51fb\u4e0b\u65b9\u6309\u9492\u4e00\u952e\u5bfc\u5165\u3002':'Ask Claude using the EcomWiki Skill. Copy the full response, then click below.','dlg-clip-btn-l':L==='zh'?'\u4ece\u526a\u8d34\u677f\u7c98\u8d34':'Paste from Clipboard','dlg-or':L==='zh'?'\u6216\u624b\u52a8\u8f93\u5165\u540d\u8bcd':'or enter a term manually','dlg-paste-t':L==='zh'?'\ud83d\udcdd \u624b\u52a8\u7c98\u8d34':'\ud83d\udcdd Manual Paste','dlg-paste-s':L==='zh'?'\u590d\u5236\u4e0b\u65b9\u6307\u4ee4 \u2192 \u7c98\u8d34\u7ed9\u4efb\u610f AI \u2192 \u5c06\u56de\u590d\u7c98\u8d34\u5230\u8fd9\u91cc':'Copy the prompt below \u2192 paste to any AI \u2192 paste the response here','dlg-api-t':L==='zh'?'\ud83d\udd11 \u76f4\u63a5 API \u67e5\u8be2':'\ud83d\udd11 Direct API Query','dlg-api-s':L==='zh'?'\u4f7f\u7528 API Key \u76f4\u63a5\u67e5\u8be2 AI':'Query AI directly with your API key','tb-export-l':L==='zh'?'\u5bfc\u51fa':'Export','tb-add-l':L==='zh'?'\u6dfb\u52a0\u8bcd\u6761':'Add Entry','sb-cfg-l':L==='zh'?'API Key \u00b7 \u8bbe\u7f6e':'API Key \u00b7 Settings'};
-  Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=map[id];});
-}
-function updateDlgNoKey(){
-  var key=getKey();
-  var noKey=document.getElementById('dlg-no-key');
-  var row=document.getElementById('dlg-api-row');
-  var hasKey=G.provider==='n8n'?(key&&key.startsWith('http')):!!key;
-  if(noKey)noKey.style.display=hasKey?'none':'block';
-  if(row)row.style.display=hasKey?'flex':'none';
-}
-async function importClipboardFromDialog(){
-  var btn=document.getElementById('dlg-clip-btn');
-  var icon=document.getElementById('dlg-clip-icon');
-  var lbl=document.getElementById('dlg-clip-btn-l');
-  var status=document.getElementById('dlg-status');
-  if(btn)btn.disabled=true;
-  if(icon)icon.textContent='\u23f3';
-  if(lbl)lbl.textContent=G.lang==='zh'?'\u6b63\u5728\u8bfb\u53d6\u526a\u8d34\u677f...':'Reading clipboard...';
-  try{
-    var raw=await navigator.clipboard.readText();
-    if(!raw||!raw.trim())throw new Error('EMPTY');
-    var result=parseAndSave(raw.trim(),true);
-    if(result){
-      if(icon)icon.textContent='\u2705';
-      var nm=result.name&&typeof result.name==='object'?(result.name[G.lang]||result.name.en||result.name.zh):result.name||'';
-      if(lbl)lbl.textContent=(G.lang==='zh'?'\u8bcd\u6761\u300c':'Entry "')+nm+(G.lang==='zh'?'\u300d\u5df2\u5bfc\u5165\uff01':'" imported!');
-      if(status){status.textContent=G.lang==='zh'?'\u2705 \u5bfc\u5165\u6210\u529f\uff01':'\u2705 Imported successfully!';status.className='dlg-status ok';}
-      setTimeout(function(){closeAddDialog();goP('overview');},1800);
-    } else throw new Error('PARSE_FAIL');
-  }catch(err){
-    if(icon)icon.textContent='\u274c';
-    var msg=err.message==='EMPTY'?(G.lang==='zh'?'\u526a\u8d34\u677f\u4e3a\u7a7a\uff0c\u8bf7\u5148\u590d\u5236 AI \u56de\u590d':'Clipboard is empty \u2014 copy the AI response first'):(err.name==='NotAllowedError'?(G.lang==='zh'?'\u8bf7\u5141\u8bb8\u8bbf\u95ee\u526a\u8d34\u677f\u6743\u9650':'Please allow clipboard access'):(G.lang==='zh'?'\u89e3\u6790\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u5185\u5bb9\u683c\u5f0f':'Parse failed \u2014 check the response format'));
-    if(lbl)lbl.textContent=msg;
-    if(status){status.textContent=msg;status.className='dlg-status err';}
-    setTimeout(function(){if(btn)btn.disabled=false;if(icon)icon.textContent='\ud83d\udccb';if(lbl)lbl.textContent=G.lang==='zh'?'\u4ece\u526a\u8d34\u677f\u7c98\u8d34':'Paste from Clipboard';if(status){status.textContent='';status.className='dlg-status';}},3000);
-  }
-}
-function updateDlgPrompt(){
-  var term=(document.getElementById('dlg-term-in').value||'').trim();
-  var wrap=document.getElementById('dlg-prompt-wrap');
-  var display=document.getElementById('dlg-prompt-display');
-  if(!term){if(wrap)wrap.style.display='none';return;}
-  if(wrap)wrap.style.display='block';
-  if(display)display.textContent=buildPrompt(term);
-}
-function copyDlgPrompt(){
-  var term=(document.getElementById('dlg-term-in').value||'').trim();
-  if(term)navigator.clipboard.writeText(buildPrompt(term)).then(function(){toast(t('toast.copied'));});
-}
-function submitDlgPaste(){
-  var raw=(document.getElementById('dlg-paste-ta').value||'').trim();
-  if(!raw){toast(G.lang==='zh'?'\u8bf7\u7c98\u8d34 AI \u8fd4\u56de\u7684\u5185\u5bb9':'Please paste the AI response');return;}
-  var entry=parseAndSave(raw,true);
-  var status=document.getElementById('dlg-status');
-  if(entry){
-    if(status){status.textContent=G.lang==='zh'?'\u2705 \u8bcd\u6761\u5df2\u5bfc\u5165\uff01':'\u2705 Entry imported!';status.className='dlg-status ok';}
-    document.getElementById('dlg-paste-ta').value='';
-    document.getElementById('dlg-term-in').value='';
-    var pw=document.getElementById('dlg-prompt-wrap');if(pw)pw.style.display='none';
-    setTimeout(function(){closeAddDialog();goP('overview');},1500);
-  }
-}
-function doAskFromDialog(){
-  var term=(document.getElementById('dlg-ask-in').value||'').trim();
-  if(!term)return;
-  var key=getKey();
-  if(!key){toast(G.lang==='zh'?'\u8bf7\u5148\u914d\u7f6e API Key':'Please configure API Key');closeAddDialog();goP('settings');return;}
-  var status=document.getElementById('dlg-status');
-  var btn=document.getElementById('dlg-ask-btn');
-  if(btn)btn.disabled=true;
-  if(status){status.textContent=G.lang==='zh'?'\u6b63\u5728\u67e5\u8be2...':'Querying AI...';status.className='dlg-status';}
-  callAPI(buildPrompt(term),SCHEMA_INSTR).then(function(raw){
-    if(btn)btn.disabled=false;
-    var result=parseAndSave(raw,true);
-    if(result){
-      if(status){status.textContent=G.lang==='zh'?'\u2705 \u8bcd\u6761\u5df2\u5bfc\u5165\uff01':'\u2705 Entry imported!';status.className='dlg-status ok';}
-      document.getElementById('dlg-ask-in').value='';
-      setTimeout(function(){closeAddDialog();goP('overview');},1500);
-    }
-  }).catch(function(err){
-    if(btn)btn.disabled=false;
-    var msg=err.message.slice(0,80);
-    if(status){status.textContent='\u274c '+msg;status.className='dlg-status err';}
-    setTimeout(function(){if(status){status.textContent='';status.className='dlg-status';}},3000);
-  });
-}
 
 /* ═══ ADD ENTRY DIALOG ════════════════════════════════ */
 function openAddDialog(){
