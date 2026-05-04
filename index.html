@@ -647,6 +647,11 @@ function clearKeyFromStorage(){localStorage.removeItem('ewk5_key_'+G.provider);}
 
 /* ═══ JSON SCHEMA (shared between API + paste prompt) ═ */
 var SCHEMA_INSTR='You are an ecommerce knowledge assistant. When asked about any ecommerce term, respond STRICTLY using the labeled section format below. Use NO markdown -- no bold, no headers, no bullets. Only ##TAGS## and plain text.\n\nEach section must appear exactly once in this order:\n\n##NAME_EN##\n[Term in English]\n##NAME_ZH##\n[Term in Chinese]\n##SUBTITLE_EN##\n[English name -- one-line description]\n##SUBTITLE_ZH##\n[Chinese subtitle -- one-line description]\n##SYSTEM##\n[One of: CMS / BI / WMS / ERP / Advertising / Operations]\n##STAGES##\n[Stage tag 1] | [Stage tag 2]\n##CONCEPT_EN##\n[Paragraph 1: core definition in English]\n\n[Paragraph 2: mechanism or formula rationale in English]\n\n[Paragraph 3: practical implications in English]\n##CONCEPT_ZH##\n[First paragraph in Chinese]\n\n[Second paragraph in Chinese]\n\n[Third paragraph in Chinese]\n##FORMULA##\n[Each formula on its own line. Write: none if not applicable]\n##WHO_EN##\n[Role 1 (context)] | [Role 2] | [Role 3] | [Role 4]\n##WHO_ZH##\n[Chinese role 1] | [Chinese role 2] | [Chinese role 3] | [Chinese role 4]\n##CN##\n[本地术语 / local term]\n[CN Point 1 in English]\n[CN Point 2 in English]\n[CN Point 3 in English]\n[CN Point 4 in English]\n[CN Point 5 in English]\n##CN_ZH##\n[本地术语]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##KR##\n[현지 용어 / local term]\n[KR Point 1 in English]\n[KR Point 2 in English]\n[KR Point 3 in English]\n[KR Point 4 in English]\n[KR Point 5 in English]\n##KR_ZH##\n[현지 용어]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##JP##\n[現地用語 / local term]\n[JP Point 1 in English]\n[JP Point 2 in English]\n[JP Point 3 in English]\n[JP Point 4 in English]\n[JP Point 5 in English]\n##JP_ZH##\n[現地用語]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##US##\n[English term]\n[US Point 1 in English]\n[US Point 2 in English]\n[US Point 3 in English]\n[US Point 4 in English]\n[US Point 5 in English]\n##US_ZH##\n[英文术语]\n[第1点中文说明]\n[第2点中文说明]\n[第3点中文说明]\n[第4点中文说明]\n[第5点中文说明]\n##DATA_EN##\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n[Metric] | [Value] | [green/amber/red/blue] | [Note in English]\n##DATA_ZH##\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n[Chinese metric] | [Value] | [green/amber/red/blue] | [Chinese note]\n##CASE_TITLE##\n[Source -- Case title]\n##CASE_DESC_EN##\n[2-3 sentences with specific numbers, in English]\n##CASE_DESC_ZH##\n[2-3 sentences in Chinese]\n##CASE_URL##\n[https://real source URL]\n\nRules:\n- DATA_EN and DATA_ZH: 4-6 rows each. badge: green=good, amber=caution, red=bad, blue=neutral.\n- Each market section: first line is local term, followed by 5 points in English.\n- CONCEPT_EN and CONCEPT_ZH: 3 paragraphs separated by blank lines.\n- Start response with ##NAME_EN## and end after ##CASE_URL##. Nothing before or after.';
+/* ── buildPrompt helper ─ */
+function buildPrompt(term){
+  return 'Please provide a complete knowledge entry for the ecommerce term: "'+term+'"\n\n'+SCHEMA_INSTR;
+}
+
 var PROVIDERS={
   anthropic:{
     name:'Anthropic (Claude Sonnet)',
@@ -1068,23 +1073,15 @@ function setProvider(p){
   updateKeyStatus();
   document.getElementById('key-input').value='';
   document.getElementById('key-input').placeholder=p==='n8n'?'https://your-n8n-instance.com/webhook/...':'sk-...';
-  document.getElementById('key-input').type=(p==='n8n'||p==='enterprise')?'text':'password';
+  document.getElementById('key-input').type=(p==='n8n')?'text':'password';
   document.getElementById('cfg-key-t').textContent=p==='n8n'?(G.lang==='zh'?'Webhook URL':'Webhook URL'):t('cfg.key.t');
   document.getElementById('cfg-key-s').textContent=p==='n8n'?(G.lang==='zh'?'粘贴你的 n8n Webhook 触发器 URL。':'Paste your n8n Webhook trigger URL.'):t('cfg.key.s');
-  // Enterprise mode: show/hide enterprise UI, configure for URL input
-  entShowUI(p==='enterprise');
-  // Hide key input row entirely for enterprise (replaced by enterprise UI)
   var keyRow=document.querySelector('.settings-row');
-  if(keyRow) keyRow.style.display=(p==='enterprise')?'none':'flex';
+  if(keyRow) keyRow.style.display='flex';
   checkKeyBanner();
 }
 
 function updateProviderInfo(){
-  if(G.provider==='enterprise'){
-    var info=t('ent.info.desc');
-    document.getElementById('provider-info').textContent=info;
-    return;
-  }
   var p=PROVIDERS[G.provider];
   if(p){document.getElementById('provider-info').innerHTML=G.lang==='zh'?p.infoZh:p.infoEn;}
 }
@@ -1366,10 +1363,6 @@ function setLang(l){
   if(orBtn) orBtn.textContent='OpenRouter ('+(G.lang==='zh'?'多模型':'Multi-model')+')';
   var n8nBtn=document.getElementById('ptab-n8n');
   if(n8nBtn) n8nBtn.textContent='n8n '+(G.lang==='zh'?'（推荐）':'(Recommended)');
-  var entBtn=document.getElementById('ptab-enterprise');
-  if(entBtn) entBtn.textContent=(G.lang==='zh'?'🏢 企业 SSO':'🏢 Enterprise SSO');
-  // If currently on enterprise, refresh its UI text
-  if(G.provider==='enterprise') entShowUI(true);
   // Empty state CTA
   var emptyCta=document.getElementById('empty-cta');
   if(emptyCta) emptyCta.textContent=t('list.empty.cta');
@@ -1377,6 +1370,28 @@ function setLang(l){
   if(clipBtn) clipBtn.textContent=G.lang==='zh'?'从剪贴板一键导入':'Import from Clipboard';
 }
 
+
+async function dlgDoAsk(){
+  var term=(document.getElementById('dlg-ask-inp').value||'').trim();
+  if(!term)return;
+  var key=getKey();
+  if(!key){document.getElementById('dlg-no-key-warn').style.display='block';return;}
+  document.getElementById('dlg-load').classList.add('show');
+  document.getElementById('dlg-ask-btn').disabled=true;
+  document.getElementById('dlg-load-t').textContent=t('l.s0')+' '+term+'...';
+  try{
+    var raw=await callAPI(buildPrompt(term),SCHEMA_INSTR);
+    document.getElementById('dlg-load').classList.remove('show');
+    document.getElementById('dlg-ask-btn').disabled=false;
+    parseAndSave(raw,true);
+    renderOV();
+    setTimeout(function(){closeAddDialog();},1500);
+  }catch(err){
+    document.getElementById('dlg-load').classList.remove('show');
+    document.getElementById('dlg-ask-btn').disabled=false;
+    toast(t('toast.err')+': '+err.message.slice(0,60));
+  }
+}
 function applyL(){
   var l=G.lang;
   // Topbar
@@ -1437,7 +1452,6 @@ function applyL(){
   var n8nBtn=document.getElementById('ptab-n8n');
   if(n8nBtn)n8nBtn.textContent='n8n '+(l==='zh'?'（推荐）':'(Recommended)');
   // Dialog
-  applyDlgL();
   // Sidebar settings button active state
   var sbCfg=document.getElementById('sb-cfg-btn');
   if(sbCfg)sbCfg.classList.toggle('act', G.panel==='settings');
@@ -1691,27 +1705,6 @@ async function dlgImportClipboard(){
       ico.textContent='📋';
       lbl.textContent=t('dlg.clip.btn');
     },3000);
-  }
-}
-async function dlgDoAsk(){
-  var term=(document.getElementById('dlg-ask-inp').value||'').trim();
-  if(!term)return;
-  var key=getKey();
-  if(!key){document.getElementById('dlg-no-key-warn').style.display='block';return;}
-  document.getElementById('dlg-load').classList.add('show');
-  document.getElementById('dlg-ask-btn').disabled=true;
-  document.getElementById('dlg-load-t').textContent=t('l.s0')+' '+term+'...';
-  try{
-    var raw=await callAPI(buildPrompt(term),SCHEMA_INSTR);
-    document.getElementById('dlg-load').classList.remove('show');
-    document.getElementById('dlg-ask-btn').disabled=false;
-    parseAndSave(raw,true);
-    renderOV();
-    setTimeout(function(){closeAddDialog();},1500);
-  }catch(err){
-    document.getElementById('dlg-load').classList.remove('show');
-    document.getElementById('dlg-ask-btn').disabled=false;
-    toast(t('toast.err')+': '+err.message.slice(0,60));
   }
 }
 function dlgSubmitPaste(){
