@@ -129,11 +129,11 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .ov-list-hd{padding:16px 22px;border-bottom:1.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
 .ov-list-hd-t{font-size:15px;font-weight:700;color:var(--tx);letter-spacing:-.01em}
 .ov-list-hd-c{font-size:12px;font-family:var(--fm);color:var(--tx3)}
-.ov-entry-row{padding:16px 22px;border-bottom:1.5px solid var(--bd);cursor:pointer;display:flex;align-items:center;gap:16px;transition:background .1s}
+.ov-entry-row{padding:14px 22px;border-bottom:1.5px solid var(--bd);cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .1s}
 .ov-entry-row:last-child{border-bottom:none}
 .ov-entry-row:hover{background:var(--bg3)}
-.ov-entry-name{font-size:15px;font-weight:600;color:var(--tx);flex:1;letter-spacing:-.01em;min-width:120px}
-.ov-entry-sub{font-size:13px;color:var(--tx2);flex:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ov-entry-name{font-size:15px;font-weight:600;color:var(--tx);letter-spacing:-.01em;margin-bottom:3px}
+.ov-entry-sub{font-size:13px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ov-entry-sys{font-size:11px;font-family:var(--fm);font-weight:600;color:var(--tx3);background:var(--bg3);padding:3px 9px;border-radius:5px;border:1.5px solid var(--bd);flex-shrink:0}
 .ov-entry-arr{color:var(--bds);font-size:16px;flex-shrink:0}
 .ov-list-empty{padding:44px 22px;text-align:center}
@@ -363,6 +363,35 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .note-a{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:6px}
 .note-dt{font-size:11px;font-family:var(--fm);color:var(--tx3)}
 
+
+/* ── Storage settings ────────────────────────────── */
+.storage-tabs{display:flex;border:1.5px solid var(--bd);border-radius:var(--rm);overflow:hidden;margin-bottom:18px;width:100%}
+.stab{flex:1;height:38px;padding:0 14px;border:none;background:transparent;font-size:13px;font-family:var(--f);font-weight:600;color:var(--tx2);cursor:pointer;border-right:1.5px solid var(--bd);transition:all .15s}
+.stab:last-child{border-right:none}
+.stab.act{background:var(--nv);color:#fff}
+.stab:hover:not(.act){background:var(--bg3)}
+.storage-panel{display:none}
+.storage-panel.act{display:block}
+.storage-status{margin-top:12px;padding:10px 14px;border-radius:var(--rm);font-size:13px;display:flex;align-items:center;gap:8px;font-family:var(--fm)}
+.storage-status.ok{background:var(--gnl);color:var(--gn);border:1.5px solid rgba(21,128,61,.2)}
+.storage-status.warn{background:var(--aml);color:var(--am);border:1.5px solid rgba(180,83,9,.2)}
+.storage-status.err{background:var(--rdl);color:var(--rd);border:1.5px solid rgba(185,28,28,.2)}
+.storage-status.info{background:var(--bll);color:var(--bl);border:1.5px solid rgba(29,78,216,.2)}
+.storage-sync-row{display:flex;gap:8px;margin-top:10px;align-items:center}
+.storage-sync-btn{height:36px;padding:0 16px;background:var(--nv);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.storage-sync-btn:hover{background:var(--nvl)}
+.storage-sync-btn:disabled{background:var(--bg3);color:var(--tx3);cursor:not-allowed}
+.storage-last-sync{font-size:12px;font-family:var(--fm);color:var(--tx3)}
+.storage-hint{font-size:12px;color:var(--tx3);line-height:1.6;margin-top:8px}
+.storage-hint a{color:var(--ac);cursor:pointer}
+.storage-usage{font-size:12px;font-family:var(--fm);color:var(--tx3);margin-top:8px}
+.storage-usage-bar{height:4px;background:var(--bd);border-radius:2px;margin-top:5px;overflow:hidden}
+.storage-usage-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .3s}
+.storage-usage-fill.warn{background:var(--am)}
+.storage-usage-fill.crit{background:var(--rd)}
+
+
+.ov-entry-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
 </style>
 </head>
 <body>
@@ -472,6 +501,54 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
           <button class="settings-clr-btn" id="cfg-clr-btn" onclick="clearAllData()"></button>
         </div>
       </div>
+      <!-- Storage Backend Card -->
+      <div class="settings-card" id="storage-card">
+        <div class="settings-card-t" id="cfg-storage-t">Data Storage</div>
+        <div class="settings-card-s" id="cfg-storage-s">Choose where your entries are saved. All backends fall back to localStorage if unavailable.</div>
+        <div class="storage-tabs">
+          <button class="stab act" onclick="setStorageBackend('local')" id="stab-local">🖥 <span id="stab-local-l">Browser</span></button>
+          <button class="stab" onclick="setStorageBackend('file')" id="stab-file">📁 <span id="stab-file-l">Local Folder</span></button>
+          <button class="stab" onclick="setStorageBackend('gist')" id="stab-gist">☁️ <span id="stab-gist-l">GitHub Gist</span></button>
+        </div>
+
+        <!-- Browser localStorage panel -->
+        <div class="storage-panel act" id="storage-panel-local">
+          <div class="storage-usage" id="storage-usage-text">Calculating...</div>
+          <div class="storage-usage-bar"><div class="storage-usage-fill" id="storage-usage-fill" style="width:0%"></div></div>
+          <div class="storage-hint" id="local-hint"></div>
+        </div>
+
+        <!-- Local folder panel -->
+        <div class="storage-panel" id="storage-panel-file">
+          <div class="storage-hint" id="file-browser-warning" style="display:none;color:var(--rd)"></div>
+          <div id="file-picker-section">
+            <div class="storage-status info" id="file-status"></div>
+            <div class="storage-sync-row">
+              <button class="storage-sync-btn" onclick="pickFolder()" id="pick-folder-btn"></button>
+              <button class="storage-sync-btn" onclick="saveToFile()" id="save-file-btn" disabled></button>
+              <span class="storage-last-sync" id="file-last-save"></span>
+            </div>
+            <div class="storage-hint" id="file-hint"></div>
+          </div>
+        </div>
+
+        <!-- GitHub Gist panel -->
+        <div class="storage-panel" id="storage-panel-gist">
+          <div class="settings-card-s" id="gist-desc" style="margin-bottom:10px"></div>
+          <div class="settings-row" style="margin-bottom:8px">
+            <input class="settings-in" id="gist-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" data-ph-en="ghp_xxxxxxxxxxxxxxxxxxxx" data-ph-zh="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <button class="settings-save-btn" onclick="saveGistToken()" id="gist-save-btn"></button>
+          </div>
+          <div class="storage-status info" id="gist-status" style="display:none"></div>
+          <div class="storage-sync-row" id="gist-sync-row" style="display:none">
+            <button class="storage-sync-btn" onclick="syncToGist(true)" id="gist-push-btn">↑ <span id="gist-push-l">Push</span></button>
+            <button class="storage-sync-btn" onclick="syncFromGist()" id="gist-pull-btn">↓ <span id="gist-pull-l">Pull</span></button>
+            <span class="storage-last-sync" id="gist-last-sync"></span>
+          </div>
+          <div class="storage-hint" id="gist-hint"></div>
+        </div>
+      </div>
+
       <div class="settings-card" style="background:var(--bg3)">
         <div class="settings-card-t" id="cfg-paste-t"></div>
         <div class="settings-card-s" id="cfg-paste-s"></div>
@@ -682,18 +759,29 @@ var MKTS=[
 ];
 
 /* ═══ STATE ══════════════════════════════════════════ */
-var G={lang:'en',_ovFilter:null,panel:'overview',eid:null,filter:'all',mmode:null,sel:'',entries:[],provider:'anthropic',askMode:'api',mktFilter:null,_providerList:['anthropic','openrouter']};
+var G={lang:'en',_ovFilter:null,panel:'overview',eid:null,filter:'all',mmode:null,sel:'',entries:[],provider:'anthropic',askMode:'api',mktFilter:null,_providerList:['anthropic','openrouter'],storageBackend:'local',gistId:'',gistLastSync:''};
 
 /* ═══ STORAGE ═════════════════════════════════════════*/
-function sv(){localStorage.setItem('ewk5',JSON.stringify({entries:G.entries,lang:G.lang,provider:G.provider,askMode:G.askMode}));}
+function sv(){
+  var data={entries:G.entries,lang:G.lang,provider:G.provider,askMode:G.askMode,
+    storageBackend:G.storageBackend,gistId:G.gistId,gistLastSync:G.gistLastSync,filter:G.filter};
+  localStorage.setItem('ewk5',JSON.stringify(data));
+  // Auto-sync to file if file backend active and handle available
+  if(G.storageBackend==='file'&&G._fileHandle){
+    saveToFile(true); // silent save
+  }
+}
 function lv(){
   var r=localStorage.getItem('ewk5');
   if(r){try{var d=JSON.parse(r);
     if(d.entries)G.entries=d.entries;
     if(d.lang)G.lang=d.lang;
-    // Sanitize legacy provider values (openai/deepseek no longer supported)
     if(d.provider&&['anthropic','openrouter','n8n'].indexOf(d.provider)>-1)G.provider=d.provider;
     if(d.askMode)G.askMode=d.askMode;
+    if(d.storageBackend)G.storageBackend=d.storageBackend;
+    if(d.gistId)G.gistId=d.gistId;
+    if(d.gistLastSync)G.gistLastSync=d.gistLastSync;
+    if(d.filter)G.filter=d.filter;
   }catch(e){}}
 }
 function getKey(){return localStorage.getItem('ewk5_key_'+G.provider)||'';}
@@ -1176,7 +1264,21 @@ function goP(p){
   if(cfgBtn) cfgBtn.classList.toggle('act',p==='settings');
   var ovBtn=document.getElementById('ni-ov');
   if(ovBtn) ovBtn.classList.toggle('act',p==='overview');
-  if(p==='settings'){updateProviderInfo();updateKeyStatus();}
+  if(p==='settings'){
+    updateProviderInfo();updateKeyStatus();
+    // Init storage panel for current backend
+    setTimeout(function(){
+      ['local','file','gist'].forEach(function(b){
+        var stab=document.getElementById('stab-'+b);
+        if(stab)stab.classList.toggle('act',G.storageBackend===b);
+        var spanel=document.getElementById('storage-panel-'+b);
+        if(spanel)spanel.classList.toggle('act',G.storageBackend===b);
+      });
+      if(G.storageBackend==='local')updateStorageUsage();
+      if(G.storageBackend==='file')initFilePanel();
+      if(G.storageBackend==='gist')initGistPanel();
+    },50);
+  }
   if(p==='overview'){renderOV();}
   // Lock/unlock main scroll for entry panel
   var mainEl=document.querySelector('.main');
@@ -1254,10 +1356,14 @@ function deleteComment(entryId, cmtIdx){
   toast(t('cmt.del.ok'));
 }
 
-function showE(id){
+function showE(id, _scrollTop){
   var entry=G.entries.find(function(e){return e.id===id;});
   if(!entry)return;
   G.eid=id; renderL();
+  // Capture current scroll position before re-render
+  var _savedScroll = (_scrollTop !== undefined) ? _scrollTop : (function(){
+    var m=document.querySelector('.e-main'); return m?m.scrollTop:0;
+  })();
   function gl(f){return f&&typeof f==='object'?(f[G.lang]||f.en||f.zh||''):f||'';}
   function gla(f){return f&&typeof f==='object'?(f[G.lang]||f.en||f.zh||[]):f||[];}
   var nm=gl(entry.name), sub=gl(entry.subtitle), concept=gl(entry.concept);
@@ -1296,17 +1402,21 @@ function showE(id){
   document.getElementById('e-detail').innerHTML=
     '<div class="ep">'    +'<div class="eh">'    +'<div class="ebc"><span>'+t('e.entries')+'</span><span class="ebc-s">›</span><span>'+esc(entry.system||'')+'</span><span class="ebc-s">›</span><span style="color:var(--tx)">'+esc(nm)+'</span></div>'    +'<div class="eh-row">'    +'<div><div class="e-title">'+esc(nm)+'</div><div class="e-sub">'+esc(sub)+'</div><div class="e-chips">'+stgs+'</div></div>'    +'<div class="eh-act"><button class="eh-btn" onclick="expHTML(G.eid)">'+t('e.export')+'</button></div>'    +'</div></div>'    +'<div class="e-cols">'    +'<div class="e-main">'    +'<div class="ebody" id="eb_'+id+'">'    +fh    +'<div class="sec"><div class="slbl">'+t('e.concept')+'</div><div class="stxt">'+esc(concept).replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div>'    +'<div class="sec"><div class="slbl">'+t('e.who')+'</div><div class="who-l">'+who.map(function(w){return '<span class="who-p">'+esc(w)+'</span>';}).join('')+'</div></div>'    +'<div class="sec"><div class="slbl">'+t('e.markets')+'</div><div class="mkg">'+mkt+'</div></div>'    +dh+cas    +'</div>'    +'</div>'    +'<div class="e-side">'    +'<div class="eside-hd">'    +'<span class="eside-t">'+t('e.fups')+'</span>'    +((entry.comments&&entry.comments.length)?'<span class="eside-cnt">'+entry.comments.length+'</span>':'')    +'</div>'    +'<div class="eside-list" id="eside-list_'+id+'">'    +cmh    +'</div>'    +'<div class="eside-foot">'    +'<input class="eside-inp" id="eside-title_'+id+'" placeholder="'+( G.lang==='zh'?'标题（选填）':'Title (optional)')+'" maxlength="80">'    +'<textarea class="eside-ta" id="eside-body_'+id+'" placeholder="'+(G.lang==='zh'?'添加备注或追问...':'Add a note or follow-up...')+'"></textarea>'    +'<button class="eside-add-btn" onclick="addNote(\''+id+'\')">'+( G.lang==='zh'?'＋ 添加':'＋ Add')+'</button>'    +'</div>'    +'</div>'    +'</div>'    +'</div>';
   goP('entry');
-  // Attach sticky header scroll listener
-  setTimeout(function(){
+  // Restore scroll position after render
+  requestAnimationFrame(function(){
     var mainEl=document.querySelector('.e-main');
-    var ehEl=document.querySelector('.eh');
-    if(mainEl&&ehEl){
+    if(mainEl&&_savedScroll){
+      mainEl.scrollTop=_savedScroll;
+    }
+    // Attach sticky header scroll listener
+    if(mainEl){
       mainEl.onscroll=null;
       mainEl.addEventListener('scroll',function(){
-        ehEl.classList.toggle('compact',mainEl.scrollTop>60);
+        var ehEl=document.querySelector('.eh');
+        if(ehEl) ehEl.classList.toggle('compact',mainEl.scrollTop>60);
       },{passive:true});
     }
-  },100);
+  });
 }
 
 function delE(id){if(!confirm(t('confirm.del')))return;G.entries=G.entries.filter(function(e){return e.id!==id;});if(G.eid===id){G.eid=null;G.entries.length?showE(G.entries[0].id):goP('overview');}sv();renderL();toast(t('toast.del'));}
@@ -1691,6 +1801,55 @@ function applyL(){
   var dlgAskLbl=document.getElementById('dlg-ask-lbl');if(dlgAskLbl)dlgAskLbl.textContent=G.lang==='zh'?'查询 →':'Ask →';
   var dlgPasteBtn=document.getElementById('dlg-paste-btn');if(dlgPasteBtn)dlgPasteBtn.textContent=G.lang==='zh'?'导入粘贴内容 →':'Import pasted text →';
   var dlgLangLabel=document.getElementById('lang-label');if(dlgLangLabel)dlgLangLabel.textContent=G.lang==='zh'?'中文':'EN';
+  // ── Storage card full i18n ──────────────────────────
+  var zh=G.lang==='zh';
+  // Card title/desc
+  var cfgStorT=document.getElementById('cfg-storage-t');
+  if(cfgStorT)cfgStorT.textContent=zh?'数据存储':'Data Storage';
+  var cfgStorS=document.getElementById('cfg-storage-s');
+  if(cfgStorS)cfgStorS.textContent=zh?'选择词条数据的存储位置。所有方式不可用时自动回退到浏览器本地存储。':'Choose where entries are saved. Falls back to browser storage if unavailable.';
+  // Tab labels
+  var sl=document.getElementById('stab-local-l');if(sl)sl.textContent=zh?'浏览器':'Browser';
+  var sf=document.getElementById('stab-file-l'); if(sf)sf.textContent=zh?'本地文件夹':'Local Folder';
+  var sg=document.getElementById('stab-gist-l'); if(sg)sg.textContent=zh?'GitHub Gist':'GitHub Gist';
+  // Local panel
+  var lh=document.getElementById('local-hint');
+  if(lh)lh.textContent=zh?'数据仅存在此浏览器中。使用导出/导入来备份或迁移数据。':'Data stays in this browser only. Use Export/Import to back up or move data.';
+  // File panel
+  var fbw=document.getElementById('file-browser-warning');
+  if(fbw)fbw.textContent=zh?"⚠️ 你的浏览器不支持 File System Access API，请使用 Chrome 或 Edge 桌面版。":"⚠️ Your browser doesn't support File System Access API. Use Chrome or Edge desktop.";
+  var pfb=document.getElementById('pick-folder-btn');
+  if(pfb)pfb.textContent=zh?'选择文件夹':'Choose Folder';
+  var sfb=document.getElementById('save-file-btn');
+  if(sfb)sfb.textContent=zh?'立即保存':'Save Now';
+  var fh=document.getElementById('file-hint');
+  if(fh)fh.innerHTML=zh?'保存为 <code>ecomwiki_data.json</code>。每次打开页面需重新授权文件夹访问。':'Saves as <code>ecomwiki_data.json</code> in your chosen folder. Re-authorization required each session.';
+  // Update file status text if no folder selected
+  var fst=document.getElementById('file-status');
+  if(fst&&fst.textContent==='No folder selected'||fst&&fst.textContent==='未选择文件夹'){
+    fst.textContent=zh?'未选择文件夹':'No folder selected';
+  }
+  // Gist panel
+  var gd=document.getElementById('gist-desc');
+  if(gd)gd.innerHTML=zh?'在 <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--ac)">github.com/settings/tokens</a> 创建具有 <strong>gist</strong> 权限的 Personal Access Token。':'Create a GitHub Personal Access Token with <strong>gist</strong> scope at <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--ac)">github.com/settings/tokens</a>';
+  var gsb=document.getElementById('gist-save-btn');
+  if(gsb)gsb.textContent=zh?'保存':'Save';
+  var gpl=document.getElementById('gist-push-l');if(gpl)gpl.textContent=zh?'推送':'Push';
+  var gll=document.getElementById('gist-pull-l');if(gll)gll.textContent=zh?'拉取':'Pull';
+  var gh=document.getElementById('gist-hint');
+  if(gh)gh.textContent=zh?'数据同步到私有 Gist。推送将本地数据保存到云端，拉取将云端数据加载到本浏览器。':'Data syncs to a private Gist. Push saves local data to cloud. Pull loads cloud data here.';
+  var gtp=document.getElementById('gist-token-input');
+  if(gtp)gtp.placeholder='ghp_xxxxxxxxxxxxxxxxxxxx';
+  // Sync storage tab display
+  ['local','file','gist'].forEach(function(b){
+    var stab=document.getElementById('stab-'+b);
+    if(stab)stab.classList.toggle('act',G.storageBackend===b);
+    var spanel=document.getElementById('storage-panel-'+b);
+    if(spanel)spanel.classList.toggle('act',G.storageBackend===b);
+  });
+  if(G.storageBackend==='local')updateStorageUsage();
+  if(G.storageBackend==='file')initFilePanel();
+  if(G.storageBackend==='gist')initGistPanel();
   var loptEn=document.getElementById('lopt-en');if(loptEn)loptEn.classList.toggle('active',G.lang==='en');
   var loptZh=document.getElementById('lopt-zh');if(loptZh)loptZh.classList.toggle('active',G.lang==='zh');
   
@@ -1788,8 +1947,10 @@ function renderOvEntries(){
       var nm=e.name&&typeof e.name==='object'?(e.name[L]||e.name.en||e.name.zh||''):(e.name||'');
       var sb=e.subtitle&&typeof e.subtitle==='object'?(e.subtitle[L]||e.subtitle.en||e.subtitle.zh||''):(e.subtitle||'');
       return '<div class="ov-entry-row" data-eid="'+e.id+'">'
+        +'<div class="ov-entry-info">'
         +'<div class="ov-entry-name">'+esc(nm)+'</div>'
-        +'<div class="ov-entry-sub">'+esc(sb)+'</div>'
+        +(sb?'<div class="ov-entry-sub">'+esc(sb)+'</div>':'')
+        +'</div>'
         +'<div class="ov-entry-sys">'+esc(e.system||'')+'</div>'
         +'<div class="ov-entry-arr">›</div>'
         +'</div>';
@@ -1958,6 +2119,230 @@ document.addEventListener('click',function(e){
   var wrap=document.getElementById('lang-wrap');
   if(wrap&&!wrap.contains(e.target))closeLangMenu();
 });
+
+
+/* ═══ STORAGE BACKENDS ════════════════════════════ */
+
+// ── Shared ─────────────────────────────────────────
+function getStorageData(){
+  return JSON.stringify({entries:G.entries,lang:G.lang,provider:G.provider,
+    askMode:G.askMode,storageBackend:G.storageBackend,gistId:G.gistId,
+    gistLastSync:G.gistLastSync,filter:G.filter});
+}
+function loadStorageData(json){
+  try{
+    var d=JSON.parse(json);
+    if(d.entries)G.entries=d.entries;
+    if(d.lang)G.lang=d.lang;
+    if(d.provider&&['anthropic','openrouter','n8n'].indexOf(d.provider)>-1)G.provider=d.provider;
+    if(d.askMode)G.askMode=d.askMode;
+    if(d.storageBackend)G.storageBackend=d.storageBackend;
+    if(d.gistId)G.gistId=d.gistId;
+    if(d.gistLastSync)G.gistLastSync=d.gistLastSync;
+    if(d.filter)G.filter=d.filter;
+    return true;
+  }catch(e){return false;}
+}
+
+// ── Storage backend switcher ───────────────────────
+function setStorageBackend(backend){
+  G.storageBackend=backend;
+  sv();
+  ['local','file','gist'].forEach(function(b){
+    document.getElementById('stab-'+b).classList.toggle('act',b===backend);
+    document.getElementById('storage-panel-'+b).classList.toggle('act',b===backend);
+  });
+  if(backend==='local') updateStorageUsage();
+  if(backend==='file')  initFilePanel();
+  if(backend==='gist')  initGistPanel();
+}
+
+// ── localStorage usage display ─────────────────────
+function updateStorageUsage(){
+  try{
+    var used=new Blob([localStorage.getItem('ewk5')||'']).size;
+    var maxBytes=5*1024*1024;
+    var pct=Math.round(used/maxBytes*100);
+    var usedKB=Math.round(used/1024);
+    var el=document.getElementById('storage-usage-text');
+    var fill=document.getElementById('storage-usage-fill');
+    if(el) el.textContent='Using '+usedKB+' KB of ~5 MB ('+pct+'%)';
+    if(fill){
+      fill.style.width=Math.min(pct,100)+'%';
+      fill.className='storage-usage-fill'+(pct>80?' crit':pct>60?' warn':'');
+    }
+  }catch(e){}
+}
+
+// ── File System Access API ─────────────────────────
+function initFilePanel(){
+  if(!('showDirectoryPicker' in window)){
+    var warn=document.getElementById('file-browser-warning');
+    var section=document.getElementById('file-picker-section');
+    if(warn){warn.style.display='block';}
+    if(section){section.style.display='none';}
+    return;
+  }
+  var status=document.getElementById('file-status');
+  if(G._fileHandle){
+    if(status) setFileStatus('ok',(G.lang==='zh'?'文件夹: ':'Folder: ')+G._folderName+(G.lang==='zh'?' — 就绪':' — ready'));
+    document.getElementById('save-file-btn').disabled=false;
+  } else {
+    if(status) setFileStatus('info',G.lang==='zh'?'未选择文件夹 — 请选择文件夹以启用自动保存':'No folder selected — choose a folder to enable auto-save');
+  }
+}
+function setFileStatus(type,msg){
+  var el=document.getElementById('file-status');
+  if(!el)return;
+  el.className='storage-status '+type;
+  el.textContent=msg;
+}
+async function pickFolder(){
+  if(!('showDirectoryPicker' in window)){return;}
+  try{
+    var dirHandle=await window.showDirectoryPicker({mode:'readwrite'});
+    G._fileHandle=dirHandle;
+    G._folderName=dirHandle.name;
+    setFileStatus('ok','Folder: '+dirHandle.name+' — ready');
+    document.getElementById('save-file-btn').disabled=false;
+    toast(G.lang==='zh'?'已选择文件夹：'+dirHandle.name:'Folder selected: '+dirHandle.name);
+    saveToFile();
+  }catch(e){
+    if(e.name!=='AbortError') setFileStatus('err','Error: '+e.message);
+  }
+}
+async function saveToFile(silent){
+  if(!G._fileHandle){if(!silent)toast(G.lang==='zh'?'请先选择文件夹':'Please pick a folder first');return;}
+  try{
+    var fileHandle=await G._fileHandle.getFileHandle('ecomwiki_data.json',{create:true});
+    var writable=await fileHandle.createWritable();
+    await writable.write(getStorageData());
+    await writable.close();
+    var now=new Date().toLocaleTimeString();
+    G._fileLastSave=now;
+    var el=document.getElementById('file-last-save');
+    if(el) el.textContent=(G.lang==='zh'?'上次保存: ':'Last saved: ')+now;
+    setFileStatus('ok','Folder: '+G._folderName+' — saved at '+now);
+    if(!silent) toast(G.lang==='zh'?'✓ 已保存到本地文件夹':'✓ Saved to local folder');
+  }catch(e){
+    setFileStatus('err','Save failed: '+e.message);
+    if(!silent) toast('Save failed: '+e.message);
+  }
+}
+async function loadFromFile(){
+  if(!G._fileHandle) return false;
+  try{
+    var fileHandle=await G._fileHandle.getFileHandle('ecomwiki_data.json');
+    var file=await fileHandle.getFile();
+    var text=await file.text();
+    return loadStorageData(text);
+  }catch(e){return false;}
+}
+
+// ── GitHub Gist ────────────────────────────────────
+var GIST_TOKEN_KEY='ewk5_gist_token';
+function getGistToken(){return localStorage.getItem(GIST_TOKEN_KEY)||'';}
+function initGistPanel(){
+  var token=getGistToken();
+  var inp=document.getElementById('gist-token-input');
+  if(inp&&token) inp.value=token.slice(0,4)+'…'+token.slice(-4);
+  updateGistStatus();
+}
+function updateGistStatus(){
+  var token=getGistToken();
+  var statusEl=document.getElementById('gist-status');
+  var syncRow=document.getElementById('gist-sync-row');
+  var lastEl=document.getElementById('gist-last-sync');
+  if(!statusEl||!syncRow) return;
+  if(!token){
+    statusEl.style.display='none';
+    syncRow.style.display='none';
+    return;
+  }
+  statusEl.style.display='flex';
+  syncRow.style.display='flex';
+  if(G.gistId){
+    statusEl.className='storage-status ok';
+    statusEl.textContent=(G.lang==='zh'?'✓ Gist 已连接: ':'✓ Gist connected: ')+G.gistId.slice(0,8)+'…';
+  } else {
+    statusEl.className='storage-status info';
+    statusEl.textContent=G.lang==='zh'?'Token 已保存 — 推送数据以创建 Gist':'Token saved — push data to create Gist';
+  }
+  if(lastEl&&G.gistLastSync) lastEl.textContent=(G.lang==='zh'?'上次同步: ':'Last sync: ')+G.gistLastSync;
+}
+function saveGistToken(){
+  var inp=document.getElementById('gist-token-input');
+  var token=(inp?inp.value:'').trim();
+  if(!token||token.indexOf('…')>-1){toast(G.lang==='zh'?'请输入完整 Token':'Please enter a valid token');return;}
+  localStorage.setItem(GIST_TOKEN_KEY,token);
+  toast(G.lang==='zh'?'✓ Token 已保存':'✓ Token saved');
+  updateGistStatus();
+}
+async function syncToGist(silent){
+  var token=getGistToken();
+  if(!token){toast(G.lang==='zh'?'请先配置 GitHub Token':'Please configure GitHub Token first');return;}
+  var pushBtn=document.getElementById('gist-push-btn');
+  if(pushBtn){pushBtn.disabled=true;pushBtn.textContent='Pushing…';}
+  try{
+    var body={
+      description:'EcomWiki Data — auto sync',
+      public:false,
+      files:{'ecomwiki_data.json':{content:getStorageData()}}
+    };
+    var url='https://api.github.com/gists'+(G.gistId?'/'+G.gistId:'');
+    var method=G.gistId?'PATCH':'POST';
+    var resp=await fetch(url,{
+      method:method,
+      headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+      body:JSON.stringify(body)
+    });
+    if(!resp.ok)throw new Error('HTTP '+resp.status+': '+await resp.text());
+    var data=await resp.json();
+    G.gistId=data.id;
+    G.gistLastSync=new Date().toLocaleString();
+    sv();
+    updateGistStatus();
+    if(!silent) toast(G.lang==='zh'?'✓ 已同步到 GitHub Gist':'✓ Synced to GitHub Gist');
+  }catch(e){
+    toast((G.lang==='zh'?'同步失败: ':'Sync failed: ')+e.message.slice(0,60));
+  }finally{
+    if(pushBtn){pushBtn.disabled=false;pushBtn.textContent='↑ Push';}
+  }
+}
+async function syncFromGist(){
+  var token=getGistToken();
+  if(!token||!G.gistId){toast(G.lang==='zh'?'请先 Push 一次数据':'Please Push data first');return;}
+  var pullBtn=document.getElementById('gist-pull-btn');
+  if(pullBtn){pullBtn.disabled=true;pullBtn.textContent='Pulling…';}
+  try{
+    var resp=await fetch('https://api.github.com/gists/'+G.gistId,{
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    var data=await resp.json();
+    var fileContent=data.files['ecomwiki_data.json'];
+    if(!fileContent)throw new Error('File not found in Gist');
+    var text=fileContent.content||'';
+    // If truncated, fetch raw
+    if(fileContent.truncated){
+      var raw=await fetch(fileContent.raw_url);
+      text=await raw.text();
+    }
+    if(loadStorageData(text)){
+      G.gistLastSync=new Date().toLocaleString();
+      sv();
+      applyL();renderOV();renderL();
+      updateGistStatus();
+      toast(G.lang==='zh'?'✓ 已从 GitHub Gist 加载数据':'✓ Loaded data from GitHub Gist');
+    }else{
+      throw new Error('Invalid data format');
+    }
+  }catch(e){
+    toast((G.lang==='zh'?'拉取失败: ':'Pull failed: ')+e.message.slice(0,60));
+  }finally{
+    if(pullBtn){pullBtn.disabled=false;pullBtn.textContent='↓ Pull';}
+  }
+}
 
 /* ═══ INIT ════════════════════════════════════════════ */
 function init(){
