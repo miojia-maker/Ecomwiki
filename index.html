@@ -26,9 +26,10 @@
   --sh:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
   --shm:0 4px 20px rgba(0,0,0,.1),0 12px 40px rgba(0,0,0,.07);
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--f)}
+html{height:100%;background:var(--bg);font-family:var(--f);overflow-x:auto}
+body{height:100%;min-width:960px;background:var(--bg);font-family:var(--f)}
 body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:column}
-.topbar{height:56px;background:var(--bg2);border-bottom:1.5px solid var(--bd);display:flex;align-items:center;padding:0 24px;gap:10px;flex-shrink:0;z-index:100}
+.topbar{height:56px;background:var(--bg2);border-bottom:1.5px solid var(--bd);display:flex;align-items:center;padding:0 24px;gap:10px;flex-shrink:0;z-index:100;min-width:960px}
 .topbar-brand{display:none}
 .topbar-spacer{flex:1}
 .topbar-sep{width:1px;height:22px;background:var(--bd);flex-shrink:0}
@@ -47,8 +48,8 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .lang-opt:hover{background:var(--bg3)}
 .lang-opt.active{color:var(--ac);font-weight:700}
 .lang-opt.active::after{content:'✓';font-size:13px}
-.app-body{flex:1;display:flex;overflow:hidden;min-height:0}
-.sb{width:252px;flex-shrink:0;background:var(--nv);display:flex;flex-direction:column;height:100%;overflow:hidden}
+.app-body{flex:1;display:flex;overflow:hidden;min-height:0;min-width:960px;width:100%}
+.sb{width:clamp(180px,18vw,260px);flex-shrink:0;background:var(--nv);display:flex;flex-direction:column;height:100%;overflow:hidden}
 .sb-brand{padding:22px 20px 18px;border-bottom:1px solid var(--nb);flex-shrink:0}
 .brand{font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:9px;letter-spacing:-.03em}
 .bdot{width:9px;height:9px;border-radius:50%;background:var(--ac);flex-shrink:0}
@@ -91,10 +92,11 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .sfb{width:28px;height:28px;border-radius:var(--r);border:1.5px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;color:rgba(255,255,255,.32);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .sfb:hover{background:var(--nh);color:#fff}
 .main{flex:1;height:100%;overflow-y:auto;background:var(--bg);display:flex;flex-direction:column;min-width:0}
+.main.entry-open{overflow:hidden}
 .main::-webkit-scrollbar{width:5px}
 .main::-webkit-scrollbar-thumb{background:var(--bds);border-radius:3px}
-.panel{display:none;flex:1;flex-direction:column}
-.panel.act{display:flex}
+.panel{display:none;flex:1;flex-direction:column;height:0}
+.panel.act{display:flex;height:100%}
 .ov{padding:36px 44px 48px;max-width:1120px;width:100%}
 .ov-t{font-size:26px;font-weight:800;color:var(--tx);letter-spacing:-.03em;margin-bottom:7px}
 .ov-s{font-size:15px;color:var(--tx2);line-height:1.65;max-width:520px;margin-bottom:4px}
@@ -140,7 +142,7 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .ov-list-empty-s{font-size:13px;color:var(--tx3);line-height:1.65;max-width:260px;margin:0 auto 18px}
 .ov-list-empty-btn{height:40px;padding:0 22px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
 .ov-list-empty-btn:hover{background:var(--ach)}
-.ep{flex:1;display:flex;flex-direction:column;min-height:0}
+/* .ep defined in two-col layout */
 .eh{background:var(--bg2);border-bottom:1.5px solid var(--bd);padding:24px 44px 20px;flex-shrink:0}
 .ebc{font-size:12px;font-family:var(--fm);color:var(--tx3);margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .ebc-s{color:var(--bds)}
@@ -154,7 +156,7 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .eh-act{display:flex;gap:7px;flex-shrink:0;margin-top:4px}
 .eh-btn{height:34px;padding:0 14px;border-radius:var(--rm);border:1.5px solid var(--bd);background:var(--bg3);font-size:12px;font-family:var(--fm);font-weight:600;color:var(--tx2);cursor:pointer;transition:all .15s}
 .eh-btn:hover{background:var(--bd);color:var(--tx)}
-.ebody{flex:1;overflow-y:auto;padding:30px 44px 52px;max-width:860px}
+.ebody{width:100%;padding:30px 44px 52px;max-width:1024px}
 .ebody::-webkit-scrollbar{width:4px}
 .ebody::-webkit-scrollbar-thumb{background:var(--bds);border-radius:2px}
 .sec{margin-bottom:30px}
@@ -190,7 +192,10 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .cmts-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .cmts-t{font-size:10px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--tx3)}
 .cmt-cnt{background:var(--bg3);color:var(--tx3);border:1.5px solid var(--bd);padding:2px 9px;border-radius:20px;font-size:11px;font-family:var(--fm);font-weight:700}
-.cmt-c{background:var(--bg2);border:1.5px solid var(--bd);border-radius:var(--rl);padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--ac)}
+.cmt-c{background:var(--bg2);border:1.5px solid var(--bd);border-radius:var(--rl);padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--ac);position:relative}
+.cmt-del{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:var(--r);border:1.5px solid var(--bd);background:var(--bg3);cursor:pointer;color:var(--tx3);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;opacity:0}
+.cmt-c:hover .cmt-del{opacity:1}
+.cmt-del:hover{background:var(--rdl);border-color:rgba(185,28,28,.3);color:var(--rd)}
 .cmt-q{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:9px;display:flex;gap:10px;align-items:flex-start}
 .cmt-ql{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--ac);background:var(--acl);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
 .cmt-a{font-size:14px;color:var(--tx2);line-height:1.8;padding-left:30px}
@@ -308,6 +313,56 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 .ees-cta:hover{background:var(--ach)}
 .toast{position:fixed;bottom:22px;right:22px;background:var(--nv);color:#fff;padding:12px 18px;border-radius:var(--rm);font-size:14px;z-index:999;transform:translateY(52px);opacity:0;transition:all .3s;pointer-events:none;max-width:320px;border-left:3px solid var(--ac);box-shadow:var(--shm)}
 .toast.show{transform:translateY(0);opacity:1}
+
+/* ── Sticky compact header on scroll ────────────────── */
+.eh{background:var(--bg2);border-bottom:1.5px solid var(--bd);padding:20px 44px 16px;flex-shrink:0;position:sticky;top:0;z-index:50;transition:padding .2s,box-shadow .2s}
+.eh.compact{padding:10px 44px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.eh.compact .ebc{display:none}
+.eh.compact .e-sub{display:none}
+.eh.compact .e-chips{display:none}
+.eh.compact .e-title{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.eh.compact .eh-row{align-items:center}
+
+/* ── Two-column layout fill-to-frame fix ─────────────── */
+.ep{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;height:100%}
+.e-cols{flex:1;display:flex;min-height:0;overflow:hidden;height:0}
+.e-main{flex:1;min-width:600px;display:flex;flex-direction:column;min-height:0;overflow-y:auto;border-right:1.5px solid var(--bd)}
+.e-main::-webkit-scrollbar{width:4px}
+.e-main::-webkit-scrollbar-thumb{background:var(--bds);border-radius:2px}
+
+/* ── Right panel fixed layout ────────────────────────── */
+.e-side{width:clamp(200px,22vw,400px);flex-shrink:0;display:flex;flex-direction:column;background:var(--bg);min-height:0;overflow:hidden}
+.eside-hd{padding:14px 18px 12px;border-bottom:1.5px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
+.eside-t{font-size:11px;font-family:var(--fm);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3)}
+.eside-cnt{font-size:11px;font-family:var(--fm);font-weight:700;color:var(--ac);background:var(--acl);border:1.5px solid var(--acb);padding:2px 8px;border-radius:20px}
+.eside-list{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.eside-list::-webkit-scrollbar{width:3px}
+.eside-list::-webkit-scrollbar-thumb{background:var(--bds);border-radius:2px}
+.eside-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px;text-align:center;min-height:0}
+.eside-empty-ic{font-size:24px;opacity:.15}
+.eside-empty-t{font-size:13px;font-weight:600;color:var(--tx2)}
+.eside-empty-s{font-size:12px;color:var(--tx3);line-height:1.55;max-width:200px}
+.eside-foot{flex-shrink:0;border-top:1.5px solid var(--bd);background:var(--bg2);padding:16px;display:flex;flex-direction:column;gap:10px}
+.eside-inp-row{display:flex;gap:8px;margin-bottom:8px}
+.eside-inp{width:100%;height:36px;background:var(--bg3);border:1.5px solid var(--bd);border-radius:var(--rm);padding:0 11px;font-size:13px;font-family:var(--f);color:var(--tx);outline:none;transition:border-color .15s}
+.eside-inp:focus{border-color:var(--ac);background:#fff}
+.eside-inp::placeholder{color:var(--tx3)}
+.eside-ta{width:100%;background:var(--bg3);border:1.5px solid var(--bd);border-radius:var(--rm);padding:9px 11px;font-size:13px;font-family:var(--f);color:var(--tx);outline:none;resize:none;height:72px;line-height:1.55;transition:border-color .15s;display:block}
+.eside-ta:focus{border-color:var(--ac);background:#fff}
+.eside-ta::placeholder{color:var(--tx3)}
+.eside-add-btn{width:100%;height:36px;background:var(--ac);color:#fff;border:none;border-radius:var(--rm);font-family:var(--f);font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
+.eside-add-btn:hover{background:var(--ach)}
+
+
+/* ── Note cards (right panel) ───────────────────── */
+.note-c{background:var(--bg2);border:1.5px solid var(--bd);border-radius:var(--rl);padding:13px 14px;position:relative;border-left:3px solid var(--ac)}
+.note-c:hover .cmt-del{opacity:1}
+.note-hd{display:flex;align-items:flex-start;gap:7px;margin-bottom:6px}
+.note-ql{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--ac);background:var(--acl);padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px}
+.note-q{font-size:13px;font-weight:600;color:var(--tx);line-height:1.4;flex:1}
+.note-a{font-size:13px;color:var(--tx2);line-height:1.65;margin-bottom:6px}
+.note-dt{font-size:11px;font-family:var(--fm);color:var(--tx3)}
+
 </style>
 </head>
 <body>
@@ -519,7 +574,7 @@ body{font-size:14px;line-height:1.5;color:var(--tx);display:flex;flex-direction:
 <script>
 /* ═══ I18N ═══════════════════════════════════════════ */
 var I={
-  zh:{'ns.nav':'导航','ni.ov':'知识框架','ni.ask':'添加词条','ni.cfg':'设置 / API Key','ns.lib':'词条库','si.ph':'搜索词条...','sf.l':'词条','fc.all':'全部','fc.ads':'广告','fc.ops':'运营','ov.t':'电商知识体系框架','ov.s':'你的电商知识库。用 EcomWiki Skill 从 Claude 导入词条，按模块或市场浏览筛选。','ov.fw':'知识模块','ov.mkt':'覆盖市场','ov.ht':'使用指南','ht.t':'EcomWiki 使用指南','ht.1':'【API Key 模式】在「设置」里配置 Anthropic 或 OpenRouter 的 API Key，然后点击顶栏「添加词条」直接输入名词，自动查询并生成词条。','ht.2':'【手动粘贴模式】没有 API Key？切换到「手动粘贴模式」，①输入名词后复制生成的指令，②粘贴给任意 AI（Claude.ai、ChatGPT 等），③将 AI 的完整回复直接粘贴回来导入即可，无需处理格式。','ht.3':'【追问】在词条页面选中任意文字，右键点击「追问选中内容」，系统会调用 AI 进行深度解析，结果自动保存为评论。没有 API Key 时也可手动粘贴 AI 回复。','ht.4':'【导出与备份】点击词条页右上角可导出单个词条为 HTML 文件随时分享；在「设置」里可导出全部词条为 JSON 文件，用于备份或在其他设备上恢复。','fw.01':'ERP 系统','fw.02':'WMS 库存管理','fw.03':'CMS 内容运营','fw.04':'BI 数据看板','fw.05':'广告推广','fw.06':'社媒 & 直播','mkt.cn':'中国','mkt.kr':'韩国','mkt.jp':'日本','mkt.us':'北美','ask.t':'查询电商名词','ask.s':'输入名词获取覆盖概念解释、四市场对比、数据参考值和真实案例的结构化解析。','ask.ph':'输入名词，如 ROAS、动销率、FBA...','ask.btn':'查询 →','l.t':'Agent 正在分析...','l.s0':'搜索行业资料','l.s1':'分析四市场差异','l.s2':'整理数据参考值','l.s3':'生成结构化词条','e.entries':'词条','e.concept':'概念解释','e.formula':'公式','e.who':'谁在关注','e.markets':'四市场解读','e.data':'数据参考值','e.case':'Real Case','e.case.l':'案例','e.metric':'指标','e.val':'参考值','e.note':'说明','e.fups':'追问 / 副词条','e.nocomments':'暂无追问记录','e.export':'导出 HTML','ctx.fu':'追问选中内容','ctx.ed':'标记修改','md.fu.t':'追问','md.ed.t':'标记修改','md.cl':'选中内容','md.fu.ph':'输入你的追问...','md.ed.ph':'输入修改建议...','md.cancel':'取消','md.fu.sub':'发送 →','md.ed.sub':'保存','empty.t':'暂无词条','empty.s':'点击顶栏「添加词条」按钮开始。','toast.ok':'词条已生成并保存','toast.dup':'词条已存在，已跳转','toast.del':'词条已删除','toast.exp':'JSON 已导出','toast.html':'HTML 已导出','toast.fu':'追问已保存','toast.err':'生成失败，请重试','toast.keysaved':'API Key 已保存','toast.keycleared':'API Key 已清除','toast.copied':'已复制到剪贴板','toast.datecleared':'数据已清空','confirm.del':'确认删除这个词条？','confirm.clear':'确认清空所有词条数据？此操作不可恢复。',
+  zh:{'ns.nav':'导航','ni.ov':'知识框架','ni.ask':'添加词条','ni.cfg':'设置 / API Key','ns.lib':'词条库','si.ph':'搜索词条...','sf.l':'词条','fc.all':'全部','fc.ads':'广告','fc.ops':'运营','ov.t':'电商知识体系框架','ov.s':'你的电商知识库。用 EcomWiki Skill 从 Claude 导入词条，按模块或市场浏览筛选。','ov.fw':'知识模块','ov.mkt':'覆盖市场','ov.ht':'使用指南','ht.t':'EcomWiki 使用指南','ht.1':'【API Key 模式】在「设置」里配置 Anthropic 或 OpenRouter 的 API Key，然后点击顶栏「添加词条」直接输入名词，自动查询并生成词条。','ht.2':'【手动粘贴模式】没有 API Key？切换到「手动粘贴模式」，①输入名词后复制生成的指令，②粘贴给任意 AI（Claude.ai、ChatGPT 等），③将 AI 的完整回复直接粘贴回来导入即可，无需处理格式。','ht.3':'【追问】在词条页面选中任意文字，右键点击「追问选中内容」，系统会调用 AI 进行深度解析，结果自动保存为评论。没有 API Key 时也可手动粘贴 AI 回复。','ht.4':'【导出与备份】点击词条页右上角可导出单个词条为 HTML 文件随时分享；在「设置」里可导出全部词条为 JSON 文件，用于备份或在其他设备上恢复。','fw.01':'ERP 系统','fw.02':'WMS 库存管理','fw.03':'CMS 内容运营','fw.04':'BI 数据看板','fw.05':'广告推广','fw.06':'社媒 & 直播','mkt.cn':'中国','mkt.kr':'韩国','mkt.jp':'日本','mkt.us':'北美','ask.t':'查询电商名词','ask.s':'输入名词获取覆盖概念解释、四市场对比、数据参考值和真实案例的结构化解析。','ask.ph':'输入名词，如 ROAS、动销率、FBA...','ask.btn':'查询 →','l.t':'Agent 正在分析...','l.s0':'搜索行业资料','l.s1':'分析四市场差异','l.s2':'整理数据参考值','l.s3':'生成结构化词条','e.entries':'词条','e.concept':'概念解释','e.formula':'公式','e.who':'谁在关注','e.markets':'四市场解读','e.data':'数据参考值','e.case':'Real Case','e.case.l':'案例','e.metric':'指标','e.val':'参考值','e.note':'说明','e.fups':'追问 / 副词条','e.nocomments':'暂无追问记录','e.export':'导出 HTML','ctx.fu':'追问选中内容','ctx.ed':'标记修改','md.fu.t':'追问','md.ed.t':'标记修改','md.cl':'选中内容','md.fu.ph':'输入你的追问...','md.ed.ph':'输入修改建议...','md.cancel':'取消','md.fu.sub':'发送 →','md.ed.sub':'保存','empty.t':'暂无词条','empty.s':'点击顶栏「添加词条」按钮开始。','toast.ok':'词条已生成并保存','toast.dup':'词条已存在，已跳转','toast.del':'词条已删除','toast.exp':'JSON 已导出','toast.html':'HTML 已导出','toast.fu':'追问已保存','toast.err':'生成失败，请重试','toast.keysaved':'API Key 已保存','toast.keycleared':'API Key 已清除','toast.copied':'已复制到剪贴板','toast.datecleared':'数据已清空','confirm.del':'确认删除这个词条？','confirm.clear':'确认清空所有词条数据？此操作不可恢复。','cmt.del.confirm':'确认删除这条记录？此操作不可恢复。','cmt.del.ok':'已删除','note.add.ph.title':'标题（选填）','note.add.ph.body':'添加备注或追问...','note.add.btn':'＋ 添加',
     'ov.entries.lbl':'词条',
     'ov.clear':'清除筛选',
     'ov.empty.t':'暂无词条',
@@ -563,7 +618,7 @@ var I={
     'cfg.paste.t':'手动粘贴模式','cfg.paste.s':'不想配置 API Key？可切换到「手动粘贴模式」。系统生成 Prompt，你粘贴给任意 AI 获取回复，再将 JSON 粘贴回来即可——但推荐使用 API Key 模式以获得完整体验。',
     'cfg.save.btn':'保存','cfg.clr.key.btn':'清除'
   },
-  en:{'ns.nav':'Navigation','ni.ov':'Framework','ni.ask':'Add Entry','ni.cfg':'Settings / API Key','ns.lib':'Library','si.ph':'Search entries...','sf.l':'entries','fc.all':'All','fc.ads':'Ads','fc.ops':'Ops','ov.t':'Ecommerce Knowledge Framework','ov.s':'Your personal ecommerce knowledge base. Import terms from Claude using the EcomWiki Skill, then browse and filter by module or market.','ov.fw':'Knowledge Modules','ov.mkt':'Markets','ov.ht':'How To Use','ht.t':'How to use EcomWiki','ht.1':'[API Key Mode] Go to Settings and configure an Anthropic or OpenRouter API Key. Then click Add Entry in the top bar to auto-generate a full structured entry.','ht.2':'[Manual Paste Mode] No API Key? Switch to Manual Paste Mode. ① Enter a term and copy the generated prompt. ② Paste it to any AI (Claude.ai, ChatGPT, etc.). ③ Paste the AI\'s full response back — no JSON formatting needed.','ht.3':'[Follow-up] Select any text in an entry and right-click to follow up. AI analyzes the selected context and the response is saved as a comment. Works with paste mode too if you have no API Key.','ht.4':'[Export & Backup] Click the export button on any entry to save it as a shareable HTML file. Go to Settings to export all entries as JSON for backup or cross-device migration.','fw.01':'ERP System','fw.02':'WMS Inventory','fw.03':'CMS Content','fw.04':'BI Dashboard','fw.05':'Advertising','fw.06':'Social & Live','mkt.cn':'China','mkt.kr':'Korea','mkt.jp':'Japan','mkt.us':'N. America','ask.t':'Query Any Ecommerce Term','ask.s':'Enter a term to get a structured breakdown: concept, four-market comparison, data benchmarks, real cases.','ask.ph':'Enter a term, e.g. ROAS, FBA, sell-through rate...','ask.btn':'Ask →','l.t':'Agent is analyzing...','l.s0':'Searching industry data','l.s1':'Analyzing market differences','l.s2':'Compiling data benchmarks','l.s3':'Generating structured entry','e.entries':'Entries','e.concept':'Concept','e.formula':'Formula','e.who':'Who Cares','e.markets':'Four Markets','e.data':'Data Reference','e.case':'Real Case','e.case.l':'Case Study','e.metric':'Metric','e.val':'Value','e.note':'Note','e.fups':'Follow-ups','e.nocomments':'No follow-ups yet','e.export':'Export HTML','ctx.fu':'Follow up on this','ctx.ed':'Suggest edit','md.fu.t':'Follow Up','md.ed.t':'Suggest Edit','md.cl':'Selected Text','md.fu.ph':'Enter your question...','md.ed.ph':'Enter your correction...','md.cancel':'Cancel','md.fu.sub':'Send →','md.ed.sub':'Save','empty.t':'No entries yet','empty.s':'Click 「Add Entry」 in the top bar to get started.','toast.ok':'Entry generated & saved','toast.dup':'Entry exists, navigating','toast.del':'Entry deleted','toast.exp':'JSON exported','toast.html':'HTML exported','toast.fu':'Follow-up saved','toast.err':'Generation failed, please retry','toast.keysaved':'API Key saved','toast.keycleared':'API Key cleared','toast.copied':'Copied to clipboard','toast.datecleared':'Data cleared','confirm.del':'Delete this entry?','confirm.clear':'Clear all entry data? This cannot be undone.',
+  en:{'ns.nav':'Navigation','ni.ov':'Framework','ni.ask':'Add Entry','ni.cfg':'Settings / API Key','ns.lib':'Library','si.ph':'Search entries...','sf.l':'entries','fc.all':'All','fc.ads':'Ads','fc.ops':'Ops','ov.t':'Ecommerce Knowledge Framework','ov.s':'Your personal ecommerce knowledge base. Import terms from Claude using the EcomWiki Skill, then browse and filter by module or market.','ov.fw':'Knowledge Modules','ov.mkt':'Markets','ov.ht':'How To Use','ht.t':'How to use EcomWiki','ht.1':'[API Key Mode] Go to Settings and configure an Anthropic or OpenRouter API Key. Then click Add Entry in the top bar to auto-generate a full structured entry.','ht.2':'[Manual Paste Mode] No API Key? Switch to Manual Paste Mode. ① Enter a term and copy the generated prompt. ② Paste it to any AI (Claude.ai, ChatGPT, etc.). ③ Paste the AI\'s full response back — no JSON formatting needed.','ht.3':'[Follow-up] Select any text in an entry and right-click to follow up. AI analyzes the selected context and the response is saved as a comment. Works with paste mode too if you have no API Key.','ht.4':'[Export & Backup] Click the export button on any entry to save it as a shareable HTML file. Go to Settings to export all entries as JSON for backup or cross-device migration.','fw.01':'ERP System','fw.02':'WMS Inventory','fw.03':'CMS Content','fw.04':'BI Dashboard','fw.05':'Advertising','fw.06':'Social & Live','mkt.cn':'China','mkt.kr':'Korea','mkt.jp':'Japan','mkt.us':'N. America','ask.t':'Query Any Ecommerce Term','ask.s':'Enter a term to get a structured breakdown: concept, four-market comparison, data benchmarks, real cases.','ask.ph':'Enter a term, e.g. ROAS, FBA, sell-through rate...','ask.btn':'Ask →','l.t':'Agent is analyzing...','l.s0':'Searching industry data','l.s1':'Analyzing market differences','l.s2':'Compiling data benchmarks','l.s3':'Generating structured entry','e.entries':'Entries','e.concept':'Concept','e.formula':'Formula','e.who':'Who Cares','e.markets':'Four Markets','e.data':'Data Reference','e.case':'Real Case','e.case.l':'Case Study','e.metric':'Metric','e.val':'Value','e.note':'Note','e.fups':'Follow-ups','e.nocomments':'No follow-ups yet','e.export':'Export HTML','ctx.fu':'Follow up on this','ctx.ed':'Suggest edit','md.fu.t':'Follow Up','md.ed.t':'Suggest Edit','md.cl':'Selected Text','md.fu.ph':'Enter your question...','md.ed.ph':'Enter your correction...','md.cancel':'Cancel','md.fu.sub':'Send →','md.ed.sub':'Save','empty.t':'No entries yet','empty.s':'Click 「Add Entry」 in the top bar to get started.','toast.ok':'Entry generated & saved','toast.dup':'Entry exists, navigating','toast.del':'Entry deleted','toast.exp':'JSON exported','toast.html':'HTML exported','toast.fu':'Follow-up saved','toast.err':'Generation failed, please retry','toast.keysaved':'API Key saved','toast.keycleared':'API Key cleared','toast.copied':'Copied to clipboard','toast.datecleared':'Data cleared','confirm.del':'Delete this entry?','confirm.clear':'Clear all entry data? This cannot be undone.','cmt.del.confirm':'Delete this note? This cannot be undone.','cmt.del.ok':'Note deleted','note.add.ph.title':'Title (optional)','note.add.ph.body':'Add a note or follow-up...','note.add.btn':'＋ Add',
     'ov.entries.lbl':'Entries',
     'ov.clear':'Clear filters',
     'ov.empty.t':'No entries yet',
@@ -1123,6 +1178,9 @@ function goP(p){
   if(ovBtn) ovBtn.classList.toggle('act',p==='overview');
   if(p==='settings'){updateProviderInfo();updateKeyStatus();}
   if(p==='overview'){renderOV();}
+  // Lock/unlock main scroll for entry panel
+  var mainEl=document.querySelector('.main');
+  if(mainEl){mainEl.classList.toggle('entry-open',p==='entry');}
 }
 
 
@@ -1162,6 +1220,40 @@ function renderL(){
 }
 
 /* ═══ SHOW ENTRY ════════════════════════════════════ */
+function addNote(entryId){
+  var entry=G.entries.find(function(e){return e.id===entryId;});
+  if(!entry) return;
+  var titleEl=document.getElementById('eside-title_'+entryId);
+  var bodyEl =document.getElementById('eside-body_'+entryId);
+  var title=(titleEl?titleEl.value||'':'').trim();
+  var body =(bodyEl ?bodyEl.value ||'':'').trim();
+  if(!body) return;
+  entry.comments=entry.comments||[];
+  entry.comments.push({
+    q:title||(G.lang==='zh'?'备注':'Note'),
+    a:body,
+    date:new Date().toISOString().slice(0,10)
+  });
+  sv();
+  showE(entryId);
+  toast(G.lang==='zh'?'✓ 已添加':'✓ Note added');
+  // scroll to bottom of list after render
+  setTimeout(function(){
+    var list=document.getElementById('eside-list_'+entryId);
+    if(list) list.scrollTop=list.scrollHeight;
+  },80);
+}
+
+function deleteComment(entryId, cmtIdx){
+  if(!confirm(t('cmt.del.confirm'))) return;
+  var entry=G.entries.find(function(e){return e.id===entryId;});
+  if(!entry||!entry.comments) return;
+  entry.comments.splice(cmtIdx,1);
+  sv();
+  showE(entryId);
+  toast(t('cmt.del.ok'));
+}
+
 function showE(id){
   var entry=G.entries.find(function(e){return e.id===id;});
   if(!entry)return;
@@ -1190,26 +1282,31 @@ function showE(id){
     +'<a class="rc-u" href="'+esc(entry.realCase.url||'')+'" target="_blank">'+esc(entry.realCase.url||'')+'</a>'
     +'</div></div>':'';
   var cmh=(entry.comments&&entry.comments.length)
-    ?entry.comments.map(function(c){return '<div class="cmt-c"><div class="cmt-q"><span class="cmt-ql">Q</span>'+esc(c.q)+'</div><div class="cmt-a">'+esc(c.a)+'</div><div class="cmt-dt">'+esc(c.date||'')+'</div></div>';}).join('')
-    :'<div class="no-cmt">'+t('e.nocomments')+'</div>';
+    ?entry.comments.map(function(c,ci){
+      return '<div class="note-c">'
+        +'<button class="cmt-del" onclick="deleteComment(\''+id+'\','+ci+')" title="'+(G.lang==='zh'?'删除':'Delete')+'">🗑</button>'
+        +'<div class="note-hd"><span class="note-ql">'+(c.q&&c.q.startsWith('✏️')?'✏️':'Q')+'</span><div class="note-q">'+esc(c.q&&c.q.startsWith('✏️')?c.q.slice(2).trim():c.q)+'</div></div>'
+        +'<div class="note-a">'+esc(c.a)+'</div>'
+        +'<div class="note-dt">'+esc(c.date||'')+'</div>'
+        +'</div>';
+    }).join('')
+    :'<div class="eside-empty"><div class="eside-empty-ic">💬</div><div class="eside-empty-t">'+(G.lang==='zh'?'还没有追问或备注':'No notes yet')+'</div><div class="eside-empty-s">'+(G.lang==='zh'?'在下方添加备注、追问或补充内容':'Add notes, follow-ups, or extra context below')+'</div></div>';
   var fh=formula?'<div class="sec"><div class="slbl">'+t('e.formula')+'</div><div class="formula">'+esc(formula).replace(/\n/g,'<br>')+'</div></div>':'';
   var stgs=(entry.stages||[]).slice(0,2).map(function(s,i){return '<span class="echip '+(i===0?'ec-sys':'ec-stg')+'">'+esc(s)+'</span>';}).join('');
   document.getElementById('e-detail').innerHTML=
-    '<div class="eh">'
-    +'<div class="ebc"><span>'+t('e.entries')+'</span><span class="ebc-s">›</span><span>'+esc(entry.system||'')+'</span><span class="ebc-s">›</span><span style="color:var(--tx)">'+esc(nm)+'</span></div>'
-    +'<div class="eh-row">'
-    +'<div><div class="e-title">'+esc(nm)+'</div><div class="e-sub">'+esc(sub)+'</div><div class="e-chips">'+stgs+'</div></div>'
-    +'<div class="eh-act"><button class="eh-btn" onclick="expHTML(G.eid)">'+t('e.export')+'</button></div>'
-    +'</div></div>'
-    +'<div class="ebody" id="eb_'+id+'">'
-    +fh
-    +'<div class="sec"><div class="slbl">'+t('e.concept')+'</div><div class="stxt">'+esc(concept).replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div>'
-    +'<div class="sec"><div class="slbl">'+t('e.who')+'</div><div class="who-l">'+who.map(function(w){return '<span class="who-p">'+esc(w)+'</span>';}).join('')+'</div></div>'
-    +'<div class="sec"><div class="slbl">'+t('e.markets')+'</div><div class="mkg">'+mkt+'</div></div>'
-    +dh+cas
-    +'<div class="cmts-w"><div class="cmts-hd"><span class="cmts-t">'+t('e.fups')+'</span><span class="cmt-cnt">'+((entry.comments||[]).length)+'</span></div><div id="cmts_'+id+'">'+cmh+'</div></div>'
-    +'</div>';
+    '<div class="ep">'    +'<div class="eh">'    +'<div class="ebc"><span>'+t('e.entries')+'</span><span class="ebc-s">›</span><span>'+esc(entry.system||'')+'</span><span class="ebc-s">›</span><span style="color:var(--tx)">'+esc(nm)+'</span></div>'    +'<div class="eh-row">'    +'<div><div class="e-title">'+esc(nm)+'</div><div class="e-sub">'+esc(sub)+'</div><div class="e-chips">'+stgs+'</div></div>'    +'<div class="eh-act"><button class="eh-btn" onclick="expHTML(G.eid)">'+t('e.export')+'</button></div>'    +'</div></div>'    +'<div class="e-cols">'    +'<div class="e-main">'    +'<div class="ebody" id="eb_'+id+'">'    +fh    +'<div class="sec"><div class="slbl">'+t('e.concept')+'</div><div class="stxt">'+esc(concept).replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')+'</div></div>'    +'<div class="sec"><div class="slbl">'+t('e.who')+'</div><div class="who-l">'+who.map(function(w){return '<span class="who-p">'+esc(w)+'</span>';}).join('')+'</div></div>'    +'<div class="sec"><div class="slbl">'+t('e.markets')+'</div><div class="mkg">'+mkt+'</div></div>'    +dh+cas    +'</div>'    +'</div>'    +'<div class="e-side">'    +'<div class="eside-hd">'    +'<span class="eside-t">'+t('e.fups')+'</span>'    +((entry.comments&&entry.comments.length)?'<span class="eside-cnt">'+entry.comments.length+'</span>':'')    +'</div>'    +'<div class="eside-list" id="eside-list_'+id+'">'    +cmh    +'</div>'    +'<div class="eside-foot">'    +'<input class="eside-inp" id="eside-title_'+id+'" placeholder="'+( G.lang==='zh'?'标题（选填）':'Title (optional)')+'" maxlength="80">'    +'<textarea class="eside-ta" id="eside-body_'+id+'" placeholder="'+(G.lang==='zh'?'添加备注或追问...':'Add a note or follow-up...')+'"></textarea>'    +'<button class="eside-add-btn" onclick="addNote(\''+id+'\')">'+( G.lang==='zh'?'＋ 添加':'＋ Add')+'</button>'    +'</div>'    +'</div>'    +'</div>'    +'</div>';
   goP('entry');
+  // Attach sticky header scroll listener
+  setTimeout(function(){
+    var mainEl=document.querySelector('.e-main');
+    var ehEl=document.querySelector('.eh');
+    if(mainEl&&ehEl){
+      mainEl.onscroll=null;
+      mainEl.addEventListener('scroll',function(){
+        ehEl.classList.toggle('compact',mainEl.scrollTop>60);
+      },{passive:true});
+    }
+  },100);
 }
 
 function delE(id){if(!confirm(t('confirm.del')))return;G.entries=G.entries.filter(function(e){return e.id!==id;});if(G.eid===id){G.eid=null;G.entries.length?showE(G.entries[0].id):goP('overview');}sv();renderL();toast(t('toast.del'));}
@@ -1275,176 +1372,152 @@ function closeMO(){document.getElementById('mo').classList.remove('open');}
 function submitFU(){submitMO();}
 
 async function submitMO(){
-  var entry=G.entries.find(function(e){return e.id===G.eid;});if(!entry){closeMO();return;}
-  var sb=document.getElementById('md-sub');sb.disabled=true;sb.textContent='...';
+  var entry=G.entries.find(function(e){return e.id===G.eid;});
+  if(!entry){closeMO();return;}
+  var sb=document.getElementById('md-sub');
+  sb.disabled=true;sb.textContent='...';
+
   if(G.mmode==='fu'){
+    // ── FOLLOW-UP mode ───────────────────────────────
     var hasKey=!!getKey();
     if(hasKey){
-      var q=(document.getElementById('md-ta').value||'').trim();if(!q){sb.disabled=false;sb.textContent=t('md.fu.sub');return;}
+      var q=(document.getElementById('md-ta').value||'').trim();
+      if(!q){sb.disabled=false;sb.textContent=t('md.fu.sub');return;}
       try{
-        var ans=await callAPI(buildFUPrompt(entry.name,G.sel,q),'You are an expert ecommerce knowledge assistant. Answer follow-up questions concisely in Chinese (2-3 paragraphs). Be specific and practical.');
-        entry.comments=entry.comments||[];entry.comments.push({q:q,a:ans,date:new Date().toISOString().slice(0,10)});
+        var entName=entry.name&&typeof entry.name==='object'?(entry.name[G.lang]||entry.name.en||entry.name.zh||''):(entry.name||'');
+        var ans=await callAPI(buildFUPrompt(entName,G.sel,q),'You are an expert ecommerce knowledge assistant. Answer follow-up questions concisely in the same language as the question (2-3 paragraphs). Be specific and practical.');
+        entry.comments=entry.comments||[];
+        entry.comments.push({q:q,a:ans,date:new Date().toISOString().slice(0,10)});
         sv();closeMO();showE(entry.id);
         setTimeout(function(){var el=document.getElementById('cmts_'+entry.id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},300);
         toast(t('toast.fu'));
-      }catch(err){toast(t('toast.err'));console.error(err);}
+      }catch(err){
+        toast(t('toast.err'));console.error(err);
+        sb.disabled=false;sb.textContent=t('md.fu.sub');
+      }
     }else{
-      var pasteAns=(document.getElementById('md-paste-ta').value||'').trim();if(!pasteAns){sb.disabled=false;return;}
-      entry.comments=entry.comments||[];entry.comments.push({q:(document.getElementById('md-ta').value||G.sel).slice(0,80),a:pasteAns,date:new Date().toISOString().slice(0,10)});
+      var pasteAns=(document.getElementById('md-paste-ta').value||'').trim();
+      if(!pasteAns){sb.disabled=false;return;}
+      var qText=(document.getElementById('md-ta').value||G.sel||'').slice(0,80);
+      entry.comments=entry.comments||[];
+      entry.comments.push({q:qText,a:pasteAns,date:new Date().toISOString().slice(0,10)});
       sv();closeMO();showE(entry.id);toast(t('toast.fu'));
     }
+
   }else{
-    // ── EDIT MODE: replace selected text in-place ──────────────
+    // ── EDIT mode: replace selected text in-place ────
     var inp=(document.getElementById('md-ta').value||'').trim();
-    if(!inp){sb.disabled=false;return;}
+    if(!inp){sb.disabled=false;sb.textContent=t('md.ed.sub');return;}
+
     var L=G.lang;
     var oldText=G.sel;
     var replaced=false;
 
-    // Helper: replace oldText with inp inside a string (bilingual-aware)
-    function replaceIn(str){
-      if(typeof str==='string' && str.indexOf(oldText)>=0){
-        return {val:str.replace(oldText,inp), hit:true};
-      }
-      return {val:str, hit:false};
-    }
-
-    // Try replacing in each text field, searching current language first
-    function tryField(field){
+    // Search bilingual field for oldText, replace with inp
+    function biReplace(field, fieldKey){
       if(!field) return false;
+      if(typeof field==='string'){
+        if(field.indexOf(oldText)>=0){
+          entry[fieldKey]=field.replace(oldText,inp);
+          return true;
+        }
+        return false;
+      }
       if(typeof field==='object'){
-        // Try current lang first, then other
-        var langs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
-        for(var i=0;i<langs.length;i++){
-          var l=langs[i];
-          if(field[l] && typeof field[l]==='string' && field[l].indexOf(oldText)>=0){
-            field[l]=field[l].replace(oldText,inp);
+        var order=L==='zh'?['zh','en']:['en','zh'];
+        for(var oi=0;oi<order.length;oi++){
+          var lang=order[oi];
+          if(field[lang] && typeof field[lang]==='string' && field[lang].indexOf(oldText)>=0){
+            field[lang]=field[lang].replace(oldText,inp);
             return true;
           }
         }
-      } else if(typeof field==='string' && field.indexOf(oldText)>=0){
-        return true; // caller handles string fields
       }
       return false;
     }
 
-    // 1. Try concept
-    if(!replaced && entry.concept){
-      if(typeof entry.concept==='object'){
-        var langs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
-        for(var i=0;i<langs.length;i++){
-          var l=langs[i];
-          if(entry.concept[l] && entry.concept[l].indexOf(oldText)>=0){
-            entry.concept[l]=entry.concept[l].replace(oldText,inp);
-            replaced=true; break;
-          }
-        }
-      } else if(typeof entry.concept==='string' && entry.concept.indexOf(oldText)>=0){
-        entry.concept=entry.concept.replace(oldText,inp);
-        replaced=true;
-      }
-    }
-    // 2. Try subtitle
-    if(!replaced && entry.subtitle){
-      if(typeof entry.subtitle==='object'){
-        var langs2=['en','zh'].sort(function(a,b){return a===L?-1:1;});
-        for(var i=0;i<langs2.length;i++){
-          var l2=langs2[i];
-          if(entry.subtitle[l2] && entry.subtitle[l2].indexOf(oldText)>=0){
-            entry.subtitle[l2]=entry.subtitle[l2].replace(oldText,inp);
-            replaced=true; break;
-          }
-        }
-      } else if(typeof entry.subtitle==='string' && entry.subtitle.indexOf(oldText)>=0){
-        entry.subtitle=entry.subtitle.replace(oldText,inp);
-        replaced=true;
-      }
-    }
-    // 3. Try formula
+    // 1. concept
+    if(!replaced) replaced=biReplace(entry.concept,'concept');
+
+    // 2. subtitle
+    if(!replaced) replaced=biReplace(entry.subtitle,'subtitle');
+
+    // 3. formula
     if(!replaced && entry.formula){
-      var fStr=typeof entry.formula==='object'?(entry.formula[L]||entry.formula.en||entry.formula.zh||''):entry.formula||'';
-      if(fStr.indexOf(oldText)>=0){
-        if(typeof entry.formula==='object'){
-          entry.formula[L]=fStr.replace(oldText,inp);
-        } else {
-          entry.formula=fStr.replace(oldText,inp);
+      var fVal=entry.formula;
+      if(typeof fVal==='string' && fVal.indexOf(oldText)>=0){
+        entry.formula=fVal.replace(oldText,inp);replaced=true;
+      } else if(typeof fVal==='object'){
+        var fOrder=L==='zh'?['zh','en']:['en','zh'];
+        for(var fi=0;fi<fOrder.length;fi++){
+          var fl=fOrder[fi];
+          if(fVal[fl] && fVal[fl].indexOf(oldText)>=0){fVal[fl]=fVal[fl].replace(oldText,inp);replaced=true;break;}
         }
-        replaced=true;
       }
     }
-    // 4. Try who (array)
+
+    // 4. who (array or bilingual arrays)
     if(!replaced && entry.who){
-      var whoArr=entry.who&&typeof entry.who==='object'&&!Array.isArray(entry.who)
-        ?(entry.who[L]||entry.who.en||entry.who.zh||[])
-        :(entry.who||[]);
+      var whoArr=Array.isArray(entry.who)?entry.who
+        :(entry.who[L]||entry.who.en||entry.who.zh||[]);
       for(var wi=0;wi<whoArr.length;wi++){
-        if(whoArr[wi].indexOf(oldText)>=0){
-          whoArr[wi]=whoArr[wi].replace(oldText,inp);
-          replaced=true; break;
-        }
+        if(whoArr[wi].indexOf(oldText)>=0){whoArr[wi]=whoArr[wi].replace(oldText,inp);replaced=true;break;}
       }
     }
-    // 5. Try realCase.desc
+
+    // 5. realCase.desc
     if(!replaced && entry.realCase && entry.realCase.desc){
-      var d=entry.realCase.desc;
-      if(typeof d==='object'){
-        var descLangs=['en','zh'].sort(function(a,b){return a===L?-1:1;});
-        for(var i=0;i<descLangs.length;i++){
-          var dl=descLangs[i];
-          if(d[dl] && d[dl].indexOf(oldText)>=0){
-            d[dl]=d[dl].replace(oldText,inp);
-            replaced=true; break;
-          }
+      var descVal=entry.realCase.desc;
+      if(typeof descVal==='string' && descVal.indexOf(oldText)>=0){
+        entry.realCase.desc=descVal.replace(oldText,inp);replaced=true;
+      } else if(typeof descVal==='object'){
+        var dOrder=L==='zh'?['zh','en']:['en','zh'];
+        for(var dci=0;dci<dOrder.length;dci++){
+          var dcl=dOrder[dci];
+          if(descVal[dcl] && descVal[dcl].indexOf(oldText)>=0){descVal[dcl]=descVal[dcl].replace(oldText,inp);replaced=true;break;}
         }
-      } else if(typeof d==='string' && d.indexOf(oldText)>=0){
-        entry.realCase.desc=d.replace(oldText,inp);
-        replaced=true;
       }
     }
-    // 6. Try realCase.title
-    if(!replaced && entry.realCase && entry.realCase.title && entry.realCase.title.indexOf(oldText)>=0){
-      entry.realCase.title=entry.realCase.title.replace(oldText,inp);
-      replaced=true;
+
+    // 6. realCase.title
+    if(!replaced && entry.realCase && entry.realCase.title){
+      if(entry.realCase.title.indexOf(oldText)>=0){entry.realCase.title=entry.realCase.title.replace(oldText,inp);replaced=true;}
     }
-    // 7. Try market points
+
+    // 7. market points
     if(!replaced && entry.markets){
-      outer: for(var mi=0;mi<entry.markets.length;mi++){
-        var m=entry.markets[mi];
-        var pts=m.points&&typeof m.points==='object'&&!Array.isArray(m.points)
-          ?(m.points[L]||m.points.en||m.points.zh||[])
-          :(m.points||[]);
-        for(var pi=0;pi<pts.length;pi++){
-          if(pts[pi].indexOf(oldText)>=0){
-            pts[pi]=pts[pi].replace(oldText,inp);
-            replaced=true; break outer;
-          }
+      for(var mi=0;mi<entry.markets.length;mi++){
+        if(replaced) break;
+        var mk=entry.markets[mi];
+        var mpts=Array.isArray(mk.points)?mk.points
+          :(mk.points&&mk.points[L]||mk.points&&mk.points.en||mk.points&&mk.points.zh||[]);
+        for(var mpi=0;mpi<mpts.length;mpi++){
+          if(mpts[mpi].indexOf(oldText)>=0){mpts[mpi]=mpts[mpi].replace(oldText,inp);replaced=true;break;}
         }
       }
     }
-    // 8. Try data labels/notes
+
+    // 8. data rows
     if(!replaced && entry.data){
-      var dataArr=entry.data&&typeof entry.data==='object'&&!Array.isArray(entry.data)
-        ?(entry.data[L]||entry.data.en||entry.data.zh||[])
-        :(entry.data||[]);
+      var dataArr=Array.isArray(entry.data)?entry.data
+        :(entry.data[L]||entry.data.en||entry.data.zh||[]);
       for(var di=0;di<dataArr.length;di++){
         var row=dataArr[di];
         if(row.label && row.label.indexOf(oldText)>=0){row.label=row.label.replace(oldText,inp);replaced=true;break;}
-        if(row.note  && row.note.indexOf(oldText)>=0) {row.note=row.note.replace(oldText,inp);replaced=true;break;}
-        if(row.val   && row.val.indexOf(oldText)>=0)  {row.val=row.val.replace(oldText,inp);replaced=true;break;}
+        if(row.note  && row.note.indexOf(oldText)>=0) {row.note=row.note.replace(oldText,inp);  replaced=true;break;}
+        if(row.val   && row.val.indexOf(oldText)>=0)  {row.val=row.val.replace(oldText,inp);    replaced=true;break;}
       }
     }
 
     if(replaced){
-      sv();
-      closeMO();
-      showE(entry.id);
+      sv();closeMO();showE(entry.id);
       toast(G.lang==='zh'?'✓ 修改已保存':'✓ Edit saved');
-    } else {
-      // Fallback: couldn't locate the exact text, save as note
+    }else{
+      // Fallback: save as annotation note
       entry.comments=entry.comments||[];
       entry.comments.push({q:'✏️ '+oldText.slice(0,50)+(oldText.length>50?'…':''),a:inp,date:new Date().toISOString().slice(0,10)});
       sv();closeMO();showE(entry.id);
-      toast(G.lang==='zh'?'⚠️ 未定位原文，已保存为备注':'⚠️ Could not locate text, saved as note');
+      toast(G.lang==='zh'?'⚠️ 未定位原文，已保存为备注':'⚠️ Text not found, saved as note');
     }
   }
   sb.disabled=false;
